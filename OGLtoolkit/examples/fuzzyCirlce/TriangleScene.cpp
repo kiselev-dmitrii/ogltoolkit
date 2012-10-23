@@ -46,8 +46,8 @@ void TriangleScene::init() {
         // Устанавливаем состояние vao
         m_vao = new VertexArray();
         m_vao->bind();
-                // Говорим, что будем использовать индексный буфер с этим vao
                 m_ibo->bind();
+                // Говорим, что будем использовать индексный буфер с этим vao
 
                 // Говорим OpenGL'у как интерпретировать данные в VBO
                 m_vboPositions->setAttribAssociation("vertexPosition", 3, GL_FLOAT);

@@ -2,6 +2,7 @@
 
 layout (location = 0) in vec3 vertexPosition;   //позиция вершины
 layout (location = 1) in vec3 vertexNormal;     //нормаль вершины
+layout (location = 2) in vec2 vertexTexCoord;   //текст. коорд. вершины
 
 out vec3 diffuseColor;
 

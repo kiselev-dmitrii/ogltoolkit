@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include "lib/Debug/Debug.h"
 #include "QtView.h"
-#include "TriangleScene.h"
+#include "LightScene.h"
 
 QtView::QtView(QWidget *parent) : QGLWidget(parent) {
         // Устанавливаем версию и профиль
@@ -20,7 +20,7 @@ QtView::QtView(QWidget *parent) : QGLWidget(parent) {
 
 void QtView::initializeGL() {
         //////////////// Здесь требуется указать конкретную сцену //////////////////
-        m_scene = new TriangleScene();
+        m_scene = new LightScene();
         ////////////////////////////////////////////////////////////////////////////
 
         // Инициализация GLEW
