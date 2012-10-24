@@ -15,6 +15,9 @@ SOURCES += main.cpp \
     ../../lib/OGL/IndexBuffer.cpp \
     ../../lib/Data/Mesh.cpp \
     ../../lib/Utils/StringUtils.cpp \
+    ../../lib/Utils/StreamUtils.cpp \
+    ../../lib/Framework/Camera.cpp \
+    ../../lib/Framework/Entity.cpp \
     QtView.cpp \
     LightScene.cpp
 
@@ -29,6 +32,9 @@ HEADERS += \
     ../../lib/OGL/IndexBuffer.h \
     ../../lib/Data/Mesh.h \
     ../../lib/Utils/StringUtils.h \
+    ../../lib/Utils/StreamUtils.h \
+    ../../lib/Framework/Camera.h \
+    ../../lib/Framework/Entity.h \
     QtView.h \
     LightScene.h
 

@@ -13,6 +13,7 @@ LightScene::~LightScene() {
 
 void LightScene::init() {
         glClearColor(0,0,0,0);
+        glEnable(GL_DEPTH_TEST);
 
         //GpuProgram
         m_program = new GpuProgram();
@@ -51,8 +52,7 @@ void LightScene::update(float t) {
         mat3 normalMatrix = mat3(1);
         mat4 MVPMatrix = glm::scale(mat4(1), vec3(0.5));
         mat4 ModelViewMatrix = glm::scale(mat4(1), vec3(0.5));
-        MVPMatrix = glm::rotate(MVPMatrix, 30.0f, vec3(1,0,1));
-        MVPMatrix = glm::rotate(MVPMatrix, 30.0f, vec3(1,0,0));
+        MVPMatrix = glm::rotate(MVPMatrix, 90.0f, vec3(0,1,0));
 
         vec3 lightPosition = vec3(1,1,1);
         vec3 Kd = vec3(0.5, 1.0, 1.0);
@@ -67,7 +67,7 @@ void LightScene::update(float t) {
 }
 
 void LightScene::render() {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_vaoMesh->bind();
         glDrawElements(GL_TRIANGLES, m_mesh->indicesCount(), GL_UNSIGNED_INT, (GLvoid *) 0);
