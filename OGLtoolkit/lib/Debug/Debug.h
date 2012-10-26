@@ -1,6 +1,9 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 #include <iostream>
+#include "lib/Utils/StreamUtils.h"
+
+using namespace StreamUtils;
 
 #define SHOW(variable)  std::cout << #variable" = " << variable << std::endl;
 #define DEBUG(text)     std::cout << text << std::endl;

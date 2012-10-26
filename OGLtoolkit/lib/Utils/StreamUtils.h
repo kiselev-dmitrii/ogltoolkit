@@ -4,6 +4,9 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
+using std::ostream;
+using std::endl;
+
 /** Наборы функций и операторов для удобного ввода-вывода
   */
 namespace StreamUtils {

@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Entity.cpp \
     QtView.cpp \
-    LightScene.cpp
+    LightScene.cpp \
+    ../../lib/Framework/Render.cpp
 
 HEADERS += \
     ../../lib/Debug/Debug.h \
@@ -36,7 +37,8 @@ HEADERS += \
     ../../lib/Framework/Camera.h \
     ../../lib/Framework/Entity.h \
     QtView.h \
-    LightScene.h
+    LightScene.h \
+    ../../lib/Framework/Render.h
 
 OTHER_FILES += \
     shaders/lighting.vert \

@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include <glm/gtx/rotate_vector.hpp>
+#include "lib/Debug/Debug.h"
 
 Camera::Camera() {
         m_dir = vec3(1,0,0);
@@ -9,7 +11,7 @@ Camera::Camera() {
         m_nearPlane = 0.05;
         m_farPlane = 100.0;
         m_ratio = 1.0;
-        m_fovAngle = 60;
+        m_fovAngle = 30;
         m_width = m_height = 1.0;
 }
 
@@ -53,10 +55,22 @@ void Camera::moveUp(float delta) {
 
 void Camera::rotate(float angle, const vec3 &axis) {
         // При повороте будем менять лишь вектор m_dir
-        // Для отыскания нового m_dir необходимо умножить m_dir на матрицу поворота
+        m_dir = glm::rotate(m_dir, angle, axis);
+}
 
-        mat3 rotateMatrix = glm::rotate(mat3(1), angle, axis);
-        m_dir = rotateMatrix * m_dir;
+void Camera::rotateWithMouse(const vec2 &delta) {
+        DEBUG("Скорее всего не работает");
+        vec2 angles = delta/1000.0f;
+        rotate(angles.x, vec3(0,0,1));
+        rotate(angles.y, vec3(1,0,0));
+}
+
+void Camera::setPosition(const vec3 &pos) {
+        m_pos = pos;
+}
+
+void Camera::setTarget(const vec3 &target) {
+        m_dir = glm::normalize(target-m_pos);
 }
 
 mat4* Camera::viewMatrix() {
@@ -67,7 +81,7 @@ mat4* Camera::viewMatrix() {
 mat4* Camera::projectionMatrix() {
         switch (m_projType) {
                 case ProjectionType::ORTHOGONAL:
-                        m_projMatrix = glm::ortho(0, m_width, 0, m_height);
+                        m_projMatrix = glm::ortho(0.0f, m_width, 0.0f, m_height);
                         break;
                 case ProjectionType::PERSPECTIVE:
                         m_projMatrix = glm::perspective(m_fovAngle, m_ratio, m_nearPlane, m_farPlane);

@@ -39,6 +39,16 @@ void Mesh::loadMeshFromFile(const string &filename) {
                 return;
         }
 
+        // Если меш уже был, то удаляем его
+        if (m_vertices != NULL) {
+                delete [] m_vertices;
+                m_verticesCount = 0;
+        }
+        if (m_indices != NULL) {
+                delete [] m_indices;
+                m_indicesCount = 0;
+        }
+
         // Проходим по всем граням и копируем индексы в m_indices.
         // Каждая грань - это треугольник
         m_indicesCount = mesh->mNumFaces * 3;
