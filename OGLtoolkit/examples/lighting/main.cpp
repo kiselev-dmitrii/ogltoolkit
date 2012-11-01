@@ -1,15 +1,12 @@
-#include <QApplication>
-#include <iostream>
-#include "QtView.h"
+#include "lib/Subsystems/Application.h"
+#include "LightScene.h"
 
+int main() {
+        Application *app = Application::instance();
 
-int main(int argc, char *argv[]) {
-        QApplication app(argc, argv);
+        app->window()->setSize(ivec2(800,600));
+        app->setScene(new LightScene);
 
-        QtView view;
-        view.show();
-
-
-        return app.exec();
+        return app->exec();
 }
 

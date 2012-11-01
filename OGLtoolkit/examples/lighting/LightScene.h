@@ -5,6 +5,7 @@
 #include "lib/OGL/GpuProgram.h"
 #include "lib/Framework/Entity.h"
 #include "lib/Framework/Camera.h"
+#include "lib/Debug/Debug.h"
 
 class LightScene : public AbstractScene {
 private:
@@ -23,8 +24,12 @@ public:
 
         void    init();
         void    resize(int w, int h);
-        void    update(float t);
+        void    update(float deltaTime);
         void    render();
+
+public:
+        void    onKeyPress(int key);
+        void    onMouseMove(int x, int y);
 };
 
 #endif // LIGHTSCENE_H

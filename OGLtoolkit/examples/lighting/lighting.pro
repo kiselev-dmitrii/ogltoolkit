@@ -1,5 +1,6 @@
 TEMPLATE = app
-QT += opengl
+LIBS += -lGL
+LIBS += -lglfw
 LIBS += -lGLEW
 LIBS += -lassimp
 
@@ -18,9 +19,11 @@ SOURCES += main.cpp \
     ../../lib/Utils/StreamUtils.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Entity.cpp \
-    QtView.cpp \
+#    QtView.cpp \
     LightScene.cpp \
-    ../../lib/Framework/Render.cpp
+    ../../lib/Framework/Render.cpp \
+    ../../lib/Subsystems/Application.cpp \
+    ../../lib/Subsystems/Mouse.cpp
 
 HEADERS += \
     ../../lib/Debug/Debug.h \
@@ -36,9 +39,11 @@ HEADERS += \
     ../../lib/Utils/StreamUtils.h \
     ../../lib/Framework/Camera.h \
     ../../lib/Framework/Entity.h \
-    QtView.h \
+#    QtView.h \
     LightScene.h \
-    ../../lib/Framework/Render.h
+    ../../lib/Framework/Render.h \
+    ../../lib/Subsystems/Application.h \
+    ../../lib/Subsystems/Mouse.h
 
 OTHER_FILES += \
     shaders/lighting.vert \

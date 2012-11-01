@@ -59,10 +59,10 @@ void Camera::rotate(float angle, const vec3 &axis) {
 }
 
 void Camera::rotateWithMouse(const vec2 &delta) {
-        DEBUG("Скорее всего не работает");
-        vec2 angles = delta/1000.0f;
-        rotate(angles.x, vec3(0,0,1));
-        rotate(angles.y, vec3(1,0,0));
+        vec2 angles = delta/20.0f;
+        vec3 right = glm::cross(m_dir, m_up);
+        rotate(angles.x, m_up);
+        rotate(angles.y, right);
 }
 
 void Camera::setPosition(const vec3 &pos) {

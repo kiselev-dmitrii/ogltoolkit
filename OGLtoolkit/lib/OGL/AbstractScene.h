@@ -8,14 +8,24 @@
   */
 class AbstractScene {
 public:
+        virtual ~AbstractScene() {}
+
         // Выполняется загрузка ресурсов, инициализация шейдеров и т.д
         virtual void    init() = 0;
         // Вызывается при изменении размеров окна
         virtual void    resize(int w, int h) = 0;
         // Служит для обновления анимации спустя время t
-        virtual void    update(float t) = 0;
+        virtual void    update(float deltaTime) = 0;
         // Отрисовывает сцену
         virtual void    render() = 0;
+
+public: //События
+        // Вызывается при изменении позиции мыши
+        virtual void    onMouseMove(int x, int y)               {}
+        // Вызывается при нажатии клавиши
+        virtual void    onKeyPress(int key)                     {}
+        // Вызывается при отпускании клавиши
+        virtual void    onKeyRelease(int key)                   {}
 };
 
 #endif // ABSTRACTSCENE_H

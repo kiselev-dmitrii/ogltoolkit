@@ -1,6 +1,8 @@
 #include "LightScene.h"
 #include "glm/gtx/transform.hpp"
 #include "lib/Debug/Debug.h"
+#include "lib/Subsystems/Mouse.h"
+#include "lib/Subsystems/Application.h"
 
 LightScene::LightScene() {}
 
@@ -12,6 +14,7 @@ LightScene::~LightScene() {
 }
 
 void LightScene::init() {
+        Mouse::hide();
         glClearColor(0,0,0,0);
         glEnable(GL_DEPTH_TEST);
 
@@ -45,9 +48,8 @@ void LightScene::resize(int w, int h) {
         m_camera->setAspectRatio(float(w)/h);
 }
 
-void LightScene::update(float t) {
-        m_camera->moveRight(2);
-        m_camera->setTarget(vec3(0,0,0));
+void LightScene::update(float deltaTime) {
+        m_head->rotate(vec3(0.1,0.1,0.1));
 }
 
 void LightScene::render() {
@@ -74,4 +76,28 @@ void LightScene::updateMatrix(Entity *entity) {
         m_program->setUniform("NormalMatrix", normalMatrix);
         m_program->setUniform("MVPMatrix", mvpMatrix);
         m_program->setUniform("ModelViewMatrix", modelViewMatrix);
+}
+
+void LightScene::onMouseMove(int x, int y) {
+        ivec2 pos = ivec2(x,y);
+        Mouse::setPos(Application::instance()->window()->center());
+        vec2 delta = vec2(Application::instance()->window()->center() - pos);
+        m_camera->rotateWithMouse(delta);
+}
+
+void LightScene::onKeyPress(int key) {
+        switch(key) {
+                case 'W':
+                        m_camera->moveForward(0.1);
+                        break;
+                case 'S':
+                        m_camera->moveForward(-0.1);
+                        break;
+                case 'D':
+                        m_camera->moveRight(0.1);
+                        break;
+                case 'A':
+                        m_camera->moveRight(-0.1);
+                        break;
+        }
 }
