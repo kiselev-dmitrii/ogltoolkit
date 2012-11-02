@@ -18,7 +18,7 @@ Entity::Entity(const string &filename) {
 }
 
 void Entity::updateBuffers() {
-        TRACE("Возможно стоит применять updateData");
+        // Проверил, можно использовать uploadData
         m_vbo.uploadData(m_mesh.vertices(), m_mesh.verticesSize(), Hint::STATIC_DRAW);
         m_ibo.uploadData(m_mesh.indices(), m_mesh.indicesSize(), Hint::STATIC_DRAW);
 }

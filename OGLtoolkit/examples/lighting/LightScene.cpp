@@ -35,12 +35,20 @@ void LightScene::init() {
         m_box->setPivot(vec3(0.5,0.5,0.5));
 
         // Установка света
-        vec3 lightPosition = vec3(1,1,1);
+        vec3 lightPosition = vec3(0,0, 30);
+        vec3 Ka = vec3(0.1, 0.1, 0.1);
+        vec3 La = vec3(1, 1, 1);
         vec3 Kd = vec3(1.0, 1.0, 1.0);
         vec3 Ld = vec3(0.5, 1.0, 1.0);
+        vec3 Ks = vec3(1.0, 1.0, 1.0);
+        vec3 Ls = vec3(1.0, 1.0, 1.0);
         m_program->setUniform("lightPosition", lightPosition);
+        m_program->setUniform("Ka", Ka);
+        m_program->setUniform("La", La);
         m_program->setUniform("Kd", Kd);
         m_program->setUniform("Ld", Ld);
+        m_program->setUniform("Ks", Ks);
+        m_program->setUniform("Ls", Ls);
 }
 
 void LightScene::resize(int w, int h) {
