@@ -15,9 +15,6 @@ private:
 
         GpuProgram      *m_program;
 
-private:
-        void    updateMatrix(Entity *entity);
-
 public:
         LightScene();
         ~LightScene();
