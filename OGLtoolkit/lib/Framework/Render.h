@@ -3,14 +3,12 @@
 
 #include "Entity.h"
 
-/** Синглтон для осуществления рендера
+/** Статический класс, для осуществления рендера
   */
 class Render {
-private:
-        Render();
 public:
-        // Рендерит сущность
-        void    render(Entity *entity);
+        // Занимается отрисовкой сущности
+        static void     render(Entity *entity);
 };
 
 #endif // RENDER_H

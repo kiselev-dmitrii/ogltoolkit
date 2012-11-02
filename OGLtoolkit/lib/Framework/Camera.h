@@ -24,6 +24,8 @@ class Camera {
 private:
         mat4    m_viewMatrix;
         mat4    m_projMatrix;
+        bool    m_isViewMatrixChanged;
+        bool    m_isProjMatrixChanged;
 
         vec3    m_dir;                  //ось, направленная вперед
         vec3    m_up;                   //ось, направленная вверх

@@ -17,6 +17,7 @@ using std::string;
 class Entity {
 private:
         mat4            m_modelMatrix;
+        bool            m_isModelMatrixChanged;
 
         Mesh            m_mesh;
         VertexArray     m_vao;

@@ -6,6 +6,8 @@ void Entity::init() {
         m_orientation = vec3(0);
         m_scale = vec3(1);
         m_pivot = vec3(0);
+
+        m_isModelMatrixChanged = true;
 }
 
 Entity::Entity() {
@@ -34,7 +36,7 @@ void Entity::updateInterpretation() {
 }
 
 void Entity::setMesh(const Mesh &mesh) {
-        TRACE("Возможно в Mesh нужен свой конструктор копирования, т.к память заного не выделится");
+        TRACE("Возможно в Mesh нужен свой оператор присваивания, т.к память заного не выделится");
         m_mesh = mesh;
         updateBuffers();
         updateInterpretation();
@@ -50,25 +52,46 @@ Mesh* Entity::mesh() {
         return &m_mesh;
 }
 
-void Entity::setPosition(const vec3 &pos) { m_position = pos; }
+void Entity::setPosition(const vec3 &pos) {
+        m_position = pos;
+        m_isModelMatrixChanged = true;
+}
 
-void Entity::setOrientation(const vec3 &angles) { m_orientation = angles; }
+void Entity::setOrientation(const vec3 &angles) {
+        m_orientation = angles;
+        m_isModelMatrixChanged = true;
+}
 
-void Entity::setScale(const vec3 &scales) { m_scale = scales; }
+void Entity::setScale(const vec3 &scales) {
+        m_scale = scales;
+        m_isModelMatrixChanged = true;
+}
 
-void Entity::move(const vec3 &delta) { m_position += delta; }
+void Entity::setPivot(const vec3 &coord) {
+        m_pivot = coord;
+        m_isModelMatrixChanged = true;
+}
 
-void Entity::rotate(const vec3 &delta) { m_orientation += delta; }
+void Entity::move(const vec3 &delta) {
+        m_position += delta;
+        m_isModelMatrixChanged = true;
+}
 
-void Entity::stretch(const vec3 &delta) { m_scale += delta; }
+void Entity::rotate(const vec3 &delta) {
+        m_orientation += delta;
+        m_isModelMatrixChanged = true;
+}
+
+void Entity::stretch(const vec3 &delta) {
+        m_scale += delta;
+        m_isModelMatrixChanged = true;
+}
 
 vec3 Entity::position() { return m_position; }
 
 vec3 Entity::orientation() { return m_orientation; }
 
 vec3 Entity::scale() { return m_scale; }
-
-void Entity::setPivot(const vec3 &coord) { m_pivot = coord; }
 
 vec3 Entity::pivot() { return m_pivot; }
 
@@ -78,12 +101,16 @@ mat4* Entity::modelMatrix() {
         // ModelMatrix = E*Pos*Scale*Orient*Pivot*v
         // Сначала мы переносим в лок. сис-му координат, затем поворачиваем
         // Затем устанавливаем позицию
-        m_modelMatrix = glm::translate(mat4(1), m_position);
-        m_modelMatrix = glm::scale(m_modelMatrix, m_scale);
-        m_modelMatrix = glm::rotate(m_modelMatrix, m_orientation.x, vec3(1,0,0));
-        m_modelMatrix = glm::rotate(m_modelMatrix, m_orientation.y, vec3(0,1,0));
-        m_modelMatrix = glm::rotate(m_modelMatrix, m_orientation.z, vec3(0,0,1));
-        m_modelMatrix = glm::translate(m_modelMatrix, -m_pivot);
+        if(m_isModelMatrixChanged) {
+                m_modelMatrix = glm::translate(mat4(1), m_position);
+                m_modelMatrix = glm::scale(m_modelMatrix, m_scale);
+                m_modelMatrix = glm::rotate(m_modelMatrix, m_orientation.x, vec3(1,0,0));
+                m_modelMatrix = glm::rotate(m_modelMatrix, m_orientation.y, vec3(0,1,0));
+                m_modelMatrix = glm::rotate(m_modelMatrix, m_orientation.z, vec3(0,0,1));
+                m_modelMatrix = glm::translate(m_modelMatrix, -m_pivot);
+
+                m_isModelMatrixChanged = false;
+        }
 
         return &m_modelMatrix;
 }

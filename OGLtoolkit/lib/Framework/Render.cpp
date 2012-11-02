@@ -1,5 +1,5 @@
 #include "Render.h"
 
-Render::Render()
-{
+void Render::render(Entity *entity) {
+
 }
