@@ -257,6 +257,25 @@ void GpuProgram::setUniform(const string &name, const mat4 &value) {
         glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
 }
 
+void GpuProgram::setSubroutines(ShaderType::Enum type, const vector<string> &uniformNames, const vector<string> &funcNames) {
+        if(uniformNames.size() != funcNames.size()) {
+                TRACE("Count of uniform names doesnt match count of uniform values");
+                return;
+        }
+
+        vector<GLint> locations(uniformNames.size());
+        for(size_t i=0; i<locations.size(); ++i) {
+                locations[i] = glGetSubroutineUniformLocation(m_programHandle, type, uniformNames[i].c_str());
+        }
+
+        vector<GLuint> indices(locations.size());
+        for(size_t i=0; i<locations.size(); ++i) {
+                indices[locations[i]] = glGetSubroutineIndex(m_programHandle, type, funcNames[i].c_str());
+        }
+
+        glUniformSubroutinesuiv(type, indices.size(), &(indices[0]));
+}
+
 GLuint GpuProgram::handle() const {
         return m_programHandle;
 }

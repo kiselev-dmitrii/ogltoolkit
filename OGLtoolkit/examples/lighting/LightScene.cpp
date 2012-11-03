@@ -21,8 +21,8 @@ void LightScene::init() {
 
         //GpuProgram
         m_program = new GpuProgram();
-        m_program->compileShaderFromFile("shaders/lighting.vert", ShaderType::VERTEX_SHADER);
-        m_program->compileShaderFromFile("shaders/lighting.frag", ShaderType::FRAGMENT_SHADER);
+        m_program->compileShaderFromFile("shaders/vertLighting.vert", ShaderType::VERTEX_SHADER);
+        m_program->compileShaderFromFile("shaders/vertLighting.frag", ShaderType::FRAGMENT_SHADER);
         m_program->link();
         m_program->bind();
         Render::instance()->setCurrentProgram(m_program);
@@ -34,23 +34,25 @@ void LightScene::init() {
 
         m_box = new Entity("meshes/cube.obj");
         m_head = new Entity("meshes/model.obj");
+        m_head->rotate(vec3(90,0,0));
         m_head->setPosition(vec3(2,2,1));
         m_box->setPivot(vec3(0.5,0.5,0.5));
         m_box->setScale(vec3(10,10,0.1));
 
-        // Установка света
-        vec3 lightPosition = vec3(1,1,10);
-        vec3 Ka = vec3(0.1, 0.1, 0.1);
-        vec3 La = vec3(1, 1, 1);
-        vec3 Ld = vec3(1.0, 1.0, 1.0);
-        vec3 Ks = vec3(1.0, 1.0, 1.0);
-        vec3 Ls = vec3(1.0, 1.0, 1.0);
-        m_program->setUniform("lightPosition", lightPosition);
-        m_program->setUniform("Ka", Ka);
-        m_program->setUniform("La", La);
-        m_program->setUniform("Ld", Ld);
-        m_program->setUniform("Ks", Ks);
-        m_program->setUniform("Ls", Ls);
+        // Настройка света света
+        m_program->setUniform("light.wPosition", vec3(1,1,10));
+        m_program->setUniform("light.ambient", vec3(1.0));
+        m_program->setUniform("light.diffuse", vec3(1.0));
+        m_program->setUniform("light.specular", vec3(1.0));
+        m_program->setUniform("material.ambient", vec3(0.1));
+        m_program->setUniform("material.specular", vec3(1.0));
+        m_program->setUniform("material.shininess", 80.0f);
+
+        // Выбор модели затенения
+        vector<string> names(2); names[0] = "frontShading"; names[1] = "backShading";
+        vector<string> values(2); values[0] = "phongShading"; values[1] = "diffuseShading";
+        m_program->setSubroutines(ShaderType::VERTEX_SHADER, names, values);
+
 }
 
 void LightScene::resize(int w, int h) {
@@ -59,16 +61,16 @@ void LightScene::resize(int w, int h) {
 }
 
 void LightScene::update(float deltaTime) {
-        m_head->rotate(deltaTime*vec3(100,100,100));
+        //m_head->rotate(deltaTime*vec3(100,100,100));
 }
 
 void LightScene::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_program->setUniform("Kd", vec3(0.3,0.3,0.3));
+        m_program->setUniform("material.diffuse", vec3(0.3,0.3,0.3));
         Render::instance()->render(m_box);
 
-        m_program->setUniform("Kd",vec3(0.5, 1.0, 1.0));
+        m_program->setUniform("material.diffuse",vec3(0.5, 1.0, 1.0));
         Render::instance()->render(m_head);
 }
 

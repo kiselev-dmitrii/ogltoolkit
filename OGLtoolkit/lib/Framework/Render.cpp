@@ -30,10 +30,10 @@ void Render::updateMatrices(Camera *camera, Entity *entity) {
         mat3 normalMatrix =  glm::inverse(glm::transpose(mat3(modelViewMatrix)));
         mat4 mvpMatrix = *projMatrix * modelViewMatrix;
 
-        m_curProgram->setUniform("NormalMatrix", normalMatrix);
-        m_curProgram->setUniform("MVPMatrix", mvpMatrix);
-        m_curProgram->setUniform("ModelViewMatrix", modelViewMatrix);
-        m_curProgram->setUniform("ViewMatrix", *viewMatrix);
+        m_curProgram->setUniform("V", *viewMatrix);
+        m_curProgram->setUniform("MV", modelViewMatrix);
+        m_curProgram->setUniform("MVP", mvpMatrix);
+        m_curProgram->setUniform("N", normalMatrix);
 }
 
 void Render::render(Entity *entity) {

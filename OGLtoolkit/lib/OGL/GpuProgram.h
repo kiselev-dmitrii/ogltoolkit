@@ -4,8 +4,10 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <string>
+#include <vector>
 
 using std::string;
+using std::vector;
 using glm::vec3;
 using glm::vec4;
 using glm::mat3;
@@ -18,11 +20,11 @@ using namespace glm;
   */
 namespace ShaderType {
 enum Enum {
-        VERTEX_SHADER,
-        FRAGMENT_SHADER,
-        GEOMETRY_SHADER,
-        TESS_CONTROL_SHADER,
-        TESS_EVAL_SHADER
+        VERTEX_SHADER = GL_VERTEX_SHADER,
+        FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
+        GEOMETRY_SHADER = GL_GEOMETRY_SHADER,
+        TESS_CONTROL_SHADER = GL_TESS_CONTROL_SHADER,
+        TESS_EVAL_SHADER = GL_TESS_EVALUATION_SHADER
 };
 }
 
@@ -71,6 +73,10 @@ public:
         void    setUniform(const string &name, const vec4 &value);
         void    setUniform(const string &name, const mat3 &value);
         void    setUniform(const string &name, const mat4 &value);
+
+        // Устанавливает подряд идущие uniform-subroutine переменные из uniformNames в значения funcNames в шейдере type
+        // В uniformNames должны быть указаны все uniform-subroutine переменные или хотябы первые подряд
+        void    setSubroutines(ShaderType::Enum type, const vector<string> &uniformNames, const vector<string> &funcNames);
 
         // Возвращает handle программы
         GLuint  handle() const;

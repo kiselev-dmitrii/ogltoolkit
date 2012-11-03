@@ -19,7 +19,6 @@ SOURCES += main.cpp \
     ../../lib/Utils/StreamUtils.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Entity.cpp \
-#    QtView.cpp \
     LightScene.cpp \
     ../../lib/Framework/Render.cpp \
     ../../lib/Subsystems/Application.cpp \
@@ -39,7 +38,6 @@ HEADERS += \
     ../../lib/Utils/StreamUtils.h \
     ../../lib/Framework/Camera.h \
     ../../lib/Framework/Entity.h \
-#    QtView.h \
     LightScene.h \
     ../../lib/Framework/Render.h \
     ../../lib/Subsystems/Application.h \
@@ -47,5 +45,7 @@ HEADERS += \
 
 OTHER_FILES += \
     shaders/lighting.vert \
-    shaders/lighting.frag
+    shaders/lighting.frag \
+    shaders/vertLighting.frag \
+    shaders/vertLighting.vert
 
