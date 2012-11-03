@@ -4,8 +4,8 @@ layout (location = 0) in vec3 vertexPosition;
 layout (location = 1) in vec3 vertexNormal;
 layout (location = 2) in vec2 vertexTexCoord;
 
-out vec3 frontColor;
-out vec3 backColor;
+out vec3 color;
+out vec2 texCoord;
 
 struct Light {
         vec3    wPosition;
@@ -35,8 +35,7 @@ uniform mat3 N;         //нормаль из model во view
 subroutine vec3 Shading(vec3 vPos, vec3 vNorm);
 
 //конкретный uniform-указатель, который будет передавтаться из вне
-subroutine uniform Shading frontShading;
-subroutine uniform Shading backShading;
+subroutine uniform Shading shading;
 
 /** Реализует затенение по Фонгу. Сигнатура функции должна быть как у Shading
   */
@@ -73,8 +72,7 @@ void main() {
         vec3 vPos = vec3(MV * vec4(vertexPosition, 1.0));
         vec3 vNorm = normalize(N * vertexNormal);
 
-        frontColor = frontShading(vPos, vNorm);
-        backColor = backShading(vPos, -vNorm);
-
+        color = shading(vPos, vNorm);
+        texCoord = vertexTexCoord;
         gl_Position = MVP * vec4(vertexPosition, 1.0);
 }

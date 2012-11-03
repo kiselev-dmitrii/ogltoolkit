@@ -78,6 +78,10 @@ public:
         // В uniformNames должны быть указаны все uniform-subroutine переменные или хотябы первые подряд
         void    setSubroutines(ShaderType::Enum type, const vector<string> &uniformNames, const vector<string> &funcNames);
 
+        // Устанавливает uniform-subroutine нулевую по порядку
+        // Удобно, если в шейдере лишь одна такая переменная
+        void    setSubroutine(ShaderType::Enum type, const string &funcName);
+
         // Возвращает handle программы
         GLuint  handle() const;
 

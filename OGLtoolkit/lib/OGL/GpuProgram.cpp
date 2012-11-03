@@ -276,6 +276,11 @@ void GpuProgram::setSubroutines(ShaderType::Enum type, const vector<string> &uni
         glUniformSubroutinesuiv(type, indices.size(), &(indices[0]));
 }
 
+void GpuProgram::setSubroutine(ShaderType::Enum type, const string &funcName) {
+        GLuint index = glGetSubroutineIndex(m_programHandle, type, funcName.c_str());
+        glUniformSubroutinesuiv(type, 1, &index);
+}
+
 GLuint GpuProgram::handle() const {
         return m_programHandle;
 }

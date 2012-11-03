@@ -48,11 +48,8 @@ void LightScene::init() {
         m_program->setUniform("material.specular", vec3(1.0));
         m_program->setUniform("material.shininess", 80.0f);
 
-        // Выбор модели затенения
-        vector<string> names(2); names[0] = "frontShading"; names[1] = "backShading";
-        vector<string> values(2); values[0] = "phongShading"; values[1] = "diffuseShading";
-        m_program->setSubroutines(ShaderType::VERTEX_SHADER, names, values);
-
+        //Метод освещения
+        m_program->setSubroutine(ShaderType::VERTEX_SHADER, "phongShading");
 }
 
 void LightScene::resize(int w, int h) {
