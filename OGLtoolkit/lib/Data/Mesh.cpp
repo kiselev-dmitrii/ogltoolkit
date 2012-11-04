@@ -64,7 +64,7 @@ void Mesh::loadMeshFromFile(const string &filename) {
         for (size_t i=0; i < m_verticesCount; ++i) {
                 memcpy(&(m_vertices[i].position[0]), mesh->mVertices+i, 3*sizeof(float));
                 memcpy(&(m_vertices[i].normal[0]), mesh->mNormals+i, 3*sizeof(float));
-                memcpy(&(m_vertices[i].texCoord[0]), mesh->mTextureCoords+i, 2*sizeof(float));
+                memcpy(&(m_vertices[i].texCoord[0]), mesh->mTextureCoords[0]+i, 2*sizeof(float));
         }
 }
 
