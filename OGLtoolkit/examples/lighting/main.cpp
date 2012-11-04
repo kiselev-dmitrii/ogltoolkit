@@ -5,6 +5,7 @@ int main() {
         Application *app = Application::instance();
 
         app->window()->setSize(ivec2(800,600));
+        app->window()->setTitle("Lighting test");
         app->setScene(new LightScene);
 
         return app->exec();

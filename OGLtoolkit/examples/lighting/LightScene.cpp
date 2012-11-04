@@ -4,6 +4,7 @@
 #include "lib/Subsystems/Mouse.h"
 #include "lib/Subsystems/Application.h"
 #include "lib/Framework/Render.h"
+#include "lib/Utils/StringUtils.h"
 
 LightScene::LightScene() {}
 
@@ -21,8 +22,8 @@ void LightScene::init() {
 
         //GpuProgram
         m_program = new GpuProgram();
-        m_program->compileShaderFromFile("shaders/vertLighting.vert", ShaderType::VERTEX_SHADER);
-        m_program->compileShaderFromFile("shaders/vertLighting.frag", ShaderType::FRAGMENT_SHADER);
+        m_program->compileShaderFromFile("shaders/multiLighting.vert", ShaderType::VERTEX_SHADER);
+        m_program->compileShaderFromFile("shaders/multiLighting.frag", ShaderType::FRAGMENT_SHADER);
         m_program->link();
         m_program->bind();
         Render::instance()->setCurrentProgram(m_program);
@@ -39,17 +40,23 @@ void LightScene::init() {
         m_box->setPivot(vec3(0.5,0.5,0.5));
         m_box->setScale(vec3(10,10,0.1));
 
-        // Настройка света света
-        m_program->setUniform("light.wPosition", vec3(1,1,10));
-        m_program->setUniform("light.ambient", vec3(1.0));
-        m_program->setUniform("light.diffuse", vec3(1.0));
-        m_program->setUniform("light.specular", vec3(1.0));
+        // Настройка нескольких источников света
+        setLightSource(0, vec3(1,1,10), vec3(0.3), vec3(1,0,0), vec3(1.0));
+        setLightSource(1, vec3(5,5,6), vec3(0.3), vec3(0,1,0), vec3(1.0));
+        setLightSource(2, vec3(5,-5,8), vec3(0.3), vec3(0,0,1), vec3(1.0));
+
+        // Установка материала по дефолту
         m_program->setUniform("material.ambient", vec3(0.1));
         m_program->setUniform("material.specular", vec3(1.0));
         m_program->setUniform("material.shininess", 80.0f);
+}
 
-        //Метод освещения
-        m_program->setSubroutine(ShaderType::VERTEX_SHADER, "phongShading");
+void LightScene::setLightSource(int index, const vec3 &pos, const vec3 &amb, const vec3 &diff, const vec3 &spec) {
+        string uniformName = "lights[" + StringUtils::numToStr<int>(index) + "].";
+        m_program->setUniform(uniformName + "wPosition", pos);
+        m_program->setUniform(uniformName + "ambient", amb);
+        m_program->setUniform(uniformName + "diffuse", diff);
+        m_program->setUniform(uniformName + "specular", spec);
 }
 
 void LightScene::resize(int w, int h) {

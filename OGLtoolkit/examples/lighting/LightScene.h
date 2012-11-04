@@ -15,6 +15,7 @@ private:
 
         GpuProgram      *m_program;
 
+        void            setLightSource(int index, const vec3 &pos, const vec3 &amb, const vec3 &diff, const vec3 &spec);
 public:
         LightScene();
         ~LightScene();

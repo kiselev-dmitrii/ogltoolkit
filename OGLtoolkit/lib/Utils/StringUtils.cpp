@@ -1,6 +1,5 @@
 #include "StringUtils.h"
 #include <sstream>
-#include "../Debug/Debug.h"
 
 vector<string> StringUtils::split(const string &str, char delim) {
         vector<string> result;
@@ -14,17 +13,3 @@ vector<string> StringUtils::split(const string &str, char delim) {
         return result;
 }
 
-template <typename NumType>
-NumType StringUtils::strToNum(const string &str) {
-        NumType result;
-
-        istringstream stream(str);
-
-        try {
-                stream >> result;
-        } catch (...) {
-                DEBUG("Cannot convert string " << str << " to float");
-        }
-
-        return result;
-}
