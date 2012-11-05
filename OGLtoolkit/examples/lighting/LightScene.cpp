@@ -22,8 +22,8 @@ void LightScene::init() {
 
         //GpuProgram
         m_program = new GpuProgram();
-        m_program->compileShaderFromFile("shaders/multiLighting.vert", ShaderType::VERTEX_SHADER);
-        m_program->compileShaderFromFile("shaders/multiLighting.frag", ShaderType::FRAGMENT_SHADER);
+        m_program->compileShaderFromFile("shaders/multiFragLighting.vert", ShaderType::VERTEX_SHADER);
+        m_program->compileShaderFromFile("shaders/multiFragLighting.frag", ShaderType::FRAGMENT_SHADER);
         m_program->link();
         m_program->bind();
         Render::instance()->setCurrentProgram(m_program);
@@ -36,14 +36,14 @@ void LightScene::init() {
         m_box = new Entity("meshes/cube.obj");
         m_head = new Entity("meshes/model.obj");
         m_head->rotate(vec3(90,0,0));
-        m_head->setPosition(vec3(2,2,1));
+        m_head->setPosition(vec3(0,0,1));
         m_box->setPivot(vec3(0.5,0.5,0.5));
         m_box->setScale(vec3(10,10,0.1));
 
         // Настройка нескольких источников света
-        setLightSource(0, vec3(1,1,10), vec3(0.3), vec3(1,0,0), vec3(1.0));
-        setLightSource(1, vec3(5,5,6), vec3(0.3), vec3(0,1,0), vec3(1.0));
-        setLightSource(2, vec3(5,-5,8), vec3(0.3), vec3(0,0,1), vec3(1.0));
+        setLightSource(0, vec3(-10,-10,6), vec3(0.3), vec3(1,0,0), vec3(1,0.5,0.5));
+        setLightSource(1, vec3(-7,-3,6), vec3(0.3), vec3(0,1,0), vec3(0.5,1,0.5));
+        setLightSource(2, vec3(0,0,6), vec3(0.3), vec3(0,0,1), vec3(0.5,0.5,1));
 
         // Установка материала по дефолту
         m_program->setUniform("material.ambient", vec3(0.1));
@@ -66,6 +66,7 @@ void LightScene::resize(int w, int h) {
 
 void LightScene::update(float deltaTime) {
         //m_head->rotate(deltaTime*vec3(100,100,100));
+        SHOW(1.0/deltaTime);
 }
 
 void LightScene::render() {
