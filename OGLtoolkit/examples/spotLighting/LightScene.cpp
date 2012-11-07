@@ -4,7 +4,6 @@
 #include "lib/Subsystems/Mouse.h"
 #include "lib/Subsystems/Application.h"
 #include "lib/Framework/Render.h"
-#include "lib/Utils/StringUtils.h"
 
 LightScene::LightScene() {}
 
@@ -22,8 +21,8 @@ void LightScene::init() {
 
         //GpuProgram
         m_program = new GpuProgram();
-        m_program->compileShaderFromFile("shaders/multiFragLighting.vert", ShaderType::VERTEX_SHADER);
-        m_program->compileShaderFromFile("shaders/multiFragLighting.frag", ShaderType::FRAGMENT_SHADER);
+        m_program->compileShaderFromFile("shaders/spotLighting.vert", ShaderType::VERTEX_SHADER);
+        m_program->compileShaderFromFile("shaders/spotLighting.frag", ShaderType::FRAGMENT_SHADER);
         m_program->link();
         m_program->bind();
         Render::instance()->setCurrentProgram(m_program);
@@ -40,23 +39,20 @@ void LightScene::init() {
         m_box->setPivot(vec3(0.5,0.5,0.5));
         m_box->setScale(vec3(10,10,0.1));
 
-        // Настройка нескольких источников света
-        setLightSource(0, vec3(-10,-10,6), vec3(0.3), vec3(1,0,0), vec3(1,0.5,0.5));
-        setLightSource(1, vec3(-7,-3,6), vec3(0.3), vec3(0,1,0), vec3(0.5,1,0.5));
-        setLightSource(2, vec3(0,0,6), vec3(0.3), vec3(0,0,1), vec3(0.5,0.5,1));
+
+        // Настройка источника света
+        m_program->setUniform("spot.wPosition", vec3(0,0,5));
+        m_program->setUniform("spot.wTarget", vec3(0.0));
+        m_program->setUniform("spot.cutoff", 30.0f);
+        m_program->setUniform("spot.pow", 30.0f);
+        m_program->setUniform("spot.ambient", vec3(0.8));
+        m_program->setUniform("spot.diffuse", vec3(0.8,0.8,1.0));
+        m_program->setUniform("spot.specular", vec3(1.0));
 
         // Установка материала по дефолту
         m_program->setUniform("material.ambient", vec3(0.1));
         m_program->setUniform("material.specular", vec3(1.0));
         m_program->setUniform("material.shininess", 80.0f);
-}
-
-void LightScene::setLightSource(int index, const vec3 &pos, const vec3 &amb, const vec3 &diff, const vec3 &spec) {
-        string uniformName = "lights[" + StringUtils::numToStr<int>(index) + "].";
-        m_program->setUniform(uniformName + "wPosition", pos);
-        m_program->setUniform(uniformName + "ambient", amb);
-        m_program->setUniform(uniformName + "diffuse", diff);
-        m_program->setUniform(uniformName + "specular", spec);
 }
 
 void LightScene::resize(int w, int h) {
@@ -65,16 +61,18 @@ void LightScene::resize(int w, int h) {
 }
 
 void LightScene::update(float deltaTime) {
-        m_head->rotate(deltaTime*vec3(0,100,0));
-        SHOW(1.0/deltaTime);
+        //m_head->rotate(deltaTime*vec3(0,100,0));
+        //SHOW(1.0/deltaTime);
 }
 
 void LightScene::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        m_program->setUniform("material.ambient", vec3(0.1));
         m_program->setUniform("material.diffuse", vec3(0.3,0.3,0.3));
         Render::instance()->render(m_box);
 
+        m_program->setUniform("material.ambient", vec3(0.2, 0.3, 0.3));
         m_program->setUniform("material.diffuse",vec3(0.5, 1.0, 1.0));
         Render::instance()->render(m_head);
 }

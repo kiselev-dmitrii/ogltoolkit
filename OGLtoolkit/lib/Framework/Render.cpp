@@ -1,4 +1,5 @@
 #include "Render.h"
+#include "lib/Debug/Debug.h"
 
 Render* Render::instance() {
         static Render instance;
@@ -7,6 +8,7 @@ Render* Render::instance() {
 
 void Render::setCurrentProgram(GpuProgram *program) {
         m_curProgram = program;
+        TRACE("Скорее всего здесь надо также производить binding");
 }
 
 GpuProgram* Render::currentProgram() {
