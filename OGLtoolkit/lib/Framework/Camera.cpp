@@ -11,7 +11,7 @@ Camera::Camera() {
         m_nearPlane = 0.05;
         m_farPlane = 100.0;
         m_ratio = 1.0;
-        m_fovAngle = 30;
+        m_fovAngle = 60;
         m_width = m_height = 1.0;
 
         m_isViewMatrixChanged = true;
