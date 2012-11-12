@@ -3,6 +3,10 @@
 Texture::Texture(TextureTarget::Enum target) {
         m_target = target;
         glGenTextures(1, &m_handle);
+
+        // По-дефолту линейная фильтрация
+        setFilterMinimization(TextureFilter::LINEAR);
+        setFilterMagnification(TextureFilter::LINEAR);
 }
 
 Texture::~Texture() {
@@ -11,11 +15,6 @@ Texture::~Texture() {
 
 void Texture::bind() {
         glBindTexture(m_target, m_handle);
-}
-
-void Texture::setAssociatedTextureUnit(size_t textureUnit) {
-        glActiveTexture(GL_TEXTURE0 + textureUnit);
-        bind();
 }
 
 void Texture::setFilterMagnification(TextureFilter::Enum filter) {

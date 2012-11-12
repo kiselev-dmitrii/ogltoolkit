@@ -13,7 +13,10 @@ LightScene::~LightScene() {
         delete m_camera;
         delete m_box;
         delete m_plane;
-        delete m_boxImg;
+        delete m_tuBox;
+        delete m_tuPlane;
+        delete m_texBrick;
+        delete m_texCement;
 }
 
 void LightScene::init() {
@@ -43,19 +46,15 @@ void LightScene::init() {
         m_box = new Entity("meshes/cube.obj");
         m_box->setPosition(vec3(0,0,0));
 
-        // Загружаем текстуру - временный код (далее обернется в класс)
-        m_boxImg = new Image("images/brick1.jpg");
-        SHOW(m_boxImg->bytePerPixel());
+        // Загружаем текстуру
+        m_tuBox = new TextureUnit();
+        m_tuPlane = new TextureUnit();
 
-        GLuint texID;
-        glActiveTexture(GL_TEXTURE0);           //выбираем текстурный блок
-        glGenTextures(1, &texID);               // создаем текстуру
-        glBindTexture(GL_TEXTURE_2D, texID);    // биндим ее в точку GL_TEXTURE0->GL_TEXTURE_2D
-        glTexImage2D(GL_TEXTURE_2D, 0, m_boxImg->format(), m_boxImg->width(), m_boxImg->height(), 0, m_boxImg->format(), m_boxImg->type(), m_boxImg->data());
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        m_tuBox->bind();
+        m_texBrick = new Texture2D("images/brick1.jpg");
 
-        m_program->setUniform("sampler1", 0);
+        m_tuPlane->bind();
+        m_texCement = new Texture2D("images/cement.jpg");
 
         // Настройка нескольких источников света
         setLightSource(0, vec3(-10,-10,6), vec3(0.5), vec3(1,0,0), vec3(1,0.5,0.5));
@@ -88,9 +87,11 @@ void LightScene::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_program->setUniform("material.diffuse", vec3(0.3,0.3,0.3));
+        m_program->setUniform("sampler1", m_tuPlane->number());
         Render::instance()->render(m_plane);
 
         m_program->setUniform("material.diffuse",vec3(0.5, 1.0, 1.0));
+        m_program->setUniform("sampler1", m_tuBox->number());
         Render::instance()->render(m_box);
 }
 

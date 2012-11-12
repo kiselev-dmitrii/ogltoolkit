@@ -33,9 +33,6 @@ public:
         // Биндит текстуру
         void    bind();
 
-        // Устанавливает текстуру в i-тый текстурный блок
-        void    setAssociatedTextureUnit(size_t textureUnit);
-
         // Установка интерполяции при уменьшении и увеличении текстуры
         void    setFilterMinimization(TextureFilter::Enum filter);
         void    setFilterMagnification(TextureFilter::Enum filter);
