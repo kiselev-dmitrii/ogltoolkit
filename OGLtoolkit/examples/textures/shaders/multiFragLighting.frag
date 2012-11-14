@@ -22,7 +22,8 @@ struct Material {
 uniform Material material;
 uniform Light lights[3];
 uniform mat4 V;
-uniform sampler2D sampler1;
+uniform sampler2D baseSampler;
+uniform sampler2D layerSampler;
 
 void phongShading(int lightIndex, vec3 vPos, vec3 vNorm, out vec3 ambAndDiff, out vec3 spec) {
         vec3 vLightPos = vec3(V * vec4(lights[lightIndex].wPosition, 1.0));
@@ -51,7 +52,11 @@ void main(void) {
                 specular += tmpSpec;
         }
 
-        vec3 color = ambDiff*texture2D(sampler1, texCoord) + specular;
+        vec4 baseTexColor = texture2D(baseSampler, texCoord);
+        vec4 layerTexColor = texture2D(layerSampler, texCoord);
+        vec3 texColor =  mix(baseTexColor, layerTexColor, layerTexColor.a);
+
+        vec3 color = ambDiff*texColor + specular;
 
         FragColor = vec4(color, 1.0);
 }

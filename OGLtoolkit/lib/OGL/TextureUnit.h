@@ -2,13 +2,25 @@
 #define TEXTUREUNIT_H
 
 #include <GL/glew.h>
+#include <vector>
+
+using std::vector;
 
 /** Класс-обертка для TextureImageUnit
   */
 class TextureUnit {
 private:
-        static int      m_counter;      //счетчик, для определения последнего свободного
-        int             m_number;       //номер текстурного юнита
+        static int              m_countUsed;    //кол-во занятых TIU
+        static vector<bool>     m_usedUnits;    //если true, то i-тый unit занят
+
+        int                     m_number;       //номер текстурного юнита
+
+private:
+        // Ищет свободный блок в векторе и возвращает его номер.
+        // Делает его занятым
+        static int              assignUnit();
+        // Освобождает unit с номером i
+        static void             freeUnit(int i);
 
 public:
         // Конструктор и деструктор TIU

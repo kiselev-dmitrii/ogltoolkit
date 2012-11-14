@@ -14,12 +14,11 @@ private:
         GpuProgram      *m_program;
         Camera          *m_camera;
 
-        Entity          *m_plane;
         Entity          *m_box;
-        TextureUnit     *m_tuBox;
-        TextureUnit     *m_tuPlane;
+        TextureUnit     *m_tuBase;
+        TextureUnit     *m_tuLayer;
         Texture2D       *m_texBrick;
-        Texture2D       *m_texCement;
+        Texture2D       *m_texMoss;
 
 
         void            setLightSource(int index, const vec3 &pos, const vec3 &amb, const vec3 &diff, const vec3 &spec);

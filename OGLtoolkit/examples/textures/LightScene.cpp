@@ -12,11 +12,10 @@ LightScene::~LightScene() {
         delete m_program;
         delete m_camera;
         delete m_box;
-        delete m_plane;
-        delete m_tuBox;
-        delete m_tuPlane;
         delete m_texBrick;
-        delete m_texCement;
+        delete m_texMoss;
+        delete m_tuBase;
+        delete m_tuLayer;
 }
 
 void LightScene::init() {
@@ -39,22 +38,20 @@ void LightScene::init() {
         Render::instance()->setCurrentCamera(m_camera);
 
         // Модели
-        m_plane = new Entity("meshes/cube.obj");
-        m_plane->setPivot(vec3(0.5,0.5,0.5));
-        m_plane->setScale(vec3(100,100,0.1));
-
         m_box = new Entity("meshes/cube.obj");
         m_box->setPosition(vec3(0,0,0));
 
         // Загружаем текстуру
-        m_tuBox = new TextureUnit();
-        m_tuPlane = new TextureUnit();
-
-        m_tuBox->bind();
+        m_tuBase = new TextureUnit();
+        m_tuLayer = new TextureUnit();
         m_texBrick = new Texture2D("images/brick1.jpg");
+        m_texMoss = new Texture2D("images/moss.png");
 
-        m_tuPlane->bind();
-        m_texCement = new Texture2D("images/cement.jpg");
+        m_tuBase->bind();
+        m_texBrick->bind();
+
+        m_tuLayer->bind();
+        m_texMoss->bind();
 
         // Настройка нескольких источников света
         setLightSource(0, vec3(-10,-10,6), vec3(0.5), vec3(1,0,0), vec3(1,0.5,0.5));
@@ -86,12 +83,10 @@ void LightScene::update(float deltaTime) {
 void LightScene::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        m_program->setUniform("material.diffuse", vec3(0.3,0.3,0.3));
-        m_program->setUniform("sampler1", m_tuPlane->number());
-        Render::instance()->render(m_plane);
-
         m_program->setUniform("material.diffuse",vec3(0.5, 1.0, 1.0));
-        m_program->setUniform("sampler1", m_tuBox->number());
+        m_program->setUniform("material.specular",vec3(0.0));
+        m_program->setUniform("baseSampler", m_tuBase->number());
+        m_program->setUniform("layerSampler", m_tuLayer->number());
         Render::instance()->render(m_box);
 }
 
