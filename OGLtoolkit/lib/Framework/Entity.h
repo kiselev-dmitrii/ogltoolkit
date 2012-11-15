@@ -39,8 +39,10 @@ private:
 public:
         // Пустой объект. Далее в него загружается меш с помощью setMesh
         Entity();
-        // Создает 3d объект с мещем из файла filename
+        // Создает 3d объект с мешем из файла filename
         Entity(const string &filename);
+        // Создает 3d объект с мешем mesh
+        Entity(const Mesh &mesh);
 
         // Устанавливает/возвращает меш
         void            setMesh(const Mesh &mesh);

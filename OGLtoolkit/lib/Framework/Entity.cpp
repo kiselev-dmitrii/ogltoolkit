@@ -19,6 +19,11 @@ Entity::Entity(const string &filename) {
         setMesh(filename);
 }
 
+Entity::Entity(const Mesh &mesh) {
+        init();
+        setMesh(mesh);
+}
+
 void Entity::updateBuffers() {
         // Проверил, можно использовать uploadData
         m_vbo.uploadData(m_mesh.vertices(), m_mesh.verticesSize(), Hint::STATIC_DRAW);
@@ -27,16 +32,17 @@ void Entity::updateBuffers() {
 
 void Entity::updateInterpretation() {
         m_vao.bind();
-                m_vbo.setAttribAssociation("vertexPosition", 3, GL_FLOAT, 0, sizeof(Vertex));
-                m_vbo.setAttribAssociation("vertexNormal", 3, GL_FLOAT, sizeof(vec3), sizeof(Vertex));
-                m_vbo.setAttribAssociation("vertexTexCoord", 2, GL_FLOAT, 2*sizeof(vec3), sizeof(Vertex));
+                m_vbo.setAttribAssociation("vertexPosition", 3, GL_FLOAT, 0, m_mesh.vertexSize());
+
+                if(m_mesh.hasNormals()) m_vbo.setAttribAssociation("vertexNormal", 3, GL_FLOAT, m_mesh.normalOffset(), m_mesh.vertexSize());
+                if(m_mesh.hasTexCoords()) m_vbo.setAttribAssociation("vertexTexCoord", 2, GL_FLOAT, m_mesh.texCoordOffset(), m_mesh.vertexSize());
+                if(m_mesh.hasTangents()) m_vbo.setAttribAssociation("vertexTangent", 3, GL_FLOAT, m_mesh.tangentOffset(), m_mesh.vertexSize());
 
                 m_ibo.bind();
         m_vao.unbind();
 }
 
 void Entity::setMesh(const Mesh &mesh) {
-        TRACE("Возможно в Mesh нужен свой оператор присваивания, т.к память заного не выделится");
         m_mesh = mesh;
         updateBuffers();
         updateInterpretation();
