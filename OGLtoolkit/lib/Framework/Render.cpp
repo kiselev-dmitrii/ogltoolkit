@@ -8,7 +8,7 @@ Render* Render::instance() {
 
 void Render::setCurrentProgram(GpuProgram *program) {
         m_curProgram = program;
-        TRACE("Скорее всего здесь надо также производить binding");
+        program->bind();
 }
 
 GpuProgram* Render::currentProgram() {

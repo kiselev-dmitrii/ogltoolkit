@@ -70,7 +70,7 @@ void Mesh::loadMeshFromFile(const string &filename, size_t indexMesh, unsigned c
         // Загружаем новый меш
         Assimp::Importer importer;
 
-        const aiScene *scene = importer.ReadFile(filename, aiProcessPreset_TargetRealtime_Quality);
+        const aiScene *scene = importer.ReadFile(filename, aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
         if(!scene) {
                 DEBUG("Error loading mesh from " << filename);
                 DEBUG(importer.GetErrorString());
