@@ -4,7 +4,7 @@
 #include "GpuProgram.h"
 #include "lib/Debug/Debug.h"
 
-GpuProgram::GpuProgram() {
+void GpuProgram::init() {
         m_programHandle = 0;
         m_vertexHandle = 0;
         m_fragmentHandle = 0;
@@ -12,6 +12,17 @@ GpuProgram::GpuProgram() {
         m_tessControlHandle = 0;
         m_tessEvalHandle = 0;
         m_isLinked = false;
+}
+
+GpuProgram::GpuProgram() {
+        init();
+}
+
+GpuProgram::GpuProgram(const string &vertexShader, const string &fragmentShader) {
+        init();
+        compileShaderFromFile(vertexShader, ShaderType::VERTEX_SHADER);
+        compileShaderFromFile(fragmentShader, ShaderType::FRAGMENT_SHADER);
+        link();
 }
 
 GpuProgram::~GpuProgram() {

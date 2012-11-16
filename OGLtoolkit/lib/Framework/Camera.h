@@ -65,6 +65,8 @@ public:
         // Установка позиции
         void    setPosition(const vec3 &pos);
         void    setTarget(const vec3 &target);
+        // Получение позиции
+        vec3    position();
 
         // Возвращает указатель на видовую матрицу
         mat4*   viewMatrix();

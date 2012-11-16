@@ -185,4 +185,6 @@ Mesh &Mesh::operator =(const Mesh &op2) {
 
         memcpy(m_vertices, op2.m_vertices, m_verticesCount * m_vertexSize);
         memcpy(m_indices, op2.m_indices, m_indicesCount * sizeof(uint));
+
+        return *this;
 }

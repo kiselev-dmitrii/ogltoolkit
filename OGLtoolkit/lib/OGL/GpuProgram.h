@@ -44,13 +44,18 @@ private:
         bool    m_isLinked;
 
 private:
+        void    init();
+
         bool    createProgram();
         bool    loadBufferFromFile(const string &filename, string *buffer);
         bool    compileShaderFromString(const string &sourceCode, ShaderType::Enum type);
 
 public:
-        // Конструктор, деструктор
+        // Создает пустой объект
         GpuProgram();
+        // Создает программу с загруженными шейдерами (компилирует, линкует)
+        GpuProgram(const string &vertexShader, const string &fragmentShader);
+        // Разрушает объект
         ~GpuProgram();
 
         // Компиляция, линковка

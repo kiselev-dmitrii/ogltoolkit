@@ -89,6 +89,10 @@ void Camera::setTarget(const vec3 &target) {
         m_isViewMatrixChanged = true;
 }
 
+vec3 Camera::position() {
+        return m_pos;
+}
+
 mat4* Camera::viewMatrix() {
         if(m_isViewMatrixChanged) {
                 m_viewMatrix = glm::lookAt(m_pos, m_pos + m_dir, m_up);

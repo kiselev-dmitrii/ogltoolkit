@@ -26,3 +26,18 @@ void Texture::setFilterMinimization(TextureFilter::Enum filter) {
         bind();
         glTexParameterf(m_target, GL_TEXTURE_MIN_FILTER, filter);
 }
+
+void Texture::setWrapS(WrapMode::Enum mode) {
+        bind();
+        glTexParameterf(m_target, GL_TEXTURE_WRAP_S, mode);
+}
+
+void Texture::setWrapT(WrapMode::Enum mode) {
+        bind();
+        glTexParameterf(m_target, GL_TEXTURE_WRAP_T, mode);
+}
+
+void Texture::setWrapR(WrapMode::Enum mode) {
+        bind();
+        glTexParameterf(m_target, GL_TEXTURE_WRAP_R, mode);
+}

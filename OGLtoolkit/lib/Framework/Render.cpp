@@ -33,6 +33,7 @@ void Render::updateMatrices(Camera *camera, Entity *entity) {
         mat4 mvpMatrix = *projMatrix * modelViewMatrix;
 
         m_curProgram->setUniform("V", *viewMatrix);
+        m_curProgram->setUniform("M", *modelMatrix);
         m_curProgram->setUniform("MV", modelViewMatrix);
         m_curProgram->setUniform("MVP", mvpMatrix);
         m_curProgram->setUniform("N", normalMatrix);
