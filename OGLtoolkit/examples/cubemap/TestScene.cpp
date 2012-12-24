@@ -30,7 +30,8 @@ void TestScene::initRender() {
 }
 
 void TestScene::initTeapotModel() {
-        m_eTeapot = new Entity(Mesh("meshes/model.obj", 0, MeshFlags::NORMALS | MeshFlags::TEXCOORDS));
+        m_eTeapot = new Entity(Mesh("meshes/teapot.obj", 1, MeshFlags::NORMALS | MeshFlags::TEXCOORDS));
+        m_eTeapot->setOrientation(vec3(90,90,0));
         m_tcEnvironment = new TextureCube("images/church", "jpg");
 
         m_reflection->setUniform("mirror.baseColor", vec3(0.5,0.5,0.0));
@@ -58,7 +59,8 @@ void TestScene::resize(int w, int h) {
 }
 
 void TestScene::update(float deltaTime) {
-        m_eTeapot->rotate(vec3(0,0,deltaTime*100));
+        //m_eTeapot->rotate(vec3(deltaTime*10,deltaTime*100,0));
+        SHOW(1.0/deltaTime);
 }
 
 void TestScene::renderTeapotModel() {

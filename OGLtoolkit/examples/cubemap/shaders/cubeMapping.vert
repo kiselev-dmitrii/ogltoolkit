@@ -17,7 +17,7 @@ void main() {
         if(isDrawSkybox) {
                 wReflectDir = wPosition;
         } else {
-                vec3 wNormal = vec3(M * vec4(vertexNormal, 1.0));
+                vec3 wNormal = vec3(M * vec4(vertexNormal, 0.0));
                 vec3 wViewDir = normalize(wCameraPosition - wPosition);
 
                 wReflectDir = reflect(-wViewDir, wNormal);
