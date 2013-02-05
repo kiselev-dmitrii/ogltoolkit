@@ -18,7 +18,7 @@ void TestScene::initRender() {
         glClearColor(0.9, 0.9, 0.9, 1.0);
         glEnable(GL_DEPTH_TEST);
 
-        m_reflection = new GpuProgram("shaders/cubeMapping.vert", "shaders/cubeMapping.frag");
+        m_reflection = new GpuProgram("resources/shaders/cubeMapping.vert", "resources/shaders/cubeMapping.frag");
         Render::instance()->setCurrentProgram(m_reflection);
 
         m_camera = new Camera();
@@ -30,16 +30,16 @@ void TestScene::initRender() {
 }
 
 void TestScene::initTeapotModel() {
-        m_eTeapot = new Entity(Mesh("meshes/teapot.obj", 1, MeshFlags::NORMALS | MeshFlags::TEXCOORDS));
+        m_eTeapot = new Entity(Mesh("resources/meshes/teapot.obj", 1, MeshFlags::NORMALS | MeshFlags::TEXCOORDS));
         m_eTeapot->setOrientation(vec3(90,90,0));
-        m_tcEnvironment = new TextureCube("images/church", "jpg");
+        m_tcEnvironment = new TextureCube("resources/images/church", "jpg");
 
         m_reflection->setUniform("mirror.baseColor", vec3(0.5,0.5,0.0));
         m_reflection->setUniform("mirror.reflectFactor", 0.9f);
 }
 
 void TestScene::initSkybox() {
-        m_eSkybox = new Entity(Mesh("meshes/cube.obj", 0, MeshFlags::NORMALS | MeshFlags::TEXCOORDS));
+        m_eSkybox = new Entity(Mesh("resources/meshes/cube.obj", 0, MeshFlags::NORMALS | MeshFlags::TEXCOORDS));
         m_eSkybox->setPivot(vec3(0.5, 0.5, 0.5));
         m_eSkybox->setScale(vec3(100,100,100));
 }
