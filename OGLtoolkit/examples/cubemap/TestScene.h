@@ -17,7 +17,6 @@ private:
         Entity*         m_eSkybox;
         TextureCube*    m_tcEnvironment;
 
-
         TextureUnit*    m_tuCubeMap;
 
 private:

@@ -68,6 +68,7 @@ void TestScene::renderTeapotModel() {
         m_tcEnvironment->bind();
 
         m_reflection->setUniform("isDrawSkybox", false);
+        m_reflection->setUniform("cubemap", m_tuCubeMap->number());
         Render::instance()->render(m_eTeapot);
 }
 
@@ -76,6 +77,7 @@ void TestScene::renderSkybox() {
         m_tcEnvironment->bind();
 
         m_reflection->setUniform("isDrawSkybox", true);
+        m_reflection->setUniform("cubemap", m_tuCubeMap->number());
         Render::instance()->render(m_eSkybox);
 }
 

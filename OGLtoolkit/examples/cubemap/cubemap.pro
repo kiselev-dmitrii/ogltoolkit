@@ -62,10 +62,10 @@ OTHER_FILES += \
 #    shaders/vertLighting.vert \
 #    shaders/multiLighting.frag \
 #    shaders/multiLighting.vert \
-    shaders/multiFragLighting.vert \
-    shaders/multiFragLighting.frag \
-    shaders/normalMapping.vert \
-    shaders/normalMapping.frag \
-    shaders/cubeMapping.vert \
-    shaders/cubeMapping.frag
+    bin/resources/shaders/multiFragLighting.vert \
+    bin/resources/shaders/multiFragLighting.frag \
+    bin/resources/shaders/normalMapping.vert \
+    bin/resources/shaders/normalMapping.frag \
+    bin/resources/shaders/cubeMapping.vert \
+    bin/resources/shaders/cubeMapping.frag
 
