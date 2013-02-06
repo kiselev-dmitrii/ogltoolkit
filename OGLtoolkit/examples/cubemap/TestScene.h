@@ -10,20 +10,24 @@
 
 class TestScene : public AbstractScene {
 private:
-        GpuProgram*     m_reflection;
+        GpuProgram*     m_glassProgram;
         Camera*         m_camera;
 
         Entity*         m_eTeapot;
+        Entity*         m_eBullet;
         Entity*         m_eSkybox;
-        TextureCube*    m_tcEnvironment;
 
+        TextureCube*    m_tcEnvironment;
         TextureUnit*    m_tuCubeMap;
 
 private:
         void    initRender();
         void    initSkybox();
+        void    initBulletModel();
         void    initTeapotModel();
+
         void    renderTeapotModel();
+        void    renderBulletModel();
         void    renderSkybox();
 
 public:

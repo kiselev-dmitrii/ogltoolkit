@@ -1,24 +1,27 @@
 #version 400
 
-in vec3 wReflectDir;
+in vec3 reflectDir;
+in vec3 refractDir;
+in float reflectAbility;
 layout (location = 0) out vec4 FragColor;
 
-struct MirrorSettings {
+struct MaterialInfo {
+        float   ratio;
         float   reflectFactor;
-        vec3    baseColor;
 };
 
 uniform samplerCube cubemap;
 uniform bool isDrawSkybox;
-uniform MirrorSettings mirror;
+uniform MaterialInfo material;
 
 void main(void) {
-        vec4 cubemapColor = textureCube(cubemap, wReflectDir);
+        vec4 reflectColor = textureCube(cubemap, reflectDir);
+        vec4 refractColor = textureCube(cubemap, refractDir);
 
         if(isDrawSkybox) {
-                FragColor = cubemapColor;
+                FragColor = reflectColor;
         } else {
-                FragColor = mix(vec4(mirror.baseColor,1.0), cubemapColor, mirror.reflectFactor);
+                FragColor = mix(refractColor, reflectColor, material.reflectFactor*reflectAbility);
         }
 
 }
