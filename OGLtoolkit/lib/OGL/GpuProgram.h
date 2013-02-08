@@ -55,6 +55,8 @@ public:
         GpuProgram();
         // Создает программу с загруженными шейдерами (компилирует, линкует)
         GpuProgram(const string &vertexShader, const string &fragmentShader);
+        // Аналогично, но принимает на вход путь без расширений (добавляет .vert и .frag)
+        GpuProgram(const string &shaders);
         // Разрушает объект
         ~GpuProgram();
 

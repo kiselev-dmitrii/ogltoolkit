@@ -5,6 +5,18 @@ Texture2D::Texture2D(const string &filename) : Texture(TextureTarget::TEXTURE_2D
         uploadImage(filename);
 }
 
+Texture2D::Texture2D(int width, int height, TextureType::Enum type) : Texture(TextureTarget::TEXTURE_2D) {
+        //Количество бит на тип соответствует 32-битной архитектуре.
+        GLenum internalFormat;
+        if(type == TextureType::BYTE || type == TextureType::UBYTE) internalFormat = GL_RGBA8;
+        else if(type == TextureType::INT) internalFormat = GL_RGBA32I;
+        else if(type == TextureType::UINT) internalFormat = GL_RGBA32UI;
+        else if(type == TextureType::FLOAT) internalFormat = GL_RGBA32F;
+
+        TRACE("Возможно вместо формата GL_BGRA следует использовать GL_RGBA");
+        glTexImage2D(m_target, 0, internalFormat, width, height, 0, GL_BGRA, type, 0);
+}
+
 Texture2D::Texture2D() : Texture(TextureTarget::TEXTURE_2D) { }
 
 void Texture2D::uploadImage(const string &filename) {

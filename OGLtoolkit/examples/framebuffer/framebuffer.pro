@@ -30,7 +30,9 @@ SOURCES += main.cpp \
     ../../lib/Framework/Entity.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
-    FBOTestScene.cpp
+    FBOTestScene.cpp \
+    ../../lib/OGL/Framebuffer.cpp \
+    ../../lib/OGL/Renderbuffer.cpp
 
 HEADERS += \
     ../../lib/Debug/Debug.h \
@@ -54,4 +56,10 @@ HEADERS += \
     ../../lib/Framework/Camera.h \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
-    FBOTestScene.h
+    FBOTestScene.h \
+    ../../lib/OGL/Framebuffer.h \
+    ../../lib/OGL/Renderbuffer.h
+
+OTHER_FILES += \
+    bin/resources/shaders/lighting.vert \
+    bin/resources/shaders/lighting.frag

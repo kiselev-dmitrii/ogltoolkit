@@ -50,6 +50,9 @@ public:
         void    setWrapS(WrapMode::Enum mode);
         void    setWrapT(WrapMode::Enum mode);
         void    setWrapR(WrapMode::Enum mode);
+
+        // Возвращает идентификатор текстуры
+        GLuint  handle() const;
 };
 
 #endif // TEXTURE_H

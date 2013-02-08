@@ -41,3 +41,7 @@ void Texture::setWrapR(WrapMode::Enum mode) {
         bind();
         glTexParameterf(m_target, GL_TEXTURE_WRAP_R, mode);
 }
+
+GLuint Texture::handle() const {
+        return m_handle;
+}

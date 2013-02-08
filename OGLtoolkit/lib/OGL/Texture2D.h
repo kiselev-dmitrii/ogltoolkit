@@ -5,14 +5,27 @@
 #include "Texture.h"
 #include "lib/Data/Image.h"
 
+namespace TextureType {
+enum Enum {
+        UBYTE = GL_UNSIGNED_BYTE,
+        BYTE = GL_BYTE,
+        INT = GL_INT,
+        UINT = GL_UNSIGNED_INT,
+        FLOAT = GL_FLOAT
+};
+}
+
 /** Класс двумерной текстуры
   */
 class Texture2D : public Texture {
 public:
         // Конcтруирует текстуру, с изображением из filename
         Texture2D(const string &filename);
+        // Создает пустую RGBA текстуру размера width на height. Каждая компонента представляет из себя ячейку типа type.
+        Texture2D(int width, int height, TextureType::Enum type=TextureType::UBYTE);
         // Создает пустую тестуру
         Texture2D();
+
 
         // Загружает изображение в текстуру (в видеокарту)
         void    uploadImage(const string &filename);

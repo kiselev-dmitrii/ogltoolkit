@@ -25,6 +25,13 @@ GpuProgram::GpuProgram(const string &vertexShader, const string &fragmentShader)
         link();
 }
 
+GpuProgram::GpuProgram(const string &shaders) {
+        init();
+        compileShaderFromFile(shaders+".vert", ShaderType::VERTEX_SHADER);
+        compileShaderFromFile(shaders+".frag", ShaderType::FRAGMENT_SHADER);
+        link();
+}
+
 GpuProgram::~GpuProgram() {
         if(m_programHandle) glDeleteProgram(m_programHandle);
         glDeleteShader(m_vertexHandle);
