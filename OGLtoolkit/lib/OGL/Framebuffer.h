@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include "Texture2D.h"
+#include "TextureCube.h"
 #include "Renderbuffer.h"
 
 namespace FramebufferTarget {
@@ -30,15 +31,16 @@ public:
         void bind();
         void unbind();
 
-        // Присоединяет к FBO текстуру в качестве цветового буфера c номером number
+        // Присоединяет к FBO текстуру/рендербуфер в качестве цветового буфера c номером number
         void attachAsColorBuffer(const Texture2D& texture, int mipmapLevel=0, int number=0);
+        void attachAsColorBuffer(const TextureCube& texture, CubeSide::Enum side, int mipmapLevel=0, int number=0);
         void attachAsColorBuffer(const Renderbuffer& renderbuffer, int number=0);
 
         // Присоединяет к FBO текстуру/рендербуфер в качестве буфера глубины
         void attachAsDepthBuffer(const Texture2D& texture, int mipmapLevel=0);
         void attachAsDepthBuffer(const Renderbuffer& renderbuffer);
 
-        // Присоединяет к FBO текстуру в качестве буфера трафарета
+        // Присоединяет к FBO текстуру/рендербуфер в качестве буфера трафарета
         void attachAsStencilBuffer(const Texture2D& texture, int mipmapLevel=0);
         void attachAsStencilBuffer(const Renderbuffer& renderbuffer);
 };

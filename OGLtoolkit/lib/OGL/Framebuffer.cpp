@@ -22,6 +22,11 @@ void Framebuffer::attachAsColorBuffer(const Texture2D &texture, int mipmapLevel,
         glFramebufferTexture2D(m_target, GL_COLOR_ATTACHMENT0+number, GL_TEXTURE_2D, texture.handle(), mipmapLevel);
 }
 
+void Framebuffer::attachAsColorBuffer(const TextureCube &texture, CubeSide::Enum side, int mipmapLevel, int number) {
+        bind();
+        glFramebufferTexture2D(m_target, GL_COLOR_ATTACHMENT0+number, side, texture.handle(), mipmapLevel);
+}
+
 void Framebuffer::attachAsColorBuffer(const Renderbuffer &renderbuffer, int number) {
         bind();
         glFramebufferRenderbuffer(m_target, GL_COLOR_ATTACHMENT0+number, GL_RENDERBUFFER, renderbuffer.handle());
