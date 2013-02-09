@@ -14,7 +14,7 @@ Texture2D::Texture2D(int width, int height, TextureType::Enum type) : Texture(Te
         else if(type == TextureType::FLOAT) internalFormat = GL_RGBA32F;
 
         TRACE("Возможно вместо формата GL_BGRA следует использовать GL_RGBA");
-        glTexImage2D(m_target, 0, internalFormat, width, height, 0, GL_BGRA, type, 0);
+        glTexImage2D(m_target, 0, internalFormat, width, height, 0, GL_BGRA, type, NULL);
 }
 
 Texture2D::Texture2D() : Texture(TextureTarget::TEXTURE_2D) { }

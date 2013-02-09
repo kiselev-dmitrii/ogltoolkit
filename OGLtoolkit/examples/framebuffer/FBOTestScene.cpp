@@ -22,9 +22,18 @@ void FBOTestScene::resize(int w, int h) {
 }
 
 void FBOTestScene::update(float deltaTime) {
+        m_eTeapot->rotate(deltaTime*vec3(0,100,0));
 }
 
 void FBOTestScene::render() {
+        m_fbo->bind();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glViewport(0, 0, 32, 32);
+        renderTeapotFromView();
+        m_fbo->unbind();
+        glViewport(0,0,800,600);
+
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         renderBox();
@@ -124,16 +133,15 @@ void FBOTestScene::renderTeapotFromView() {
 void FBOTestScene::renderToTexture() {
         //Рендерим в текстуру чайник
         //Создаем текстуру и рендербуфер
-        m_tColorBuff = new Texture2D(512, 512);
-        m_rbDepthBuff = new Renderbuffer(512, 512, RenderbufferFormat::DEPTH_16);
+        m_tColorBuff = new Texture2D(32, 32);
+        m_rbDepthBuff = new Renderbuffer(32, 32, RenderbufferFormat::DEPTH_24);
 
         m_fbo = new Framebuffer();
         m_fbo->attachAsColorBuffer(*m_tColorBuff);
         m_fbo->attachAsDepthBuffer(*m_rbDepthBuff);
         m_fbo->bind();
-        GLenum drawBufs[] = {GL_COLOR_ATTACHMENT0};
-        glDrawBuffers(1, drawBufs);
-        glViewport(0, 0, 512, 512);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glViewport(0, 0, 32, 32);
         renderTeapotFromView();
         m_fbo->unbind();
 }

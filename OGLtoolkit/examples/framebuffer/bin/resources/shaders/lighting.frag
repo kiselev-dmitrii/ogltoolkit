@@ -29,7 +29,7 @@ void main() {
 
         if(isDrawBox) {
                 vec4 texColor = texture2D(texture, texCoord);
-                FragColor = vec4(ambientColor + diffuseColor*texColor + specularColor, 1.0);
+                FragColor = vec4(ambientColor + (diffuseColor+vec3(0.1))*texColor + specularColor, 1.0);
         } else {
                 FragColor = vec4(ambientColor + diffuseColor + specularColor, 1.0);
         }
