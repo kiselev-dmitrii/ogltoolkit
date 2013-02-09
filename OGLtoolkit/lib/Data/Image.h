@@ -6,6 +6,7 @@
 #include <string>
 
 using namespace std;
+class Texture2D;
 
 /** Класс, хранящий данные изображения
   * А также информацию о нем
@@ -20,11 +21,19 @@ private:
         void    initDevil();
 
 public:
+        // Создает изображение из файла
         Image(const string &filename);
+        // Создает изображение из текстуры
+        Image(const Texture2D &texture);
+
+        // Дестурктор. Изображение уничтожается
         ~Image();
 
         // Загружает изображение с файла
         void    load(const string &filename);
+
+        // Сохраняет изображение в файл
+        void    save(const string &filename);
 
         // Возвращает ширину
         int     width() const;

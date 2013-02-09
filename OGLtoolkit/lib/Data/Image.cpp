@@ -28,11 +28,24 @@ void Image::load(const string &filename) {
         }
 }
 
+void Image::save(const string &filename) {
+        ilBindImage(m_id);
+
+        if (!ilSaveImage(filename.c_str())) {
+                DEBUG("Cannot save image to file " << filename);
+                return;
+        }
+}
+
 Image::Image(const string &filename) {
         initDevil();
 
         ilGenImages(1, &m_id);
         load(filename);
+}
+
+Image::Image(const Texture2D &texture) {
+        TODO;
 }
 
 Image::~Image() {
