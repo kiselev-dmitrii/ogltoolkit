@@ -40,7 +40,7 @@ public:
         ~Texture();
 
         // Биндит текстуру
-        void    bind();
+        void    bind() const;
 
         // Установка интерполяции при уменьшении и увеличении текстуры
         void    setFilterMinimization(TextureFilter::Enum filter);
@@ -53,6 +53,11 @@ public:
 
         // Возвращает идентификатор текстуры
         GLuint  handle() const;
+
+        // Возвращает размеры текстуры на mipmap уровне mipmapLevel
+        int     width(int mipmapLevel=0) const;
+        int     height(int mipmapLevel=0) const;
+        int     depth(int mipmapLevel=0) const;
 };
 
 #endif // TEXTURE_H

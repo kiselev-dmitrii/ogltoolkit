@@ -24,16 +24,17 @@ public:
         // Создает изображение из файла
         Image(const string &filename);
         // Создает изображение из текстуры
-        Image(const Texture2D &texture);
+        Image(const Texture2D &texture, int level=0);
 
         // Дестурктор. Изображение уничтожается
         ~Image();
 
-        // Загружает изображение с файла
+        // Загружает изображение с файла или текстуры
         void    load(const string &filename);
+        void    load(const Texture2D &texture, int level=0);
 
         // Сохраняет изображение в файл
-        void    save(const string &filename);
+        void    save(const string &filename, bool overwrite=false);
 
         // Возвращает ширину
         int     width() const;

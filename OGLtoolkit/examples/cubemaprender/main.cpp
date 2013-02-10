@@ -4,7 +4,7 @@
 int main() {
         Application *app = Application::instance();
 
-        app->window()->setSize(ivec2(600,600));
+        app->window()->setSize(ivec2(512,512));
         app->window()->setTitle("TestScene");
         app->setScene(new TestScene);
 

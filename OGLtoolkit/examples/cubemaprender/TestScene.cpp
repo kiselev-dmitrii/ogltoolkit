@@ -11,20 +11,33 @@ void TestScene::init() {
         m_cubemapProgram = new GpuProgram("resources/shaders/makeCubemap");
         m_cubemapProgram->bind();
 
-        m_inputTexture = new TextureCube("resources/images/church/", "jpg");
+        m_inputTexture = new TextureCube("resources/images/room/", "jpg");
         m_sampler = new TextureUnit();
 
         m_sampler->bind();
         m_inputTexture->bind();
 
         m_cubemapProgram->setUniform("sampler", m_sampler->number());
-        m_cubemapProgram->setUniform("size", 50.0f);
+        m_cubemapProgram->setSubroutine(ShaderType::FRAGMENT_SHADER, "renderSpecularSide");
+        m_cubemapProgram->setUniform("size", 60.0f);
 
         initQuad();
 
-        glViewport(0,0, 600, 600);
-        glClear(GL_COLOR_BUFFER_BIT);
-        drawQuad();
+        m_outputPosX = new Texture2D(512, 512);
+        m_rbo = new Renderbuffer(512, 512, RenderbufferFormat::DEPTH_24);
+
+        m_fbo = new Framebuffer();
+        m_fbo->attachAsColorBuffer(*m_outputPosX);
+        m_fbo->attachAsDepthBuffer(*m_rbo);
+
+        m_fbo->bind();
+                glViewport(0,0, 512, 512);
+                glClear(GL_COLOR_BUFFER_BIT);
+                drawQuad();
+        m_fbo->unbind();
+
+        Image img(*m_outputPosX);
+        img.save("posx.png");
 }
 
 void TestScene::resize(int w, int h) {

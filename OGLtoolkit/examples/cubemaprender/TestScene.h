@@ -8,14 +8,26 @@
 #include "lib/OGL/VertexBuffer.h"
 #include "lib/OGL/IndexBuffer.h"
 #include "lib/OGL/VertexArray.h"
+#include "lib/OGL/Framebuffer.h"
+#include "lib/OGL/Renderbuffer.h"
 
 class TestScene : public AbstractScene {
 private:
         GpuProgram*     m_cubemapProgram;
 
         TextureCube*    m_inputTexture;
-        TextureCube*    m_outputTexture;
+        Texture2D*      m_outputPosX;
+        Texture2D*      m_outputNegX;
+        Texture2D*      m_outputPosY;
+        Texture2D*      m_outputNegY;
+        Texture2D*      m_outputPosZ;
+        Texture2D*      m_outputNegZ;
+
+
         TextureUnit*    m_sampler;
+
+        Framebuffer*    m_fbo;
+        Renderbuffer*   m_rbo;
 
 
         VertexArray*    m_vao;

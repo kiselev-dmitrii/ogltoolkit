@@ -13,7 +13,7 @@ Texture::~Texture() {
         glDeleteTextures(1, &m_handle);
 }
 
-void Texture::bind() {
+void Texture::bind() const {
         glBindTexture(m_target, m_handle);
 }
 
@@ -44,4 +44,25 @@ void Texture::setWrapR(WrapMode::Enum mode) {
 
 GLuint Texture::handle() const {
         return m_handle;
+}
+
+int Texture::width(int mipmapLevel) const {
+        int result;
+        bind();
+        glGetTexLevelParameteriv(m_target, mipmapLevel, GL_TEXTURE_WIDTH, &result);
+        return result;
+}
+
+int Texture::height(int mipmapLevel) const {
+        int result;
+        bind();
+        glGetTexLevelParameteriv(m_target, mipmapLevel, GL_TEXTURE_HEIGHT, &result);
+        return result;
+}
+
+int Texture::depth(int mipmapLevel) const {
+        int result;
+        bind();
+        glGetTexLevelParameteriv(m_target, mipmapLevel, GL_TEXTURE_DEPTH, &result);
+        return result;
 }
