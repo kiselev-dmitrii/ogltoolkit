@@ -1,5 +1,6 @@
 #include "TextureUnit.h"
 #include "lib/Debug/Debug.h"
+#include "lib/OGL/Texture.h"
 
 int TextureUnit::m_countUsed = 0;
 vector<bool> TextureUnit::m_usedUnits;
@@ -45,4 +46,9 @@ void TextureUnit::bind() {
 
 int TextureUnit::number() {
         return m_number;
+}
+
+void TextureUnit::bindTexture(const Texture &texture) {
+        bind();
+        texture.bind();
 }

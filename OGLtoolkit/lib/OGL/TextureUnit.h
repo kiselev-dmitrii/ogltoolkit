@@ -5,6 +5,7 @@
 #include <vector>
 
 using std::vector;
+class Texture;
 
 /** Класс-обертка для TextureImageUnit
   */
@@ -32,6 +33,9 @@ public:
 
         // Возвращает номер данного TIU
         int     number();
+
+        // Связывает текстуру с данным TIU
+        void    bindTexture(const Texture &texture);
 };
 
 #endif // TEXTUREUNIT_H

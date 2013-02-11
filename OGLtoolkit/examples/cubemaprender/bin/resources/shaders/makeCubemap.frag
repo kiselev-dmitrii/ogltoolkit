@@ -7,11 +7,10 @@ layout (location = 0) out vec4 FragColor;
 uniform samplerCube sampler;
 uniform float size;
 
-subroutine vec4 RenderCubeSide(vec3);
-subroutine uniform RenderCubeSide renderSide;
+subroutine vec4 RenderSide();
+subroutine uniform RenderSide renderSide;
 
-subroutine (RenderCubeSide)
-vec4 renderDiffuseSide(vec3 normal) {
+vec4 diffuse(vec3 normal) {
         vec4 summ = vec4(0.0);
         // Проходим по верхушке
         for(float i=-1; i<=1; i+=1.0/size) {
@@ -73,8 +72,7 @@ vec4 renderDiffuseSide(vec3 normal) {
         return summ;
 }
 
-subroutine (RenderCubeSide)
-vec4 renderSpecularSide(vec3 view) {
+vec4 specular(vec3 view) {
         float shininess = 80.0f;
 
         vec4 summ = vec4(0.0);
@@ -137,8 +135,49 @@ vec4 renderSpecularSide(vec3 view) {
         return summ;
 }
 
-void main() {
-        // Рендерим negz
+vec4 renderLighting(vec3 vec) {
+        return specular(vec);
+}
+
+subroutine (RenderSide)
+vec4 posx() {
         vec3 normal = normalize(vec3(1.0, texCoord.x, texCoord.y));
-        FragColor = renderSide(normal);
+        return renderLighting(normal);
+}
+
+subroutine (RenderSide)
+vec4 negx() {
+        vec3 normal = normalize(vec3(-1.0, texCoord.x, texCoord.y));
+        return renderLighting(normal);
+}
+
+subroutine (RenderSide)
+vec4 posy() {
+        vec3 normal = normalize(vec3(texCoord.x, 1.0, texCoord.y));
+        return renderLighting(normal);
+}
+
+subroutine (RenderSide)
+vec4 negy() {
+        vec3 normal = normalize(vec3(texCoord.x, -1.0, texCoord.y));
+        return renderLighting(normal);
+}
+
+subroutine (RenderSide)
+vec4 posz() {
+        vec3 normal = normalize(vec3(texCoord.x, texCoord.y, 1.0));
+        return renderLighting(normal);
+}
+
+subroutine (RenderSide)
+vec4 negz() {
+        vec3 normal = normalize(vec3(texCoord.x, texCoord.y, -1.0));
+        return renderLighting(normal);
+}
+
+
+
+
+void main() {
+        FragColor = renderSide();
 }

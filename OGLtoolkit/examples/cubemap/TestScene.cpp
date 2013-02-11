@@ -29,7 +29,7 @@ void TestScene::initRender() {
         Render::instance()->setCurrentCamera(m_camera);
 
         m_tuCubeMap = new TextureUnit();
-        m_tcEnvironment = new TextureCube("resources/images/room", "jpg");
+        m_tcEnvironment = new TextureCube("resources/images/room_diffuse", "png");
 }
 
 void TestScene::initBulletModel() {

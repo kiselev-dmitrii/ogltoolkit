@@ -18,7 +18,6 @@ void TestScene::init() {
         m_inputTexture->bind();
 
         m_cubemapProgram->setUniform("sampler", m_sampler->number());
-        m_cubemapProgram->setSubroutine(ShaderType::FRAGMENT_SHADER, "renderSpecularSide");
         m_cubemapProgram->setUniform("size", 60.0f);
 
         initQuad();
@@ -26,18 +25,24 @@ void TestScene::init() {
         m_outputPosX = new Texture2D(512, 512);
         m_rbo = new Renderbuffer(512, 512, RenderbufferFormat::DEPTH_24);
 
+        string sides[] = {"posx", "negx", "posy", "negy", "posz", "negz"};
+
         m_fbo = new Framebuffer();
         m_fbo->attachAsColorBuffer(*m_outputPosX);
         m_fbo->attachAsDepthBuffer(*m_rbo);
-
         m_fbo->bind();
-                glViewport(0,0, 512, 512);
-                glClear(GL_COLOR_BUFFER_BIT);
-                drawQuad();
+                for(int i=0; i<6; ++i) {
+                        m_cubemapProgram->setSubroutine(ShaderType::FRAGMENT_SHADER, sides[i]);
+
+                        glViewport(0,0, 512, 512);
+                        glClear(GL_COLOR_BUFFER_BIT);
+                        drawQuad();
+
+                        Image img(*m_outputPosX);
+                        img.save("output/"+sides[i]+".png");
+                }
         m_fbo->unbind();
 
-        Image img(*m_outputPosX);
-        img.save("posx.png");
 }
 
 void TestScene::resize(int w, int h) {
