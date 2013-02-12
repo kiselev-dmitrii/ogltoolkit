@@ -18,7 +18,7 @@ void TestScene::init() {
         m_inputTexture->bind();
 
         m_cubemapProgram->setUniform("sampler", m_sampler->number());
-        m_cubemapProgram->setUniform("size", 10.0f);
+        m_cubemapProgram->setUniform("size", 60.0f);
 
         initQuad();
 
@@ -39,7 +39,7 @@ void TestScene::init() {
                         drawQuad();
 
                         Image img(*m_outputPosX);
-                        img.save("output/"+sides[i]+".png");
+                        img.save("output/"+sides[i]+".jpg");
                 }
         m_fbo->unbind();
 
