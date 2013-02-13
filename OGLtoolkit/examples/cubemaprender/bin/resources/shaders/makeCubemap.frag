@@ -10,6 +10,10 @@ uniform float size;
 subroutine vec4 RenderSide();
 subroutine uniform RenderSide renderSide;
 
+vec4 regular(vec3 vec) {
+        return textureCube(sampler, vec);
+}
+
 vec4 diffuse(vec3 normal) {
         vec4 summ = vec4(0.0);
         // Проходим по верхушке
@@ -136,7 +140,7 @@ vec4 specular(vec3 view) {
 }
 
 vec4 renderLighting(vec3 vec) {
-        return specular(vec);
+        return regular(vec);
 }
 
 subroutine (RenderSide)

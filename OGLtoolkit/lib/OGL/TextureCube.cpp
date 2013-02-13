@@ -11,6 +11,24 @@ TextureCube::TextureCube() : Texture(TextureTarget::CUBEMAP) {
         initWrap();
 }
 
+TextureCube::TextureCube(int size, TextureType::Enum type) : Texture(TextureTarget::CUBEMAP) {
+        initWrap();
+
+        //Количество бит на тип соответствует 32-битной архитектуре.
+        GLenum internalFormat;
+        if(type == TextureType::BYTE || type == TextureType::UBYTE) internalFormat = GL_RGBA8;
+        else if(type == TextureType::INT) internalFormat = GL_RGBA32I;
+        else if(type == TextureType::UINT) internalFormat = GL_RGBA32UI;
+        else if(type == TextureType::FLOAT) internalFormat = GL_RGBA32F;
+
+        //Выделяем память для сторон
+        for (size_t i=0; i<6; ++i) {
+                glTexImage2D(CubeSide::POSITIVE_X+i, 0, internalFormat, size, size, 0, GL_BGRA, type, NULL);
+        }
+
+
+}
+
 TextureCube::TextureCube(const string &posX, const string &posY, const string &posZ, const string &negX, const string &negY, const string &negZ) : Texture(TextureTarget::CUBEMAP) {
         uploadImage(CubeSide::POSITIVE_X, posX);
         uploadImage(CubeSide::POSITIVE_Y, posY);

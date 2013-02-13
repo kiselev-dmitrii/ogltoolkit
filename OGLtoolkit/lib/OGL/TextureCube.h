@@ -32,6 +32,10 @@ public:
         // Создает кубическую текстуру из изображений path/[posx|...|negz].fileExtension
         TextureCube(string path, const string &fileExtension);
 
+        // Создает пустую кубическую RGBA текстуру размера size.
+        // Каждая компонента представляет из себя ячейку типа type.
+        TextureCube(int size, TextureType::Enum type=TextureType::UBYTE);
+
         // Создает пустую кубическую текстуру
         TextureCube();
 

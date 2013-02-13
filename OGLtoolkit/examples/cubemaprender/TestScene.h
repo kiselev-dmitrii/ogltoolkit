@@ -16,14 +16,7 @@ private:
         GpuProgram*     m_cubemapProgram;
 
         TextureCube*    m_inputTexture;
-        Texture2D*      m_outputPosX;
-        Texture2D*      m_outputNegX;
-        Texture2D*      m_outputPosY;
-        Texture2D*      m_outputNegY;
-        Texture2D*      m_outputPosZ;
-        Texture2D*      m_outputNegZ;
-
-
+        TextureCube*    m_outputTexture;
         TextureUnit*    m_sampler;
 
         Framebuffer*    m_fbo;

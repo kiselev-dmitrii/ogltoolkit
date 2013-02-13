@@ -3,6 +3,8 @@
 
 #include <GL/glew.h>
 
+/** Точка привязки
+  */
 namespace TextureTarget {
         enum Enum {
                 TEXTURE_2D = GL_TEXTURE_2D,
@@ -10,6 +12,8 @@ namespace TextureTarget {
         };
 }
 
+/** Режим интерполяции текселей
+  */
 namespace TextureFilter {
         enum Enum {
                 NEAREST = GL_NEAREST,
@@ -17,6 +21,8 @@ namespace TextureFilter {
         };
 }
 
+/** Режим наложения (обертки) текстуры на меш
+  */
 namespace WrapMode {
         enum Enum {
                 REPEAT = GL_REPEAT,                     //текстура повторяется
@@ -25,6 +31,19 @@ namespace WrapMode {
                 CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER    //граница текстуры растягивается
         };
 }
+
+/** Тип компонент пикселей в текстуре
+  */
+namespace TextureType {
+enum Enum {
+        UBYTE = GL_UNSIGNED_BYTE,
+        BYTE = GL_BYTE,
+        INT = GL_INT,
+        UINT = GL_UNSIGNED_INT,
+        FLOAT = GL_FLOAT
+};
+}
+
 
 /** Базовый класс OpenGL текстур
   * Не имеет виртуальных функций.
