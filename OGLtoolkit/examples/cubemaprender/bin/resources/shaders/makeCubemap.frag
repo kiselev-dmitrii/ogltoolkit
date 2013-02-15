@@ -140,7 +140,7 @@ vec4 specular(vec3 view) {
 }
 
 vec4 renderLighting(vec3 vec) {
-        return regular(vec);
+        return diffuse(vec);
 }
 
 subroutine (RenderSide)
@@ -151,13 +151,13 @@ vec4 posx() {
 
 subroutine (RenderSide)
 vec4 negx() {
-        vec3 normal = normalize(vec3(-1.0, texCoord.x, texCoord.y));
+        vec3 normal = normalize(vec3(-1.0, -texCoord.x, texCoord.y));
         return renderLighting(normal);
 }
 
 subroutine (RenderSide)
 vec4 posy() {
-        vec3 normal = normalize(vec3(texCoord.x, 1.0, texCoord.y));
+        vec3 normal = normalize(vec3(-texCoord.x, 1.0, texCoord.y));
         return renderLighting(normal);
 }
 
@@ -175,7 +175,7 @@ vec4 posz() {
 
 subroutine (RenderSide)
 vec4 negz() {
-        vec3 normal = normalize(vec3(texCoord.x, texCoord.y, -1.0));
+        vec3 normal = normalize(vec3(texCoord.x, -texCoord.y, -1.0));
         return renderLighting(normal);
 }
 

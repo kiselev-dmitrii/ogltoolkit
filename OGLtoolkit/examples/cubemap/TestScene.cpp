@@ -29,7 +29,7 @@ void TestScene::initRender() {
         Render::instance()->setCurrentCamera(m_camera);
 
         m_tuCubeMap = new TextureUnit();
-        m_tcEnvironment = new TextureCube("resources/images/lawn", "jpg");
+        m_tcEnvironment = new TextureCube("resources/images/church", "jpg");
 }
 
 void TestScene::initBulletModel() {
@@ -61,6 +61,7 @@ void TestScene::init() {
 
 void TestScene::resize(int w, int h) {
         glViewport(0,0,w,h);
+        m_camera->setFarClipDistance(500.0f);
         m_camera->setAspectRatio(float(w)/h);
 }
 

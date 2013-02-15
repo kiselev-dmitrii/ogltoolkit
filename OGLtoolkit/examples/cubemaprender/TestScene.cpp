@@ -22,24 +22,27 @@ void TestScene::init() {
 
         initQuad();
 
-        m_outputTexture = new TextureCube(512);
+        m_outputPosX = new Texture2D(512, 512);
         m_rbo = new Renderbuffer(512, 512, RenderbufferFormat::DEPTH_24);
 
         string sides[] = {"posx", "negx", "posy", "negy", "posz", "negz"};
 
         m_fbo = new Framebuffer();
+        m_fbo->attachAsColorBuffer(*m_outputPosX);
         m_fbo->attachAsDepthBuffer(*m_rbo);
-        for(int i=0; i<6; ++i) {
-                m_fbo->attachAsColorBuffer(*m_outputTexture,  CubeSide::Enum(CubeSide::NEGATIVE_X+i));
-                m_fbo->bind();
+        m_fbo->bind();
+                for(int i=0; i<6; ++i) {
+                        m_cubemapProgram->setSubroutine(ShaderType::FRAGMENT_SHADER, sides[i]);
 
-                m_cubemapProgram->setSubroutine(ShaderType::FRAGMENT_SHADER, sides[i]);
+                        glViewport(0,0, 512, 512);
+                        glClear(GL_COLOR_BUFFER_BIT);
+                        drawQuad();
 
-                glViewport(0,0, 512, 512);
-                glClear(GL_COLOR_BUFFER_BIT);
-                drawQuad();
-        }
+                        Image img(*m_outputPosX);
+                        img.save("output/"+sides[i]+".jpg");
+                }
         m_fbo->unbind();
+
 }
 
 void TestScene::resize(int w, int h) {
