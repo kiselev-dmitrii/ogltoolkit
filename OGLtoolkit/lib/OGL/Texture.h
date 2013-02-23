@@ -44,6 +44,42 @@ enum Enum {
 };
 }
 
+/** Внутренний формат компонентов в текстуре.
+  * Определяет внутреннее представление компоненты текселя в пямяти видеокарты
+  */
+namespace TextureInternal {
+enum Enum {
+        DEPTH32F = GL_DEPTH_COMPONENT32F,       //1 float компонента
+        DEPTH32I = GL_DEPTH_COMPONENT32,        //1 integer компонента
+
+        DEPTH24I = GL_DEPTH_COMPONENT24,        //24 бит на 1 компонент
+
+        RGBA8 = GL_RGBA8,                       //4 byte компоненты
+        RGBA32I = GL_RGBA32I,                   //4 integer компоненты
+        RGBA32UI = GL_RGBA32UI,                 //4 unsigned int компоненты
+        RGBA32F = GL_RGBA32F                    //4 float компоненты
+};
+}
+
+/** Определяет, как будут трактоваться загружаемые/выгружаемые массивы данных.
+  * Это представление отделено от типа.
+  * Играет роль только взаимное расположение компонент и их количество
+  */
+namespace TextureFormat {
+enum Enum {
+        DEPTH = GL_DEPTH_COMPONENT,     //1 компонента (используется в Depth текстурах)
+
+        RGBA = GL_RGBA,                 //4 комопоненты
+        BGRA = GL_BGRA,
+
+        RGB = GL_RGB,                   //3 компоненты
+        BGR = GL_BGR,
+
+        RG = GL_RG,                     //2 компоненты
+
+        R = GL_RED                      //1 компонента
+};
+}
 
 /** Базовый класс OpenGL текстур
   * Не имеет виртуальных функций.

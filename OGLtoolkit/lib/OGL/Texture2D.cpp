@@ -16,6 +16,10 @@ Texture2D::Texture2D(int width, int height, TextureType::Enum type) : Texture(Te
         glTexImage2D(m_target, 0, internalFormat, width, height, 0, GL_BGRA, type, NULL);
 }
 
+Texture2D::Texture2D(int width, int height, TextureInternal::Enum internalFormat, TextureFormat::Enum format, TextureType::Enum type) : Texture(TextureTarget::TEXTURE_2D) {
+        glTexImage2D(m_target, 0, internalFormat, width, height, 0, format, type, NULL);
+}
+
 Texture2D::Texture2D() : Texture(TextureTarget::TEXTURE_2D) { }
 
 void Texture2D::uploadImage(const string &filename) {

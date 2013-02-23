@@ -32,7 +32,7 @@ SOURCES += main.cpp \
     ../../lib/Framework/Entity.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
-    EdgeTestScene.cpp
+    BlurTestScene.cpp
 
 HEADERS += \
     ../../lib/Debug/Debug.h \
@@ -58,8 +58,8 @@ HEADERS += \
     ../../lib/Framework/Camera.h \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
-    EdgeTestScene.h
+    BlurTestScene.h
 
 OTHER_FILES += \
-    bin/resources/shaders/edges.vert \
-    bin/resources/shaders/edges.frag
+    bin/resources/shaders/blur.vert \
+    bin/resources/shaders/blur.frag

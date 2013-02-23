@@ -1,38 +1,41 @@
-#include "EdgeTestScene.h"
+#include "BlurTestScene.h"
 #include "lib/Subsystems/Mouse.h"
 #include "lib/Subsystems/Application.h"
 #include "lib/Framework/Render.h"
 #include "lib/Debug/Debug.h"
+#include "lib/Utils/StringUtils.h"
+using namespace StringUtils;
 
-EdgeTestScene::EdgeTestScene() {
-        m_secondPass = "sobelOperator";
+BlurTestScene::BlurTestScene() {
 }
 
-EdgeTestScene::~EdgeTestScene() {
+BlurTestScene::~BlurTestScene() {
 }
 
-void EdgeTestScene::init() {
+void BlurTestScene::init() {
         initRender();
         initQuad();
         initPlane();
         initTeapot();
+        initMonkey();
 }
 
-void EdgeTestScene::resize(int w, int h) {
+void BlurTestScene::resize(int w, int h) {
         glViewport(0,0,w,h);
         m_camera->setAspectRatio(float(w)/h);
 }
 
-void EdgeTestScene::update(float deltaTime) {
+void BlurTestScene::update(float deltaTime) {
         SHOW(1.0/deltaTime);
 }
 
-void EdgeTestScene::render() {
+void BlurTestScene::render() {
         pass1();
         pass2();
+        pass3();
 }
 
-void EdgeTestScene::onKeyPress(int key) {
+void BlurTestScene::onKeyPress(int key) {
         switch(key) {
                 case 'W':
                         m_camera->moveForward(0.1);
@@ -46,17 +49,10 @@ void EdgeTestScene::onKeyPress(int key) {
                 case 'A':
                         m_camera->moveRight(-0.1);
                         break;
-
-                case '1':
-                        m_secondPass = "identityOperator";
-                        break;
-                case '2':
-                        m_secondPass = "sobelOperator";
-                        break;
         }
 }
 
-void EdgeTestScene::onMouseMove(int x, int y) {
+void BlurTestScene::onMouseMove(int x, int y) {
         Mouse::hide();
 
         ivec2 pos = ivec2(x,y);
@@ -65,7 +61,7 @@ void EdgeTestScene::onMouseMove(int x, int y) {
         m_camera->rotateWithMouse(delta);
 }
 
-void EdgeTestScene::initRender() {
+void BlurTestScene::initRender() {
         glClearColor(0.9,0.9,0.9, 1.0);
         glEnable(GL_DEPTH_TEST);
 
@@ -74,7 +70,7 @@ void EdgeTestScene::initRender() {
         m_camera->setPosition(vec3(10,10,10));
         m_camera->setTarget(vec3(0,0,0));
 
-        m_program = new GpuProgram("resources/shaders/edges");
+        m_program = new GpuProgram("resources/shaders/blur");
         Render::instance()->setCurrentProgram(m_program);
         m_program->setUniform("light.position", vec3(10,10,10));
         m_program->setUniform("light.color", vec3(1.0, 1.0, 1.0));
@@ -82,32 +78,47 @@ void EdgeTestScene::initRender() {
         m_program->setUniform("textureHeight", 600.0f);
 
         // Создаем FBO с присоединенной texture и rbo
-        m_texture = new Texture2D(800, 600);
-        m_rbo = new Renderbuffer(800, 600, RenderbufferFormat::DEPTH_24);
+        m_texture1 = new Texture2D(800, 600);
+        m_depthTexture = new Texture2D(800, 600, TextureInternal::DEPTH32F, TextureFormat::DEPTH, TextureType::UINT);
 
-        m_fbo = new Framebuffer();
-        m_fbo->attachAsColorBuffer(*m_texture);
-        m_fbo->attachAsDepthBuffer(*m_rbo);
+        m_fbo1 = new Framebuffer();
+        m_fbo1->attachAsColorBuffer(*m_texture1);
+        m_fbo1->attachAsDepthBuffer(*m_depthTexture);
+
+        m_texture2 = new Texture2D(800, 600);
+        m_rbo2 = new Renderbuffer(800, 600, RenderbufferFormat::DEPTH_32F);
+        m_fbo2 = new Framebuffer();
+        m_fbo2->attachAsColorBuffer(*m_texture2);
+        m_fbo2->attachAsDepthBuffer(*m_rbo2);
 
         //
         m_sampler = new TextureUnit();
-        m_sampler->bindTexture(*m_texture);
         m_program->setUniform("inputTexture", m_sampler->number());
+
+        m_depthSampler = new TextureUnit();
+        m_program->setUniform("depthTexture", m_depthSampler->number());
+
 }
 
-void EdgeTestScene::initPlane() {
+void BlurTestScene::initPlane() {
         m_ePlane = new Entity("resources/meshes/cube.obj");
         m_ePlane->setScale(vec3(100,100, 0.1));
         m_ePlane->setPosition(vec3(0,0,-1));
 }
 
-void EdgeTestScene::initTeapot() {
-        m_eTeapot = new Entity(Mesh("resources/meshes/suzanne.obj", 0));
+void BlurTestScene::initTeapot() {
+        m_eTeapot = new Entity(Mesh("resources/meshes/teapot.obj", 1));
         m_eTeapot->setOrientation(vec3(90,90,0));
         m_eTeapot->setScale(vec3(0.5,0.5,0.5));
 }
 
-void EdgeTestScene::renderTeapot() {
+void BlurTestScene::initMonkey() {
+        m_eMonkey = new Entity(Mesh("resources/meshes/suzanne.obj"));
+        m_eMonkey->setOrientation(vec3(90,90,0));
+        m_eMonkey->setPosition(vec3(5.0, 5.0, 0.0));
+}
+
+void BlurTestScene::renderTeapot() {
         m_program->setUniform("material.ambient", vec3(0.3,0.3,0.3));
         m_program->setUniform("material.diffuse", vec3(1.0,1.0,0.3));
         m_program->setUniform("material.specular", vec3(1.0,1.0,1.0));
@@ -116,7 +127,7 @@ void EdgeTestScene::renderTeapot() {
         Render::instance()->render(m_eTeapot);
 }
 
-void EdgeTestScene::renderPlane() {
+void BlurTestScene::renderPlane() {
         m_program->setUniform("material.ambient", vec3(0.3,0.3,0.3));
         m_program->setUniform("material.diffuse", vec3(0.3,0.3,0.3));
         m_program->setUniform("material.specular", vec3(0.3,0.3,0.3));
@@ -125,7 +136,16 @@ void EdgeTestScene::renderPlane() {
         Render::instance()->render(m_ePlane);
 }
 
-void EdgeTestScene::initQuad() {
+void BlurTestScene::renderMonkey() {
+        m_program->setUniform("material.ambient", vec3(0.3,0.3,0.3));
+        m_program->setUniform("material.diffuse", vec3(0.9,0.3,0.3));
+        m_program->setUniform("material.specular", vec3(0.3,0.3,0.3));
+        m_program->setUniform("material.shininess", 0.0f);
+
+        Render::instance()->render(m_eMonkey);
+}
+
+void BlurTestScene::initQuad() {
         // 1 VBO на все провсе
         float vertices[] = {
                 -1, -1, 0,
@@ -155,7 +175,7 @@ void EdgeTestScene::initQuad() {
         m_vao->unbind();
 }
 
-void EdgeTestScene::drawQuad() {
+void BlurTestScene::drawQuad() {
         m_program->setUniform("V", mat4(1));
         m_program->setUniform("M", mat4(1));
         m_program->setUniform("MV", mat4(1));
@@ -166,18 +186,35 @@ void EdgeTestScene::drawQuad() {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (GLvoid *) 0);
 }
 
-void EdgeTestScene::pass1() {
-        m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, "phongLighting");
+void BlurTestScene::pass1() {
+        m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, "pass1");
 
-        m_fbo->bind();
+        m_fbo1->bind();
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                renderPlane();
                 renderTeapot();
-        m_fbo->unbind();
+                m_eTeapot->setPosition(vec3(1,10,0));
+                renderTeapot();
+                m_eTeapot->setPosition(vec3(0,0,0));
+                //renderMonkey();
+                //renderPlane();
+        m_fbo1->unbind();
 }
 
-void EdgeTestScene::pass2() {
-        m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, m_secondPass);
+void BlurTestScene::pass2() {
+        m_sampler->bindTexture(*m_texture1);
+        m_depthSampler->bindTexture(*m_depthTexture);
+        m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, "pass2");
+
+        m_fbo2->bind();
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                drawQuad();
+        m_fbo2->unbind();
+}
+
+void BlurTestScene::pass3() {
+        m_sampler->bindTexture(*m_texture2);
+        m_depthSampler->bindTexture(*m_depthTexture);
+        m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, "pass3");
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         drawQuad();

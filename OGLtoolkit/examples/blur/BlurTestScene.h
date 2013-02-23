@@ -9,20 +9,25 @@
 #include "lib/Framework/Camera.h"
 #include "lib/Framework/Entity.h"
 
-class EdgeTestScene : public AbstractScene {
+class BlurTestScene : public AbstractScene {
 private:
         GpuProgram*     m_program;
         Camera*         m_camera;
 
         Entity*         m_ePlane;
         Entity*         m_eTeapot;
+        Entity*         m_eMonkey;
 
-        Framebuffer*    m_fbo;
-        Texture2D*      m_texture;
+        Framebuffer*    m_fbo1;
+        Texture2D*      m_texture1;
+        Texture2D*      m_depthTexture;
+
+        Framebuffer*    m_fbo2;
+        Texture2D*      m_texture2;
+        Renderbuffer*   m_rbo2;
+
         TextureUnit*    m_sampler;
-        Renderbuffer*   m_rbo;
-
-        string          m_secondPass;
+        TextureUnit*    m_depthSampler;
 
 private:
         VertexArray*    m_vao;
@@ -33,8 +38,8 @@ private:
         void            drawQuad();
 
 public:
-        EdgeTestScene();
-        ~EdgeTestScene();
+        BlurTestScene();
+        ~BlurTestScene();
 
         void    init();
         void    resize(int w, int h);
@@ -43,13 +48,16 @@ public:
 
         void    pass1();
         void    pass2();
+        void    pass3();
 
         void    initRender();
         void    initTeapot();
         void    initPlane();
+        void    initMonkey();
 
         void    renderTeapot();
         void    renderPlane();
+        void    renderMonkey();
 
 public:
         void    onKeyPress(int key);

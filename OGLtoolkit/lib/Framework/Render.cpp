@@ -43,5 +43,4 @@ void Render::render(Entity *entity) {
         updateMatrices(m_curCamera, entity);
         entity->vertexArray()->bind();
         glDrawElements(GL_TRIANGLES, entity->mesh()->indicesCount(), GL_UNSIGNED_INT, (GLvoid *) 0);
-
 }
