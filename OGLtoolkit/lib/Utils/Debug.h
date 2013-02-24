@@ -1,7 +1,7 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 #include <iostream>
-#include "lib/Utils/StreamUtils.h"
+#include "StreamUtils.h"
 
 using namespace StreamUtils;
 

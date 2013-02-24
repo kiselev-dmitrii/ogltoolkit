@@ -1,5 +1,5 @@
 #include "Texture2D.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 Texture2D::Texture2D(const string &filename) : Texture(TextureTarget::TEXTURE_2D) {
         uploadImage(filename);

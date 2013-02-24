@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 #include <GL/glfw.h>
 #include <glm/glm.hpp>
-#include "lib/OGL/AbstractScene.h"
+#include "lib/Framework/AbstractScene.h"
 using glm::ivec2;
 using std::string;
 using namespace glm;

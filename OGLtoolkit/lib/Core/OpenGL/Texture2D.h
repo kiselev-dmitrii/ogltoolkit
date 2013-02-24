@@ -3,7 +3,7 @@
 
 #include <string>
 #include "Texture.h"
-#include "lib/Data/Image.h"
+#include "../Data/Image.h"
 
 /** Класс двумерной текстуры
   */

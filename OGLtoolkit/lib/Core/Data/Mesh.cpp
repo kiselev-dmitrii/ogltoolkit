@@ -2,7 +2,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "../Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 void Mesh::init() {
         m_vertices = NULL;

@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include "GpuProgram.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 void GpuProgram::init() {
         m_programHandle = 0;

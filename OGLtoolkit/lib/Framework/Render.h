@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "Camera.h"
-#include "lib/OGL/GpuProgram.h"
+#include "lib/Core/OpenGL/GpuProgram.h"
 
 /** Класс, для осуществления рендера
   */

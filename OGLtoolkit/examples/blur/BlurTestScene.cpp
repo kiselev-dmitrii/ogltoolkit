@@ -3,7 +3,7 @@
 #include "lib/Subsystems/Keyboard.h"
 #include "lib/Subsystems/Application.h"
 #include "lib/Framework/Render.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 #include "lib/Utils/StringUtils.h"
 using namespace StringUtils;
 

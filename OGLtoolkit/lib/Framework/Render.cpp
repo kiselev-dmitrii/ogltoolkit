@@ -1,5 +1,5 @@
 #include "Render.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 Render* Render::instance() {
         static Render instance;

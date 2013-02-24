@@ -1,10 +1,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "lib/OGL/VertexArray.h"
-#include "lib/OGL/VertexBuffer.h"
-#include "lib/OGL/IndexBuffer.h"
-#include "lib/Data/Mesh.h"
+#include "lib/Core/OpenGL/VertexArray.h"
+#include "lib/Core/OpenGL/VertexBuffer.h"
+#include "lib/Core/OpenGL/IndexBuffer.h"
+#include "lib/Core/Data/Mesh.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 

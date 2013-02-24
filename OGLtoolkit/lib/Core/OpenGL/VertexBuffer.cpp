@@ -1,5 +1,5 @@
 #include "VertexBuffer.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 VertexBuffer::VertexBuffer() : BufferObject(Target::ARRAY_BUFFER) {
 }

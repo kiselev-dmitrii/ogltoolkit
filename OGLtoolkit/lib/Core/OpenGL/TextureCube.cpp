@@ -1,5 +1,5 @@
 #include "TextureCube.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 void TextureCube::initWrap() {
         setWrapS(WrapMode::CLAMP_TO_EDGE);

@@ -1,11 +1,11 @@
 #ifndef EDGETESTSCENE_H
 #define EDGETESTSCENE_H
 
-#include "lib/OGL/AbstractScene.h"
-#include "lib/OGL/GpuProgram.h"
-#include "lib/OGL/Framebuffer.h"
-#include "lib/OGL/TextureUnit.h"
+#include "lib/Core/OpenGL/GpuProgram.h"
+#include "lib/Core/OpenGL/Framebuffer.h"
+#include "lib/Core/OpenGL/TextureUnit.h"
 
+#include "lib/Framework/AbstractScene.h"
 #include "lib/Framework/Camera.h"
 #include "lib/Framework/Entity.h"
 

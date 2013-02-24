@@ -1,6 +1,6 @@
 #include "Image.h"
-#include "lib/Debug/Debug.h"
-#include "lib/OGL/Texture2D.h"
+#include "lib/Utils/Debug.h"
+#include "../OpenGL/Texture2D.h"
 
 bool Image::m_isDevilInit = false;
 

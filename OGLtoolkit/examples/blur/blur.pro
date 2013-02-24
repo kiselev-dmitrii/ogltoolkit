@@ -10,53 +10,53 @@ LIBS += -lILU
 INCLUDEPATH = ../..
 
 SOURCES += main.cpp \
+    ../../lib/Core/Data/Image.cpp \
+    ../../lib/Core/Data/Mesh.cpp \
+    ../../lib/Core/OpenGL/Texture2D.cpp \
+    ../../lib/Core/OpenGL/BufferObject.cpp \
+    ../../lib/Core/OpenGL/VertexArray.cpp \
+    ../../lib/Core/OpenGL/TextureUnit.cpp \
+    ../../lib/Core/OpenGL/UniformBuffer.cpp \
+    ../../lib/Core/OpenGL/Texture.cpp \
+    ../../lib/Core/OpenGL/IndexBuffer.cpp \
+    ../../lib/Core/OpenGL/Renderbuffer.cpp \
+    ../../lib/Core/OpenGL/GpuProgram.cpp \
+    ../../lib/Core/OpenGL/Framebuffer.cpp \
+    ../../lib/Core/OpenGL/VertexBuffer.cpp \
+    ../../lib/Core/OpenGL/TextureCube.cpp \
     ../../lib/Subsystems/Mouse.cpp \
     ../../lib/Subsystems/Keyboard.cpp \
     ../../lib/Subsystems/Application.cpp \
     ../../lib/Utils/StreamUtils.cpp \
     ../../lib/Utils/StringUtils.cpp \
-    ../../lib/OGL/Texture2D.cpp \
-    ../../lib/OGL/BufferObject.cpp \
-    ../../lib/OGL/VertexArray.cpp \
-    ../../lib/OGL/TextureUnit.cpp \
-    ../../lib/OGL/UniformBuffer.cpp \
-    ../../lib/OGL/Texture.cpp \
-    ../../lib/OGL/IndexBuffer.cpp \
-    ../../lib/OGL/Renderbuffer.cpp \
-    ../../lib/OGL/GpuProgram.cpp \
-    ../../lib/OGL/Framebuffer.cpp \
-    ../../lib/OGL/VertexBuffer.cpp \
-    ../../lib/OGL/TextureCube.cpp \
-    ../../lib/Data/Image.cpp \
-    ../../lib/Data/Mesh.cpp \
     ../../lib/Framework/Entity.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
     BlurTestScene.cpp
 
 HEADERS += \
-    ../../lib/Debug/Debug.h \
+    ../../lib/Core/Data/Image.h \
+    ../../lib/Core/Data/Mesh.h \
+    ../../lib/Core/OpenGL/VertexBuffer.h \
+    ../../lib/Core/OpenGL/UniformBuffer.h \
+    ../../lib/Core/OpenGL/TextureUnit.h \
+    ../../lib/Core/OpenGL/Framebuffer.h \
+    ../../lib/Core/OpenGL/GpuProgram.h \
+    ../../lib/Core/OpenGL/IndexBuffer.h \
+    ../../lib/Core/OpenGL/BufferObject.h \
+    ../../lib/Core/OpenGL/VertexArray.h \
+    ../../lib/Core/OpenGL/TextureCube.h \
+    ../../lib/Core/OpenGL/Texture.h \
+    ../../lib/Core/OpenGL/Renderbuffer.h \
+    ../../lib/Core/OpenGL/Texture2D.h \
     ../../lib/Subsystems/Application.h \
     ../../lib/Subsystems/Mouse.h \
     ../../lib/Subsystems/Keyboard.h \
+    ../../lib/Utils/Debug.h \
     ../../lib/Utils/StreamUtils.h \
     ../../lib/Utils/StringUtils.h \
-    ../../lib/OGL/VertexBuffer.h \
-    ../../lib/OGL/UniformBuffer.h \
-    ../../lib/OGL/TextureUnit.h \
-    ../../lib/OGL/Framebuffer.h \
-    ../../lib/OGL/GpuProgram.h \
-    ../../lib/OGL/IndexBuffer.h \
-    ../../lib/OGL/AbstractScene.h \
-    ../../lib/OGL/BufferObject.h \
-    ../../lib/OGL/VertexArray.h \
-    ../../lib/OGL/TextureCube.h \
-    ../../lib/OGL/Texture.h \
-    ../../lib/OGL/Renderbuffer.h \
-    ../../lib/OGL/Texture2D.h \
-    ../../lib/Data/Image.h \
-    ../../lib/Data/Mesh.h \
     ../../lib/Framework/Camera.h \
+    ../../lib/Framework/AbstractScene.h \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
     BlurTestScene.h

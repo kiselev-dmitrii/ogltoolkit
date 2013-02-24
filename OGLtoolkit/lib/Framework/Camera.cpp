@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include <glm/gtx/rotate_vector.hpp>
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 Camera::Camera() {
         m_dir = vec3(1,0,0);

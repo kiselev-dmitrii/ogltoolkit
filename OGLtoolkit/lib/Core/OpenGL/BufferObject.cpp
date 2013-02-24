@@ -1,5 +1,5 @@
 #include "BufferObject.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 BufferObject::BufferObject(Target::Enum target) {
         glGenBuffers(1, &m_handle);

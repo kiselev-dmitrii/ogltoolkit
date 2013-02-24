@@ -1,6 +1,6 @@
 #include "TextureUnit.h"
-#include "lib/Debug/Debug.h"
-#include "lib/OGL/Texture.h"
+#include "Texture.h"
+#include "lib/Utils/Debug.h"
 
 int TextureUnit::m_countUsed = 0;
 vector<bool> TextureUnit::m_usedUnits;

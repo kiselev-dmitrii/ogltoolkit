@@ -2,7 +2,7 @@
 #define TEXTURECUBE_H
 
 #include "Texture.h"
-#include "lib/Data/Image.h"
+#include "../Data/Image.h"
 
 namespace CubeSide {
         enum Enum {

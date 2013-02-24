@@ -1,5 +1,5 @@
 #include "Entity.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 void Entity::init() {
         m_position = vec3(0);

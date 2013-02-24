@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "lib/Debug/Debug.h"
+#include "lib/Utils/Debug.h"
 
 Window::Window() {
         m_context.samples = 4;
