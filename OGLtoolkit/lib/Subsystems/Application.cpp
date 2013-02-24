@@ -82,6 +82,9 @@ bool Window::openWindow() {
 auto_ptr<AbstractScene> Application::m_scene;
 Window Application::m_window;
 
+Application::Application() {
+}
+
 Window *Application::window() {
         return &m_window;
 }
@@ -162,5 +165,3 @@ int Application::exec() {
         terminate();
         return 0;
 }
-
-

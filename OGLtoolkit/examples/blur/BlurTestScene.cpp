@@ -1,5 +1,6 @@
 #include "BlurTestScene.h"
 #include "lib/Subsystems/Mouse.h"
+#include "lib/Subsystems/Keyboard.h"
 #include "lib/Subsystems/Application.h"
 #include "lib/Framework/Render.h"
 #include "lib/Debug/Debug.h"
@@ -30,10 +31,18 @@ void BlurTestScene::resize(int w, int h) {
 void BlurTestScene::update(float deltaTime) {
         SHOW(1.0/deltaTime);
 
+        // Обновление ориентации камеры
         ivec2 pos = Mouse::pos();
         Mouse::setPos(Application::window()->center());
         vec2 delta = vec2(Application::window()->center() - pos);
         m_camera->rotateWithMouse(delta);
+
+        // Обновление позиции камеры
+        float speed = 5;
+        if(Keyboard::isKeyPressed('W'))  m_camera->moveForward(speed*deltaTime);
+        if(Keyboard::isKeyPressed('S'))  m_camera->moveForward(-speed*deltaTime);
+        if(Keyboard::isKeyPressed('D'))  m_camera->moveRight(speed*deltaTime);
+        if(Keyboard::isKeyPressed('A'))  m_camera->moveRight(-speed*deltaTime);
 }
 
 void BlurTestScene::render() {

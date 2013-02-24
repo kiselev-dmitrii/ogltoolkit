@@ -65,7 +65,7 @@ public:
 class Application {
 private:
         static Window                   m_window;               //главное окно приложения
-        static auto_ptr<AbstractScene>  m_scene;
+        static auto_ptr<AbstractScene>  m_scene;                //auto_ptr для того, чтобы объект по указателю разрушался
 
 private:
         // Инициализирование подсистем и т.д
@@ -78,6 +78,9 @@ private:
 private:
         //Вызывается при изменении размеров окна
         static void             onResizeScene(int width, int height);
+
+        //Статический класс лучше не создавать
+        Application();
 
 public:
         // Возвращает указатель на окно. Используется для настройки окна перед запуском

@@ -11,6 +11,7 @@ INCLUDEPATH = ../..
 
 SOURCES += main.cpp \
     ../../lib/Subsystems/Mouse.cpp \
+    ../../lib/Subsystems/Keyboard.cpp \
     ../../lib/Subsystems/Application.cpp \
     ../../lib/Utils/StreamUtils.cpp \
     ../../lib/Utils/StringUtils.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     ../../lib/Debug/Debug.h \
     ../../lib/Subsystems/Application.h \
     ../../lib/Subsystems/Mouse.h \
+    ../../lib/Subsystems/Keyboard.h \
     ../../lib/Utils/StreamUtils.h \
     ../../lib/Utils/StringUtils.h \
     ../../lib/OGL/VertexBuffer.h \
