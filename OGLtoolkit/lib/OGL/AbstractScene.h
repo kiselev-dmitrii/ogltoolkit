@@ -18,14 +18,6 @@ public:
         virtual void    update(float deltaTime) = 0;
         // Отрисовывает сцену
         virtual void    render() = 0;
-
-public: //События
-        // Вызывается при изменении позиции мыши
-        virtual void    onMouseMove(int x, int y)               {}
-        // Вызывается при нажатии клавиши
-        virtual void    onKeyPress(int key)                     {}
-        // Вызывается при отпускании клавиши
-        virtual void    onKeyRelease(int key)                   {}
 };
 
 #endif // ABSTRACTSCENE_H

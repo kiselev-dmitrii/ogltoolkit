@@ -13,6 +13,8 @@ BlurTestScene::~BlurTestScene() {
 }
 
 void BlurTestScene::init() {
+        Mouse::hide();
+
         initRender();
         initQuad();
         initPlane();
@@ -27,6 +29,11 @@ void BlurTestScene::resize(int w, int h) {
 
 void BlurTestScene::update(float deltaTime) {
         SHOW(1.0/deltaTime);
+
+        ivec2 pos = Mouse::pos();
+        Mouse::setPos(Application::window()->center());
+        vec2 delta = vec2(Application::window()->center() - pos);
+        m_camera->rotateWithMouse(delta);
 }
 
 void BlurTestScene::render() {
@@ -35,6 +42,7 @@ void BlurTestScene::render() {
         pass3();
 }
 
+/*
 void BlurTestScene::onKeyPress(int key) {
         switch(key) {
                 case 'W':
@@ -51,15 +59,7 @@ void BlurTestScene::onKeyPress(int key) {
                         break;
         }
 }
-
-void BlurTestScene::onMouseMove(int x, int y) {
-        Mouse::hide();
-
-        ivec2 pos = ivec2(x,y);
-        Mouse::setPos(Application::instance()->window()->center());
-        vec2 delta = vec2(Application::instance()->window()->center() - pos);
-        m_camera->rotateWithMouse(delta);
-}
+*/
 
 void BlurTestScene::initRender() {
         glClearColor(0.9,0.9,0.9, 1.0);

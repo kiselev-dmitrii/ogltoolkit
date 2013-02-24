@@ -2,12 +2,10 @@
 #include "BlurTestScene.h"
 
 int main() {
-        Application *app = Application::instance();
+        Application::window()->setSize(ivec2(800,600));
+        Application::window()->setTitle("BlurTestScene");
+        Application::setScene(new BlurTestScene);
 
-        app->window()->setSize(ivec2(800,600));
-        app->window()->setTitle("BlurTestScene");
-        app->setScene(new BlurTestScene);
-
-        return app->exec();
+        return Application::exec();
 }
 

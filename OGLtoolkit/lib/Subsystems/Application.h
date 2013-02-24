@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include <string>
+#include <memory>
 #include <GL/glew.h>
 #include <GL/glfw.h>
 #include <glm/glm.hpp>
@@ -57,48 +58,38 @@ public:
         ivec2   center();
 };
 
-/** Синглтон основного приложения.
+/** Статический класс основного приложения.
   * Содержит основной цикл приложения.
   * Для создание окна используется GLFW
   */
 class Application {
 private:
-        Window          m_window;               //главное окно приложения
-        AbstractScene*  m_scene;
+        static Window                   m_window;               //главное окно приложения
+        static auto_ptr<AbstractScene>  m_scene;
 
 private:
         // Инициализирование подсистем и т.д
-        bool            init();
+        static bool             init();
         // Главный цикл
-        void            loop();
+        static void             loop();
         // Завершение
-        void            terminate();
+        static void             terminate();
 
 private:
-        // Статические функции, которые вызывает GLFW
-        static void     onResizeScene(int width, int height);
-        static void     onMouseMove(int x, int y);
-        static void     onKey(int key, int action);
-
-private:
-        // Закрытый конструктор и деструктор
-        Application();
-        ~Application();
+        //Вызывается при изменении размеров окна
+        static void             onResizeScene(int width, int height);
 
 public:
-        // Получение сущности
-        static Application* instance();
-
         // Возвращает указатель на окно. Используется для настройки окна перед запуском
-        Window*         window();
+        static Window*          window();
 
         // Установка сцены в которой происходит прорисовка
-        void            setScene(AbstractScene *scene);
-        AbstractScene*  scene();
+        static void             setScene(AbstractScene *scene);
+        static AbstractScene*   scene();
 
         // Точка входа в основной цикл приложения
         // Возвращает код завершения приложения
-        int             exec();
+        static int              exec();
 };
 
 #endif // APPLICATION_H

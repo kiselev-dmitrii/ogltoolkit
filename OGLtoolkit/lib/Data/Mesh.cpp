@@ -32,17 +32,17 @@ void Mesh::calculateOffsets(unsigned char flags) {
         uint tangentSize = 0;
 
         m_vertexSize = positionSize;
-        if(m_flags & MeshFlags::NORMALS) {
+        if(flags & MeshFlags::NORMALS) {
                 normalSize = 3*sizeof(float);
                 m_vertexSize += normalSize;
                 m_normalOffset = positionSize;
         }
-        if(m_flags & MeshFlags::TEXCOORDS) {
+        if(flags & MeshFlags::TEXCOORDS) {
                 texCoordSize = 2*sizeof(float);
                 m_vertexSize += texCoordSize;
                 m_texCoordOffset = positionSize + normalSize;
         }
-        if(m_flags & MeshFlags::TANGENTS) {
+        if(flags & MeshFlags::TANGENTS) {
                 tangentSize = 3*sizeof(float);
                 m_vertexSize += tangentSize;
                 m_tangetOffset = positionSize + normalSize + texCoordSize;

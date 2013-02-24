@@ -58,11 +58,6 @@ public:
         void    renderTeapot();
         void    renderPlane();
         void    renderMonkey();
-
-public:
-        void    onKeyPress(int key);
-        void    onMouseMove(int x, int y);
-
 };
 
 #endif // EDGETESTSCENE_H

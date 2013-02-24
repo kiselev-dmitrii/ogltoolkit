@@ -22,7 +22,6 @@ SOURCES += main.cpp \
     ../../lib/OGL/Texture.cpp \
     ../../lib/OGL/IndexBuffer.cpp \
     ../../lib/OGL/Renderbuffer.cpp \
-    ../../lib/OGL/AbstractScene.cpp \
     ../../lib/OGL/GpuProgram.cpp \
     ../../lib/OGL/Framebuffer.cpp \
     ../../lib/OGL/VertexBuffer.cpp \

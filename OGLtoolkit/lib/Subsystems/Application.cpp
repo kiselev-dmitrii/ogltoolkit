@@ -79,33 +79,23 @@ bool Window::openWindow() {
 
 //========================================================================//
 
-Application::Application() {
-        m_scene = NULL;
-}
-
-Application::~Application() {
-        if(m_scene) delete m_scene;
-}
-
-Application* Application::instance() {
-        static Application instance;
-        return &instance;
-}
+auto_ptr<AbstractScene> Application::m_scene;
+Window Application::m_window;
 
 Window *Application::window() {
         return &m_window;
 }
 
 void Application::setScene(AbstractScene *scene) {
-        m_scene = scene;
+        m_scene.reset(scene);
 }
 
 AbstractScene* Application::scene() {
-        return m_scene;
+        return m_scene.get();
 }
 
 bool Application::init() {
-        if(!m_scene) {
+        if(!m_scene.get()) {
                 DEBUG("Scene was not assigned");
                 return false;
         }
@@ -133,9 +123,6 @@ bool Application::init() {
 
         // Установка колбэков
         glfwSetWindowSizeCallback(onResizeScene);
-        glfwSetKeyCallback(onKey);
-        glfwSetMousePosCallback(onMouseMove);
-
 
         return true;
 }
@@ -163,16 +150,7 @@ void Application::terminate() {
 }
 
 void Application::onResizeScene(int width, int height) {
-        Application::instance()->scene()->resize(width, height);
-}
-
-void Application::onMouseMove(int x, int y) {
-        Application::instance()->scene()->onMouseMove(x, y);
-}
-
-void Application::onKey(int key, int action) {
-        if(action) Application::instance()->scene()->onKeyPress(key);
-        else Application::instance()->scene()->onKeyRelease(key);
+        Application::scene()->resize(width, height);
 }
 
 int Application::exec() {
