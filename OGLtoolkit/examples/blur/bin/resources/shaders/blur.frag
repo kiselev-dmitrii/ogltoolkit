@@ -69,7 +69,7 @@ vec4 blurVertical(float sigma) {
                 summ += weights[i];
         }
 
-        vec4 result = texture2D(inputTexture, texCoord) * weights[0]/(2.0*summ);
+        vec4 result = texture2D(inputTexture, texCoord) * weights[0]/summ;
 
         //Вверх и низ
         for(int i=1; i<10; ++i) {
@@ -95,7 +95,7 @@ vec4 blurHorizontal(float sigma) {
                 summ += weights[i];
         }
 
-        vec4 result = texture2D(inputTexture, texCoord) * weights[0]/(2.0*summ);
+        vec4 result = texture2D(inputTexture, texCoord) * weights[0]/summ;
 
         //Вверх и низ
         for(int i=1; i<10; ++i) {
@@ -121,13 +121,13 @@ vec4 pass1() {
 subroutine (RenderPassType)
 vec4 pass2() {
         float depth = linearizeDepth(texture2D(depthTexture, texCoord).r, 100.0, 0.05);
-        return blurHorizontal(20.0*depth);
+        return blurHorizontal(pow(20.0*depth, 2.0));
 }
 
 subroutine (RenderPassType)
 vec4 pass3() {
         float depth = linearizeDepth(texture2D(depthTexture, texCoord).r, 100.0, 0.05);
-        return blurVertical(20.0*depth);
+        return blurVertical(pow(20.0*depth, 2.0));
 }
 
 void main() {

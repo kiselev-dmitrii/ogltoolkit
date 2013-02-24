@@ -106,13 +106,16 @@ public:
         void    setWrapT(WrapMode::Enum mode);
         void    setWrapR(WrapMode::Enum mode);
 
-        // Возвращает идентификатор текстуры
-        GLuint  handle() const;
-
         // Возвращает размеры текстуры на mipmap уровне mipmapLevel
         int     width(int mipmapLevel=0) const;
         int     height(int mipmapLevel=0) const;
         int     depth(int mipmapLevel=0) const;
+
+        // Возвращает идентификатор текстуры
+        GLuint  handle() const;
+
+        // Возвращает точку привязки
+        GLenum  target() const;
 };
 
 #endif // TEXTURE_H

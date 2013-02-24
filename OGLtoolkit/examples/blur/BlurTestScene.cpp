@@ -51,25 +51,6 @@ void BlurTestScene::render() {
         pass3();
 }
 
-/*
-void BlurTestScene::onKeyPress(int key) {
-        switch(key) {
-                case 'W':
-                        m_camera->moveForward(0.1);
-                        break;
-                case 'S':
-                        m_camera->moveForward(-0.1);
-                        break;
-                case 'D':
-                        m_camera->moveRight(0.1);
-                        break;
-                case 'A':
-                        m_camera->moveRight(-0.1);
-                        break;
-        }
-}
-*/
-
 void BlurTestScene::initRender() {
         glClearColor(0.9,0.9,0.9, 1.0);
         glEnable(GL_DEPTH_TEST);
@@ -89,6 +70,7 @@ void BlurTestScene::initRender() {
         // Создаем FBO с присоединенной texture и rbo
         m_texture1 = new Texture2D(800, 600);
         m_depthTexture = new Texture2D(800, 600, TextureInternal::DEPTH32F, TextureFormat::DEPTH, TextureType::UINT);
+        m_rbo1 = new Renderbuffer(800, 600, RenderbufferFormat::DEPTH_32F);
 
         m_fbo1 = new Framebuffer();
         m_fbo1->attachAsColorBuffer(*m_texture1);
@@ -124,7 +106,8 @@ void BlurTestScene::initTeapot() {
 void BlurTestScene::initMonkey() {
         m_eMonkey = new Entity(Mesh("resources/meshes/suzanne.obj"));
         m_eMonkey->setOrientation(vec3(90,90,0));
-        m_eMonkey->setPosition(vec3(5.0, 5.0, 0.0));
+        m_eMonkey->setScale(vec3(2.0,2.0,2.0));
+        m_eMonkey->setPosition(vec3(5.0, 5.0, 2.0));
 }
 
 void BlurTestScene::renderTeapot() {
@@ -204,8 +187,8 @@ void BlurTestScene::pass1() {
                 m_eTeapot->setPosition(vec3(1,10,0));
                 renderTeapot();
                 m_eTeapot->setPosition(vec3(0,0,0));
-                //renderMonkey();
-                //renderPlane();
+                renderMonkey();
+                renderPlane();
         m_fbo1->unbind();
 }
 
@@ -218,6 +201,8 @@ void BlurTestScene::pass2() {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 drawQuad();
         m_fbo2->unbind();
+
+        m_depthSampler->unbindTexture(*m_depthTexture);
 }
 
 void BlurTestScene::pass3() {
@@ -227,4 +212,6 @@ void BlurTestScene::pass3() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         drawQuad();
+
+        m_depthSampler->unbindTexture(*m_depthTexture);
 }

@@ -23,19 +23,20 @@ private:
         // Освобождает unit с номером i
         static void             freeUnit(int i);
 
+        // Делает данный TUI активным
+        void                    bind();
+
 public:
         // Конструктор и деструктор TIU
         TextureUnit();
         ~TextureUnit();
 
-        // Делает данный TUI активным
-        void    bind();
+        // Связывает/овязывает текстуру с данным TIU
+        void    bindTexture(const Texture &texture);
+        void    unbindTexture(const Texture &texture);
 
         // Возвращает номер данного TIU
-        int     number();
-
-        // Связывает текстуру с данным TIU
-        void    bindTexture(const Texture &texture);
+        int     number() const;
 };
 
 #endif // TEXTUREUNIT_H

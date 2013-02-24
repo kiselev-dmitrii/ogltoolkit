@@ -46,6 +46,10 @@ GLuint Texture::handle() const {
         return m_handle;
 }
 
+GLenum Texture::target() const {
+        return m_target;
+}
+
 int Texture::width(int mipmapLevel) const {
         int result;
         bind();
@@ -66,3 +70,4 @@ int Texture::depth(int mipmapLevel) const {
         glGetTexLevelParameteriv(m_target, mipmapLevel, GL_TEXTURE_DEPTH, &result);
         return result;
 }
+

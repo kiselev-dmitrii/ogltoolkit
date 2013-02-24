@@ -44,11 +44,16 @@ void TextureUnit::bind() {
         glActiveTexture(GL_TEXTURE0 + m_number);
 }
 
-int TextureUnit::number() {
+int TextureUnit::number() const {
         return m_number;
 }
 
 void TextureUnit::bindTexture(const Texture &texture) {
         bind();
         texture.bind();
+}
+
+void TextureUnit::unbindTexture(const Texture &texture) {
+        bind();
+        glBindTexture(texture.target(), 0);
 }

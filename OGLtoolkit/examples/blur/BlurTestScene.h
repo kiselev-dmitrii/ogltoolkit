@@ -20,6 +20,7 @@ private:
 
         Framebuffer*    m_fbo1;
         Texture2D*      m_texture1;
+        Renderbuffer*   m_rbo1;
         Texture2D*      m_depthTexture;
 
         Framebuffer*    m_fbo2;
