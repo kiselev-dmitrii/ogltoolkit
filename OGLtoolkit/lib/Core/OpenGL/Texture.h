@@ -38,8 +38,13 @@ namespace TextureType {
 enum Enum {
         UBYTE = GL_UNSIGNED_BYTE,
         BYTE = GL_BYTE,
+
+        USHORT = GL_UNSIGNED_SHORT,
+        SHORT = GL_SHORT,
+
         INT = GL_INT,
         UINT = GL_UNSIGNED_INT,
+
         FLOAT = GL_FLOAT
 };
 }
@@ -50,9 +55,9 @@ enum Enum {
 namespace TextureInternal {
 enum Enum {
         DEPTH32F = GL_DEPTH_COMPONENT32F,       //1 float компонента
-        DEPTH32I = GL_DEPTH_COMPONENT32,        //1 integer компонента
-
-        DEPTH24I = GL_DEPTH_COMPONENT24,        //24 бит на 1 компонент
+        DEPTH32 = GL_DEPTH_COMPONENT32,         //32 бит на 1 компоненту
+        DEPTH24 = GL_DEPTH_COMPONENT24,         //24 бит на 1 компоненту
+        DEPTH16 = GL_DEPTH_COMPONENT16,         //16 бит на 1 компоненту
 
         RGBA8 = GL_RGBA8,                       //4 byte компоненты
         RGBA32I = GL_RGBA32I,                   //4 integer компоненты
@@ -94,9 +99,6 @@ public:
         Texture(TextureTarget::Enum target);
         ~Texture();
 
-        // Биндит текстуру
-        void    bind() const;
-
         // Установка интерполяции при уменьшении и увеличении текстуры
         void    setFilterMinimization(TextureFilter::Enum filter);
         void    setFilterMagnification(TextureFilter::Enum filter);
@@ -110,6 +112,9 @@ public:
         int     width(int mipmapLevel=0) const;
         int     height(int mipmapLevel=0) const;
         int     depth(int mipmapLevel=0) const;
+
+        // Привязывает текстуру к контексту
+        void    bind() const;
 
         // Возвращает идентификатор текстуры
         GLuint  handle() const;
