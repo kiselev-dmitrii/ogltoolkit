@@ -32,7 +32,7 @@ namespace WrapMode {
         };
 }
 
-/** Тип компонент пикселей в текстуре
+/** Тип компонент текселей в текстуре
   */
 namespace TextureType {
 enum Enum {
@@ -58,6 +58,7 @@ enum Enum {
         DEPTH32 = GL_DEPTH_COMPONENT32,         //32 бит на 1 компоненту
         DEPTH24 = GL_DEPTH_COMPONENT24,         //24 бит на 1 компоненту
         DEPTH16 = GL_DEPTH_COMPONENT16,         //16 бит на 1 компоненту
+        DEPTH = GL_DEPTH_COMPONENT,             //выбирается автоматически, в зависимости от других параметров
 
         RGBA8 = GL_RGBA8,                       //4 byte компоненты
         RGBA32I = GL_RGBA32I,                   //4 integer компоненты

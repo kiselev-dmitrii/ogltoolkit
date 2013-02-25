@@ -19,13 +19,11 @@ private:
         Entity*         m_eMonkey;
 
         Framebuffer*    m_fbo1;
-        Texture2D*      m_texture1;
-        Renderbuffer*   m_rbo1;
-        Texture2D*      m_depthTexture;
+        ColorTexture2D* m_texture1;
+        DepthTexture2D* m_depthTexture;
 
         Framebuffer*    m_fbo2;
-        Texture2D*      m_texture2;
-        Renderbuffer*   m_rbo2;
+        ColorTexture2D* m_texture2;
 
         TextureUnit*    m_sampler;
         TextureUnit*    m_depthSampler;

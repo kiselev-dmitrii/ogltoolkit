@@ -48,12 +48,12 @@ int TextureUnit::number() const {
         return m_number;
 }
 
-void TextureUnit::bindTexture(const Texture &texture) {
+void TextureUnit::bindTexture(const Texture *texture) {
         bind();
-        texture.bind();
+        texture->bind();
 }
 
-void TextureUnit::unbindTexture(const Texture &texture) {
+void TextureUnit::unbindTexture(const Texture *texture) {
         bind();
-        glBindTexture(texture.target(), 0);
+        glBindTexture(texture->target(), 0);
 }

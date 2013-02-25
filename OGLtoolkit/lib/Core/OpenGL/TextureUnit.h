@@ -32,8 +32,8 @@ public:
         ~TextureUnit();
 
         // Связывает/овязывает текстуру с данным TIU
-        void    bindTexture(const Texture &texture);
-        void    unbindTexture(const Texture &texture);
+        void    bindTexture(const Texture *texture);
+        void    unbindTexture(const Texture *texture);
 
         // Возвращает номер данного TIU
         int     number() const;

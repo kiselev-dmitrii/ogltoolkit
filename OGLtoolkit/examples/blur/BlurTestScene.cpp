@@ -68,19 +68,15 @@ void BlurTestScene::initRender() {
         m_program->setUniform("textureHeight", 600.0f);
 
         // Создаем FBO с присоединенной texture и rbo
-        m_texture1 = new Texture2D(800, 600);
-        m_depthTexture = new Texture2D(800, 600, TextureInternal::DEPTH32F, TextureFormat::DEPTH, TextureType::UINT);
-        m_rbo1 = new Renderbuffer(800, 600, RenderbufferFormat::DEPTH_32F);
-
+        m_texture1 = new ColorTexture2D(800, 600);
+        m_depthTexture = new DepthTexture2D(800, 600);
         m_fbo1 = new Framebuffer();
-        m_fbo1->attachAsColorBuffer(*m_texture1);
-        m_fbo1->attachAsDepthBuffer(*m_depthTexture);
+        m_fbo1->attachAsColorBuffer(m_texture1);
+        m_fbo1->attachAsDepthBuffer(m_depthTexture);
 
-        m_texture2 = new Texture2D(800, 600);
-        m_rbo2 = new Renderbuffer(800, 600, RenderbufferFormat::DEPTH_32F);
+        m_texture2 = new ColorTexture2D(800, 600);
         m_fbo2 = new Framebuffer();
-        m_fbo2->attachAsColorBuffer(*m_texture2);
-        m_fbo2->attachAsDepthBuffer(*m_rbo2);
+        m_fbo2->attachAsColorBuffer(m_texture2);
 
         //
         m_sampler = new TextureUnit();
@@ -193,8 +189,8 @@ void BlurTestScene::pass1() {
 }
 
 void BlurTestScene::pass2() {
-        m_sampler->bindTexture(*m_texture1);
-        m_depthSampler->bindTexture(*m_depthTexture);
+        m_sampler->bindTexture(m_texture1);
+        m_depthSampler->bindTexture(m_depthTexture);
         m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, "pass2");
 
         m_fbo2->bind();
@@ -202,16 +198,16 @@ void BlurTestScene::pass2() {
                 drawQuad();
         m_fbo2->unbind();
 
-        m_depthSampler->unbindTexture(*m_depthTexture);
+        m_depthSampler->unbindTexture(m_depthTexture);
 }
 
 void BlurTestScene::pass3() {
-        m_sampler->bindTexture(*m_texture2);
-        m_depthSampler->bindTexture(*m_depthTexture);
+        m_sampler->bindTexture(m_texture2);
+        m_depthSampler->bindTexture(m_depthTexture);
         m_program->setSubroutine(ShaderType::FRAGMENT_SHADER, "pass3");
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         drawQuad();
 
-        m_depthSampler->unbindTexture(*m_depthTexture);
+        m_depthSampler->unbindTexture(m_depthTexture);
 }
