@@ -32,6 +32,7 @@ SOURCES += main.cpp \
     ../../lib/Framework/Entity.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
+    ../../lib/Framework/Node.cpp \
     BlurTestScene.cpp
 
 HEADERS += \
@@ -59,6 +60,7 @@ HEADERS += \
     ../../lib/Framework/AbstractScene.h \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
+    ../../lib/Framework/Node.h \
     BlurTestScene.h
 
 OTHER_FILES += \
