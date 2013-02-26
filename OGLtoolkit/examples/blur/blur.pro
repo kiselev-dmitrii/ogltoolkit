@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
     ../../lib/Framework/Node.cpp \
-    BlurTestScene.cpp
+    BlurTestScene.cpp \
+    ../../lib/Framework/EntityManager.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -61,7 +62,8 @@ HEADERS += \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
     ../../lib/Framework/Node.h \
-    BlurTestScene.h
+    BlurTestScene.h \
+    ../../lib/Framework/EntityManager.h
 
 OTHER_FILES += \
     bin/resources/shaders/blur.vert \

@@ -24,17 +24,17 @@ private:
 
 public:
         // Установка позиции, ориентации, масштаба СК в локальной СК.
-        void    setPositionInLocal(const vec3&& pos);
+        void    setPositionInLocal(const vec3& pos);
         void    setOrientationInLocal(const vec3& angles);
         void    setScaleInLocal(const vec3& scale);
 
         // Установка позиции, ориентации, масштаба СК в родительской СК.
-        void    setPositionInParent(const vec3&& pos);
+        void    setPositionInParent(const vec3& pos);
         void    setOrientationInParent(const vec3& angles);
         void    setScaleInParent(const vec3& scale);
 
         // Установка позиции, ориентации, масштаба СК в мировой СК.
-        void    setPositionInWorld(const vec3&& pos);
+        void    setPositionInWorld(const vec3& pos);
         void    setOrientationInWorld(const vec3& angles);
         void    setScaleInWorld(const vec3& scale);
 
