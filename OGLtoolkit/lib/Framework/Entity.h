@@ -1,6 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+/*
 #include "lib/Core/OpenGL/VertexArray.h"
 #include "lib/Core/OpenGL/VertexBuffer.h"
 #include "lib/Core/OpenGL/IndexBuffer.h"
@@ -12,8 +13,6 @@ using glm::vec3;
 using glm::mat3;
 using std::string;
 
-/** Класс, служащий для представления игровых объектов
-  */
 class Entity {
 private:
         mat4            m_modelMatrix;
@@ -71,6 +70,12 @@ public:
         mat4*           modelMatrix();
         //Возвращает указатель на vao
         VertexArray*    vertexArray();
+};
+*/
+
+#include "Movable.h"
+
+class Entity : public Movable {
 };
 
 #endif // ENTITY_H
