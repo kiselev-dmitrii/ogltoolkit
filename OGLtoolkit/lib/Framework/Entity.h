@@ -74,8 +74,18 @@ public:
 */
 
 #include "Movable.h"
+#include <lib/Core/OpenGL/VertexArray.h>
 
 class Entity : public Movable {
+private:
+        VertexArray*    m_vao;
+
+public:
+        // Создает объект с мешем, хрянящимся в vao
+        Entity(VertexArray *vao);
+
+        // Возращает укащатель на vao
+        VertexArray*    vertexArray() const;
 };
 
 #endif // ENTITY_H

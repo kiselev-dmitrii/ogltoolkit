@@ -10,7 +10,7 @@ private:
         Node*   m_node;         //узел, к которому привязан объект
 
 public:
-        Movable();
+        Movable(Node* node=NULL);
 
         // Возвращает систему координат с которой связан объект
         Node*   node();
