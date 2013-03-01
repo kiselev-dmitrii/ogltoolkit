@@ -44,6 +44,9 @@ public:
         TreeNode*       childNode(const string& name);
         // Ищет дочернюю ноду по всем нижележащим узлам и возвращает указатель на нее
         TreeNode*       findChildNode(const string& name);
+
+        // Отображает поддерево (c отступом offset)
+        void            show(unsigned int offset=0) const;
 };
 
 #endif // TREENODE_H
