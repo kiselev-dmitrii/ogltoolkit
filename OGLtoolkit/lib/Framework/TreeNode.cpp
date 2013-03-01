@@ -35,6 +35,8 @@ TreeNode* TreeNode::parentNode() const {
 void TreeNode::addChildNode(TreeNode *child) {
         m_childNodes.insert(std::pair<string, TreeNode*>(child->m_nodeName, child));
         if (child->m_parentNode!=this) child->setParentNode(this);
+
+        onAddChild();
 }
 
 void TreeNode::removeChildNode(TreeNode *child) {
@@ -42,6 +44,8 @@ void TreeNode::removeChildNode(TreeNode *child) {
 
         m_childNodes.erase(child->m_nodeName);
         child->m_parentNode = NULL;
+
+        onRemoveChild();
 }
 
 void TreeNode::removeChildNode(const string &name) {

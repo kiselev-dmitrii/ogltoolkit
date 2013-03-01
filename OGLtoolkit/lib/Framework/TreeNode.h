@@ -27,7 +27,7 @@ public:
         // Создает вершину с именем unknown_i
         TreeNode();
         // Разрушает данную ноду, при этом дочерние ноды становятся без родителя
-        ~TreeNode();
+        virtual ~TreeNode();
 
         // Устанавливает/возвращает родителя
         void            setParentNode(TreeNode* parent);
@@ -45,6 +45,12 @@ public:
         TreeNode*       childNode(const string& name);
         // Ищет дочернюю ноду по всем нижележащим узлам и возвращает указатель на нее
         TreeNode*       findChildNode(const string& name);
+
+
+        // Виртуальные фукнции, которые можно переобределить в наследуемых классах
+        virtual void    onAddChild() {}
+        virtual void    onRemoveChild() {}
+
 };
 
 #endif // TREENODE_H

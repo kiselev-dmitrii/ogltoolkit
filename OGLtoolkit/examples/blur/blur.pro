@@ -32,11 +32,11 @@ SOURCES += main.cpp \
     ../../lib/Framework/Entity.cpp \
     ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
-    ../../lib/Framework/Node.cpp \
-    BlurTestScene.cpp \
     ../../lib/Framework/EntityManager.cpp \
     ../../lib/Framework/Movable.cpp \
-    ../../lib/Framework/TreeNode.cpp
+    ../../lib/Framework/TreeNode.cpp \
+    BlurTestScene.cpp \
+    ../../lib/Framework/SceneNode.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -63,11 +63,11 @@ HEADERS += \
     ../../lib/Framework/AbstractScene.h \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
-    ../../lib/Framework/Node.h \
-    BlurTestScene.h \
     ../../lib/Framework/EntityManager.h \
     ../../lib/Framework/Movable.h \
-    ../../lib/Framework/TreeNode.h
+    ../../lib/Framework/TreeNode.h \
+    BlurTestScene.h \
+    ../../lib/Framework/SceneNode.h
 
 OTHER_FILES += \
     bin/resources/shaders/blur.vert \
