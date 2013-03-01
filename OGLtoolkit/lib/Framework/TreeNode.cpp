@@ -33,7 +33,7 @@ TreeNode* TreeNode::parentNode() const {
 }
 
 void TreeNode::addChildNode(TreeNode *child) {
-        m_childNodes.insert(std::pair<string, TreeNode*>(child->m_name, child));
+        m_childNodes.insert(std::pair<string, TreeNode*>(child->m_nodeName, child));
         if (child->m_parentNode!=this) child->setParentNode(this);
 }
 
@@ -85,19 +85,5 @@ TreeNode* TreeNode::findChildNode(const string &name) {
                 return NULL;
         } else {
                 return child;
-        }
-}
-
-void TreeNode::show(unsigned int offset) const {
-        SHOW("|");
-        for(unsigned int i=0; i<offset; ++i) {
-                SHOW("-");
-        }
-        SHOW(m_nodeName);
-
-        NodeMap::iterator it;
-        for(it=m_childNodes.begin(); it!=m_childNodes.end(); ++it) {
-                TreeNode* child = it->second;
-                child->show(offset+1);
         }
 }
