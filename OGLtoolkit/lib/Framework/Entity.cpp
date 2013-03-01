@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include "lib/Utils/Debug.h"
 
+/*
 void Entity::init() {
         m_position = vec3(0);
         m_orientation = vec3(0);
@@ -123,4 +124,13 @@ mat4* Entity::modelMatrix() {
 
 VertexArray* Entity::vertexArray() {
         return &m_vao;
+}
+*/
+
+Entity::Entity(VertexArray *vertexArray) : Movable() {
+        m_vertexArray = vertexArray;
+}
+
+VertexArray* Entity::vertexArray() const {
+        return m_vertexArray;
 }

@@ -78,11 +78,11 @@ public:
 
 class Entity : public Movable {
 private:
-        VertexArray*    m_vao;
+        VertexArray*    m_vertexArray;          //указатель на данные меша
 
 public:
         // Создает объект с мешем, хрянящимся в vao
-        Entity(VertexArray *vao);
+        Entity(VertexArray *vertexArray);
 
         // Возращает укащатель на vao
         VertexArray*    vertexArray() const;
