@@ -24,7 +24,11 @@ private:
         quat    m_orientationInWorld;           //оринетация, относительно мировой СК
         vec3    m_scaleInWorld;                 //масштаб, относительно мировой СК
 
-        bool    m_isNeedToUpdateWorldValues;    //определяет, требуется ли обновление
+        bool    m_isUpdateWorldValues;          //определяет, требуется ли обновление
+        bool    m_isUpdateLocalToWorldMatrix;   //определяет, требуется ли обновление модельной матрицы
+
+        mat4    m_localToWorldMatrix;
+        mat4    m_worldToLocalMatrix;
 
 private:
         // Инициализация начальных значений
@@ -37,6 +41,9 @@ private:
         // Это нужно производить при кадом изменении координат
         // Хотя это может быть неэффективно
         void    notifyNeedToUpdateWorldValues();
+
+        // Обновляет матрицу перехода ил локальных координат в мировые
+        void    updateLocalToWorldMatrix();
 
 public:
         // Конструирует СК с именем Unknown_i
@@ -87,6 +94,10 @@ public:
         void            rotateInLocal(const vec3& axis, float angle);
         void            rotateInParent(const vec3& axis, float angle);
         void            rotateInWorld(const vec3& axis, float angle);
+
+        // Возвращает матрицу перехода из локальной СК в глобальную и обратную
+        const mat4&     localToWorldMatrix();
+        const mat4&     worldToLocalMatrix();
 
         // Пеереопределенные события при добавлении/удалении ноды
         virtual void    onAddChild();

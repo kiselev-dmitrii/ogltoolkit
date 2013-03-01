@@ -9,11 +9,11 @@ void SceneNode::init() {
         m_position = vec3(0);
         m_scale = vec3(1);
 
-        m_isNeedToUpdateWorldValues = false;
+        m_isUpdateWorldValues = false;
 }
 
 void SceneNode::updateWorldValues() {
-        if(m_isNeedToUpdateWorldValues) {
+        if(m_isUpdateWorldValues) {
                 if (m_parentNode) {
                         vec3 parentWorldPos = ((SceneNode*) m_parentNode)->positionInWorld();
                         quat parentWorldOrient = ((SceneNode*) m_parentNode)->orientationInWorld();
@@ -29,13 +29,13 @@ void SceneNode::updateWorldValues() {
                         m_scaleInWorld = m_scale;
                 }
 
-                m_isNeedToUpdateWorldValues = false;
+                m_isUpdateWorldValues = false;
         }
 
 }
 
 void SceneNode::notifyNeedToUpdateWorldValues() {
-        m_isNeedToUpdateWorldValues = true;
+        m_isUpdateWorldValues = true;
         NodeMap::iterator it;
         for(it=m_childNodes.begin(); it!=m_childNodes.end(); ++it) {
                 ((SceneNode* )it->second)->notifyNeedToUpdateWorldValues();
@@ -179,10 +179,38 @@ void SceneNode::rotateInWorld(const vec3 &axis, float angle) {
         rotateInWorld(q);
 }
 
+void SceneNode::updateLocalToWorldMatrix() {
+        mat3 rot = toMat3(m_orientationInWorld);
+        m_localToWorldMatrix = mat4(
+                m_scaleInWorld.x*rot[0][0], m_scaleInWorld.y*rot[0][1], m_scaleInWorld.z*rot[0][2], m_positionInWorld.x,
+                m_scaleInWorld.x*rot[1][0], m_scaleInWorld.y*rot[1][1], m_scaleInWorld.z*rot[1][2], m_positionInWorld.y,
+                m_scaleInWorld.x*rot[2][0], m_scaleInWorld.y*rot[2][1], m_scaleInWorld.z*rot[2][2], m_positionInWorld.z,
+                                        0 ,                         0 ,                         0 ,                   1
+                );
+}
+
+const mat4& SceneNode::localToWorldMatrix() {
+        if(m_isUpdateLocalToWorldMatrix) {
+                updateLocalToWorldMatrix();
+                m_isUpdateLocalToWorldMatrix = false;
+        }
+
+        return m_localToWorldMatrix;
+}
+
+const mat4& SceneNode::worldToLocalMatrix() {
+        if(m_isUpdateLocalToWorldMatrix) {
+                updateLocalToWorldMatrix();
+                m_worldToLocalMatrix = inverse(m_localToWorldMatrix);
+                m_isUpdateLocalToWorldMatrix = false;
+        }
+        return m_worldToLocalMatrix;
+}
+
 void SceneNode::onAddChild() {
-        m_isNeedToUpdateWorldValues = true;
+        m_isUpdateWorldValues = true;
 }
 
 void SceneNode::onRemoveChild() {
-        m_isNeedToUpdateWorldValues = true;
+        m_isUpdateWorldValues = true;
 }
