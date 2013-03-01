@@ -53,9 +53,73 @@ void Node::removeNode(Node *child) {
 }
 
 void Node::setPositionInParent(const vec3 &position) {
-        // В OGRE каждая нода хранит
-        TRACE("Возможно следует оптимизировать");
-        if(m_parentNode) {
-                m_position = inverse(m_parentNode->m_orientation * m_orientation)*d / (m_parentNode->m_scale*m_scale);
+        m_position = position;
+
+        m_isNeedToUpdate = true;
+}
+
+void Node::setPositionInWorld(const vec3 &position) {
+        //Если имеется родительская нода, то нужно делать преобразование
+        //Иначе, это аналогично установки позиции в родительской системе
+        if (m_parentNode) {
+                // В Ogre наследованная ориентация и наследованный масштаб - это члены класса
+                // которые обновляются по запросу
+                TRACE("Можно оптимизировать");
+                quat derivedOrientation = m_parentNode->m_orientation * m_orientation;
+                quat derivedScale = m_parentNode->m_scale * m_scale;
+                m_position = (inverse(derivedOrientation) * position)/derivedScale;
+        } else {
+                m_position = position;
         }
+
+        m_isNeedToUpdate = true;
+}
+
+void Node::setOrientationInParent(const quat &orientation) {
+        m_orientation = normalize(orientation);
+}
+
+void Node::setOrientationInWorld(const quat &orientation) {
+        quat normOrientation = normalize(orientation);
+        if (m_parentNode) {
+                TRACE("Можно оптимизировать");
+                quat derivedOrientation = m_parentNode->m_orientation * m_orientation;
+                m_orientation = inverse(derivedOrientation) * normOrientation * derivedOrientation;
+        } else {
+                m_orientation = normOrientation;
+        }
+}
+
+void Node::translateInParent(const vec3 &delta) {
+        m_position += delta;
+}
+
+void Node::translateInLocal(const vec3 &delta) {
+        m_position += m_orientation * delta;
+}
+
+void Node::translateInWorld(const vec3 &delta) {
+        if (m_parentNode) {
+                //В Ogre вызывается m_parent->derivedOrientation()
+                TRACE("Возможно не верно работает");
+                quat derivedOrientation = m_parentNode->m_orientation * m_orientation;
+                quat derivedScale = m_parentNode->m_scale * m_scale;
+                m_position += (inverse(derivedOrientation) * delta) / derivedScale;
+        } else {
+                m_position += delta;
+        }
+}
+
+void Node::rotateInParent(const quat &quaternion) {
+        m_orientation = normalize(quaternion) * m_orientation;
+}
+
+void Node::rotateInLocal(const quat &quaternion) {
+        m_orientation = m_orientation * normalize(quaternion);
+}
+
+void Node::rotateInWorld(const quat &quaternion) {
+        TRACE("Возможно не верно работает");
+        quat derivedOrientation = m_parentNode->m_orientation * m_orientation;
+        m_orientation = m_orientation * inverse(derivedOrientation) * normalize(quaternion) * derivedOrientation;
 }

@@ -60,17 +60,17 @@ private:
         void    setPositionInWorld(const vec3& position);
 
         // Устанавливает ориентацию в родительской/мировой СК
-        void    setOrientationInWorld(const quat& orientation);
         void    setOrientationInParent(const quat& orientation);
+        void    setOrientationInWorld(const quat& orientation);
 
         // Перемещает в родительской/локальной/мировой СК
         void    translateInParent(const vec3& delta);
         void    translateInLocal(const vec3& delta);
         void    translateInWorld(const vec3& delta);
-        // Вращает в родительской/локальной/мировой СК
-        void    rotateInParent(const vec3& axis, float angle);
-        void    rotateInLocal(const vec3& axis, float angle);
-        void    rotateInWorld(const vec3& axis, float angle);
+        // Вращает в родительской/локальной/мировой СК по кватерниону
+        void    rotateInParent(const quat& quaternion);
+        void    rotateInLocal(const quat& quaternion);
+        void    rotateInWorld(const quat& quaternion);
 
 
         // Возвращает матрицу, столбцы которой содержат оси координат локальной СК
