@@ -1,7 +1,6 @@
 #include "Camera.h"
-#include <glm/gtx/rotate_vector.hpp>
-#include "lib/Utils/Debug.h"
 
+/*
 Camera::Camera() {
         m_dir = vec3(1,0,0);
         m_up = vec3(0,0,1);
@@ -116,3 +115,4 @@ mat4* Camera::projectionMatrix() {
         }
         return &m_projMatrix;
 }
+*/

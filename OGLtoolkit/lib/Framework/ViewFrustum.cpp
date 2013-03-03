@@ -1,7 +1,16 @@
 #include "ViewFrustum.h"
 #include <glm/gtx/transform.hpp>
 
-ViewFrustum::ViewFrustum() { }
+ViewFrustum::ViewFrustum() {
+        m_projType = ProjectionType::PERSPECTIVE;
+        m_nearClipDist = 0.05f;
+        m_farClipDist = 100.0f;
+        m_aspectRatio = 1.0f;
+        m_fieldOfView = 60.0f;
+        m_orthoRect = vec2(1.0f);
+
+        m_isUpdateMatrix = true;
+}
 
 void ViewFrustum::setProjectionType(ProjectionType::Enum type) {
         m_projType = type;
