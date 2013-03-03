@@ -6,14 +6,7 @@ using glm::mat4;
 using glm::vec3;
 using namespace glm;
 
-/** Тип проеции
-  */
-namespace ProjectionType {
-        enum Enum {
-                PERSPECTIVE,
-                ORTHOGONAL
-        };
-}
+
 
 /** Класс камеры.
   * Позволяет удобно изменять положение, менять тип проекции, отсекающие плоскости и т.д
@@ -40,17 +33,6 @@ private:
 public:
         Camera();
 
-        // Устанавливает тип проекции
-        void    setProjectionType(ProjectionType::Enum type);
-        // Устанавливает расстояние до дальней и ближней отсекаюзей плоскости
-        void    setFarClipDistance(float distance);
-        void    setNearClipDistance(float distance);
-        // Устанавливает соотношение сторон
-        void    setAspectRatio(float ratio);
-        // Уставливает угол обзора
-        void    setFOV(float angle);
-        // Уставливает ширину и высоту прямогольника ортогональной проекции
-        void    setOrthoRect(float width, float height);
 
         // Смещение по осям на значение delta
         void    moveForward(float delta);

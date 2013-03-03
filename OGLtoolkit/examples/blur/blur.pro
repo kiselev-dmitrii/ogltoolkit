@@ -36,7 +36,8 @@ SOURCES += main.cpp \
     ../../lib/Framework/Movable.cpp \
     ../../lib/Framework/TreeNode.cpp \
     BlurTestScene.cpp \
-    ../../lib/Framework/SceneNode.cpp
+    ../../lib/Framework/SceneNode.cpp \
+    ../../lib/Framework/ViewFrustum.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -67,7 +68,8 @@ HEADERS += \
     ../../lib/Framework/Movable.h \
     ../../lib/Framework/TreeNode.h \
     BlurTestScene.h \
-    ../../lib/Framework/SceneNode.h
+    ../../lib/Framework/SceneNode.h \
+    ../../lib/Framework/ViewFrustum.h
 
 OTHER_FILES += \
     bin/resources/shaders/blur.vert \
