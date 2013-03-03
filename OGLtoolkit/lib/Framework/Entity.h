@@ -76,6 +76,9 @@ public:
 #include "Movable.h"
 #include <lib/Core/OpenGL/VertexArray.h>
 
+/** Класс некоторой сущности.
+  * Предстваляет собой меш, загруженный в видеопамять и доступный для рендеринга
+  */
 class Entity : public Movable {
 private:
         VertexArray*    m_vertexArray;          //указатель на данные меша
