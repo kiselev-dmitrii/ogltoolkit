@@ -30,14 +30,15 @@ SOURCES += main.cpp \
     ../../lib/Utils/StreamUtils.cpp \
     ../../lib/Utils/StringUtils.cpp \
     ../../lib/Framework/Entity.cpp \
-    ../../lib/Framework/Camera.cpp \
     ../../lib/Framework/Render.cpp \
     ../../lib/Framework/EntityManager.cpp \
     ../../lib/Framework/Movable.cpp \
     ../../lib/Framework/TreeNode.cpp \
     BlurTestScene.cpp \
     ../../lib/Framework/SceneNode.cpp \
-    ../../lib/Framework/ViewFrustum.cpp
+    ../../lib/Framework/ViewFrustum.cpp \
+    ../../lib/Framework/AbstractCamera.cpp \
+    ../../lib/Framework/DefaultCamera.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -60,7 +61,6 @@ HEADERS += \
     ../../lib/Utils/Debug.h \
     ../../lib/Utils/StreamUtils.h \
     ../../lib/Utils/StringUtils.h \
-    ../../lib/Framework/Camera.h \
     ../../lib/Framework/AbstractScene.h \
     ../../lib/Framework/Entity.h \
     ../../lib/Framework/Render.h \
@@ -69,7 +69,9 @@ HEADERS += \
     ../../lib/Framework/TreeNode.h \
     BlurTestScene.h \
     ../../lib/Framework/SceneNode.h \
-    ../../lib/Framework/ViewFrustum.h
+    ../../lib/Framework/ViewFrustum.h \
+    ../../lib/Framework/AbstractCamera.h \
+    ../../lib/Framework/DefaultCamera.h
 
 OTHER_FILES += \
     bin/resources/shaders/blur.vert \
