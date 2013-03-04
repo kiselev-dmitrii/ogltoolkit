@@ -16,6 +16,19 @@ using namespace std;
 
 typedef vector<string> StringList;
 
+/** Данные о меше
+  * Указатель на эти данные имеет каждый объект Entity.
+  * Они затем используются при ренедере
+  */
+struct MeshInfo {
+        VertexBuffer    m_vbo;
+        IndexBuffer     m_ibo;
+        VertexArray     m_vao;
+
+        uint            m_indicesCount;
+};
+
+
 /** Класс представляет собой фабрику объектов типа Entity
   * Представляет методы для загрузки мешей в видеопамять и
   * для доступа и создания объектов Entity из загруженных мешей
@@ -30,16 +43,11 @@ typedef vector<string> StringList;
   */
 class EntityManager {
 private:
-        struct Triple {
-                VertexBuffer    m_vbo;
-                IndexBuffer     m_ibo;
-                VertexArray     m_vao;
-        };
-        typedef map<string, Triple*> MapTriple;
+        typedef map<string, MeshInfo*> MapMeshInfo;
         typedef map<string, Entity*> MapEntity;
 
 private:
-        MapTriple       m_triples;      //меши в видеопамяти
+        MapMeshInfo     m_meshes;       //меши
         MapEntity       m_entities;     //сущности
 
 public:
@@ -52,6 +60,8 @@ public:
         void            addMesh(const Mesh& mesh, const string& meshName);
         // Удаляет меш из доступных
         void            removeMesh(const string& meshName);
+        // Удаляет все меши
+        void            removeAllMeshes();
         // Возвращает список доступных мешей
         StringList      listOfMeshes() const;
 
@@ -63,8 +73,11 @@ public:
         Entity*         entity(const string& entityName) const;
         // Удаляет объект с именем entityName
         void            removeEntity(const string& entityName);
+        // Удаляет все сущности
+        void            removeAllEntities();
         // Возвращает список созданных Entity
         StringList      listOfEntities() const;
+
 };
 
 #endif // ENTITYMANAGER_H

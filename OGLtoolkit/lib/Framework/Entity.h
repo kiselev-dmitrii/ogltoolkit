@@ -2,21 +2,22 @@
 #define ENTITY_H
 
 #include "Movable.h"
-#include <lib/Core/OpenGL/VertexArray.h>
+
+struct MeshInfo;
 
 /** Класс некоторой сущности.
   * Предстваляет собой меш, загруженный в видеопамять и доступный для рендеринга
   */
 class Entity : public Movable {
 private:
-        VertexArray*    m_vertexArray;          //указатель на данные меша
+        MeshInfo*       m_meshInfo;     //указатель на данные меша
 
 public:
-        // Создает объект с мешем, хрянящимся в vao
-        Entity(VertexArray *vertexArray);
+        // Создает объект с мешем
+        Entity(MeshInfo* meshInfo);
 
-        // Возращает укащатель на vao
-        VertexArray*    vertexArray() const;
+        // Возвращает указатель на данные меша
+        MeshInfo*       meshInfo() const;
 };
 
 #endif // ENTITY_H

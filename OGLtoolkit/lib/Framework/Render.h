@@ -2,14 +2,14 @@
 #define RENDER_H
 
 #include "Entity.h"
-#include "Camera.h"
+#include "AbstractCamera.h"
 #include "lib/Core/OpenGL/GpuProgram.h"
 
 /** Класс, для осуществления рендера
   */
 class Render {
 private:
-        Camera*         m_curCamera;
+        AbstractCamera* m_curCamera;
         GpuProgram*     m_curProgram;
 
 private:
@@ -28,8 +28,8 @@ public:
         GpuProgram*     currentProgram();
 
         // Установка/получение текущей камеры
-        void            setCurrentCamera(Camera *camera);
-        Camera*         currentCamera();
+        void            setCurrentCamera(AbstractCamera *camera);
+        AbstractCamera* currentCamera();
 
         // Занимается отрисовкой сущности
         void            render(Entity *entity);

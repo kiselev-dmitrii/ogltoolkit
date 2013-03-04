@@ -1,10 +1,10 @@
 #include "Entity.h"
 #include "lib/Utils/Debug.h"
 
-Entity::Entity(VertexArray *vertexArray) : Movable() {
-        m_vertexArray = vertexArray;
+Entity::Entity(MeshInfo *meshInfo) : Movable() {
+        m_meshInfo = meshInfo;
 }
 
-VertexArray* Entity::vertexArray() const {
-        return m_vertexArray;
+MeshInfo* Entity::meshInfo() const {
+        return m_meshInfo;
 }
