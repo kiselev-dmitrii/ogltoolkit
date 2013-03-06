@@ -72,3 +72,7 @@ HEADERS += \
     ../../lib/Framework/TreeNode.h \
     ../../lib/Framework/DefaultCamera.h \
     FrameWorkTest.h
+
+OTHER_FILES += \
+    bin/resources/shaders/lighting.vert \
+    bin/resources/shaders/lighting.frag

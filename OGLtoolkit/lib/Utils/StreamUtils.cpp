@@ -31,3 +31,8 @@ std::ostream &StreamUtils::operator<<(std::ostream &stream, const glm::mat4 &mat
         stream << "|" << mat[3][0] << " " << mat[3][1] << " " << mat[3][2] << mat[3][3] << "|" << endl;
         return stream;
 }
+
+std::ostream &StreamUtils::operator<<(std::ostream &stream, const glm::quat &q) {
+        stream << "(" << q[0] << ", " << q[1] << ", " << q[2] << ", " << q[3] << ")";
+        return stream;
+}

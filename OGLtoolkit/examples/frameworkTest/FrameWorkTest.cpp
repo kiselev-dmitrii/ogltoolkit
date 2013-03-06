@@ -1,5 +1,6 @@
 #include "FrameWorkTest.h"
 #include "lib/Framework/Render.h"
+#include "lib/Utils/Debug.h"
 
 FrameWorkTest::FrameWorkTest() {
 }
@@ -38,7 +39,7 @@ void FrameWorkTest::initCamera() {
 }
 
 void FrameWorkTest::initShaders() {
-        m_program = new GpuProgram("resources/shaders/blur");
+        m_program = new GpuProgram("resources/shaders/lighting");
         Render::instance()->setCurrentProgram(m_program);
 }
 
@@ -56,6 +57,7 @@ void FrameWorkTest::resize(int w, int h) {
 
 void FrameWorkTest::update(float deltaTime) {
         m_camera->update(deltaTime);
+        SHOW(m_camera->node()->orientationInParent());
 }
 
 void FrameWorkTest::render() {

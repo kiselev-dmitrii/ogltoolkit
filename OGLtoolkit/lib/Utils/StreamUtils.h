@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 using std::ostream;
 using std::endl;
@@ -15,6 +16,7 @@ namespace StreamUtils {
         std::ostream &operator<<(std::ostream &stream, const glm::vec4 &vec);
         std::ostream &operator<<(std::ostream &stream, const glm::mat3 &mat);
         std::ostream &operator<<(std::ostream &stream, const glm::mat4 &mat);
+        std::ostream &operator<<(std::ostream &stream, const glm::quat &q);
 }
 
 #endif // STREAMUTILS_H
