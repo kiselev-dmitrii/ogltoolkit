@@ -1,8 +1,6 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#include <GL/glfw.h>
-
 /** Статический класс для обработки нажатых клавиш
   */
 class Keyboard {

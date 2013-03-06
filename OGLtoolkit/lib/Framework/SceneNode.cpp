@@ -1,4 +1,6 @@
 #include "SceneNode.h"
+#include <glm/gtx/quaternion.hpp>
+#include "lib/Utils/Debug.h"
 
 void SceneNode::init() {
         m_orientation = quat(1,0,0,0);
@@ -75,7 +77,7 @@ quat SceneNode::convertLocalToWorld(const quat &localQuat) {
 }
 
 void SceneNode::setPositionInParent(const vec3 &position) {
-        m_position = pos;
+        m_position = position;
         notifyNeedToUpdateWorldValues();
 }
 
@@ -107,7 +109,7 @@ void SceneNode::setPositionInWorld(const vec3 &position) {
 }
 
 void SceneNode::setOrientationInWorld(const quat &orientation) {
-        vec3 orientInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(orientation);
+        quat orientInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(orientation);
         setOrientationInParent(orientInParent);
 }
 
@@ -142,7 +144,7 @@ void SceneNode::translateInParent(const vec3 &delta) {
 
 void SceneNode::translateInWorld(const vec3 &delta) {
         if (m_parentNode) {
-                m_position += (inverse(((SceneNode*)m_parentNode)->m_positionInWorld) * delta) / ((SceneNode*)m_parentNode)->m_scaleInWorld;
+                m_position += (inverse(((SceneNode*)m_parentNode)->m_orientationInWorld) * delta) / ((SceneNode*)m_parentNode)->m_scaleInWorld;
         } else {
                 m_position += delta;
         }

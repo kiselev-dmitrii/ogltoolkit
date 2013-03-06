@@ -62,28 +62,28 @@ public:
         void            loadMeshFromFile(const string &filename, size_t indexMesh=0, unsigned char flags=MeshFlags::ALL);
 
         // Возвращает указатель на вершинные данные
-        void*           vertices();
+        void*           vertices() const;
         // Возврашает размеры буфера вершин в байтах
-        uint            verticesSize();
+        uint            verticesSize() const;
         // Возвращает размеры одной вершины
-        uint            vertexSize();
+        uint            vertexSize() const;
 
         // Возвращает смещения начал данных о нормалях, текст. коорд, и тангентах
-        uint            normalOffset();
-        uint            texCoordOffset();
-        uint            tangentOffset();
+        uint            normalOffset() const;
+        uint            texCoordOffset() const;
+        uint            tangentOffset() const;
 
         // Определяет имеет ли меш данные о нормалях, текст. коорд. и тангентах
-        bool            hasNormals();
-        bool            hasTexCoords();
-        bool            hasTangents();
+        bool            hasNormals() const;
+        bool            hasTexCoords() const;
+        bool            hasTangents() const;
 
         //Возвращает указатель на индексные данные
-        void*           indices();
+        void*           indices() const;
         //Возвращает количество индесов
-        uint            indicesCount();
+        uint            indicesCount() const;
         //Вовзращает размер индексных данных
-        uint            indicesSize();
+        uint            indicesSize() const;
 
         // Операторы
         Mesh&           operator=(const Mesh &op2);

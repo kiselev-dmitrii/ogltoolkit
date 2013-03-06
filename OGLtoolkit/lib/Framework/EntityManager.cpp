@@ -56,7 +56,7 @@ void EntityManager::removeAllMeshes() {
 StringList EntityManager::listOfMeshes() const {
         StringList result;
 
-        MapMeshInfo::iterator it;
+        MapMeshInfo::const_iterator it;
         for(it = m_meshes.begin(); it != m_meshes.end(); ++it) {
                 result.push_back(it->first);
         }
@@ -75,13 +75,13 @@ Entity* EntityManager::createEntity(const string &entityName, const string &mesh
 
         // Создаем и добавляем новую сущность
         Entity* entity = new Entity(it->second);
-        m_entities->insert(std::pair<string, Entity*>(entityName, entity));
+        m_entities.insert(std::pair<string, Entity*>(entityName, entity));
 
         return entity;
 }
 
 Entity* EntityManager::entity(const string &entityName) const {
-        MapEntity::iterator it;
+        MapEntity::const_iterator it;
         it = m_entities.find(entityName);
 
         if(it != m_entities.end()) {
@@ -115,7 +115,7 @@ void EntityManager::removeAllEntities() {
 StringList EntityManager::listOfEntities() const {
         StringList result;
 
-        MapEntity::iterator it;
+        MapEntity::const_iterator it;
         for(it = m_entities.begin(); it != m_entities.end(); ++it) {
                 result.push_back(it->first);
         }

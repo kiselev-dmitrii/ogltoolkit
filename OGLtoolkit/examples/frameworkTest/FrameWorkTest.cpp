@@ -8,7 +8,7 @@ FrameWorkTest::~FrameWorkTest() {
 }
 
 void FrameWorkTest::initRender() {
-        glClearColor(0.9, 0.9, 0.9);
+        glClearColor(0.9, 0.9, 0.9, 1.0);
         glEnable(GL_DEPTH_TEST);
 }
 
@@ -26,9 +26,9 @@ void FrameWorkTest::initEntities() {
         m_entityManager->createEntity("teapot", "teapot");
         m_entityManager->createEntity("cube", "cube");
 
-        m_entityManager->entity("suzanne")->setNode(node1);
-        m_entityManager->entity("teapot")->setNode(node2);
-        m_entityManager->entity("cube")->setNode(node3);
+        m_entityManager->entity("suzanne")->setNode(m_node1);
+        m_entityManager->entity("teapot")->setNode(m_node2);
+        m_entityManager->entity("cube")->setNode(m_node3);
 }
 
 void FrameWorkTest::initCamera() {
@@ -59,6 +59,8 @@ void FrameWorkTest::update(float deltaTime) {
 }
 
 void FrameWorkTest::render() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         Render::instance()->render(m_entityManager->entity("suzanne"));
         Render::instance()->render(m_entityManager->entity("teapot"));
         Render::instance()->render(m_entityManager->entity("cube"));

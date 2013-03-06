@@ -14,7 +14,7 @@ private:
 
 private:
         // Отправляет матрицы в шейдер
-        void            updateMatrices(Camera *camera, Entity *entity);
+        void            updateMatrices(AbstractCamera *camera, Entity *entity);
 
         // Закрытый конструктор для синглтона
         Render() {}

@@ -145,29 +145,29 @@ void Mesh::loadMeshFromFile(const string &filename, size_t indexMesh, unsigned c
 }
 
 
-void *Mesh::vertices() { return (void *)m_vertices; }
+void *Mesh::vertices() const { return (void *)m_vertices; }
 
-uint Mesh::verticesSize() { return m_verticesCount * m_vertexSize; }
+uint Mesh::verticesSize() const { return m_verticesCount * m_vertexSize; }
 
-uint Mesh::vertexSize() { return m_vertexSize; }
+uint Mesh::vertexSize() const { return m_vertexSize; }
 
-uint Mesh::normalOffset() { return m_normalOffset; }
+uint Mesh::normalOffset() const { return m_normalOffset; }
 
-uint Mesh::texCoordOffset() { return m_texCoordOffset; }
+uint Mesh::texCoordOffset() const { return m_texCoordOffset; }
 
-uint Mesh::tangentOffset() { return m_tangetOffset; }
+uint Mesh::tangentOffset() const { return m_tangetOffset; }
 
-bool Mesh::hasNormals() { return m_flags & MeshFlags::NORMALS; }
+bool Mesh::hasNormals() const { return m_flags & MeshFlags::NORMALS; }
 
-bool Mesh::hasTexCoords() { return m_flags & MeshFlags::TEXCOORDS; }
+bool Mesh::hasTexCoords() const { return m_flags & MeshFlags::TEXCOORDS; }
 
-bool Mesh::hasTangents() { return m_flags & MeshFlags::TANGENTS; }
+bool Mesh::hasTangents() const { return m_flags & MeshFlags::TANGENTS; }
 
-void *Mesh::indices() { return (void *)m_indices; }
+void *Mesh::indices() const { return (void *)m_indices; }
 
-uint Mesh::indicesCount() { return m_indicesCount; }
+uint Mesh::indicesCount() const { return m_indicesCount; }
 
-uint Mesh::indicesSize() { return m_indicesCount * sizeof(uint); }
+uint Mesh::indicesSize() const { return m_indicesCount * sizeof(uint); }
 
 Mesh &Mesh::operator =(const Mesh &op2) {
         freeMemory();
