@@ -57,7 +57,8 @@ void FrameWorkTest::resize(int w, int h) {
 
 void FrameWorkTest::update(float deltaTime) {
         m_camera->update(deltaTime);
-        SHOW(m_camera->node()->orientationInParent());
+        m_camera->node()->rotateInWorld(vec3(0,0,1), 100*deltaTime);
+        SHOW(m_camera->node()->localToWorldMatrix());
 }
 
 void FrameWorkTest::render() {

@@ -8,10 +8,11 @@ void SceneNode::init() {
         m_scale = vec3(1);
 
         m_orientationInWorld = quat(1,0,0,0);
-        m_position = vec3(0);
-        m_scale = vec3(1);
+        m_positionInWorld = vec3(0);
+        m_scaleInWorld = vec3(1);
 
-        m_isUpdateWorldValues = false;
+        m_isUpdateWorldValues = true;
+        m_isUpdateLocalToWorldMatrix = true;
 }
 
 void SceneNode::updateWorldValues() {
@@ -31,6 +32,7 @@ void SceneNode::updateWorldValues() {
                         m_scaleInWorld = m_scale;
                 }
 
+                m_isUpdateLocalToWorldMatrix = true;
                 m_isUpdateWorldValues = false;
         }
 
@@ -190,6 +192,8 @@ void SceneNode::lookAt(const vec3 &target, const vec3 &up) {
                            xAxis.y, yAxis.y, zAxis.y,
                            xAxis.z, yAxis.z, zAxis.z);
         m_orientation = toQuat(matrix);
+
+        notifyNeedToUpdateWorldValues();
 }
 
 void SceneNode::updateLocalToWorldMatrix() {
