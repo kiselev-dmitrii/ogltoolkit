@@ -15,6 +15,6 @@ void AbstractCamera::moveUp(float delta) {
 }
 
 void AbstractCamera::rotateWithMouse(const vec2 &angles) {
-        m_node->rotateInLocal(vec3(0,1,0), angles.x);
+        m_node->rotateInParent(vec3(0,0,1), angles.x);
         m_node->rotateInLocal(vec3(1,0,0), angles.y);
 }

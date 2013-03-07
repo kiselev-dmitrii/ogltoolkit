@@ -24,6 +24,14 @@ public:
         // Конструктор
         DefaultCamera(SceneNode* node);
 
+        // Установка чуствительности камеры при повороте
+        void    setMouseSensitivity(float sensitivity);
+        float   mouseSensitivity() const;
+
+        // Установка скорости движения камеры
+        void    setSpeedOfMovement(float speed);
+        float   speedOfMovement() const;
+
         // Метод обновления позиции и ориентации камеры
         void    update(float deltaTime);
 };
