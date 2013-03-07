@@ -37,7 +37,7 @@ void FrameWorkTest::initEntities() {
 
 void FrameWorkTest::initCamera() {
         m_cameraNode = new SceneNode("Camera_node");
-        m_camera = new DefaultCamera(m_cameraNode);
+        m_camera = new FirstPersonCamera(m_cameraNode);
         Render::instance()->setCurrentCamera(m_camera);
 }
 
@@ -47,7 +47,6 @@ void FrameWorkTest::initShaders() {
 
         m_program->setUniform("light.position", vec3(0));
         m_program->setUniform("light.color", vec3(1));
-
 }
 
 void FrameWorkTest::init() {

@@ -36,8 +36,8 @@ SOURCES += main.cpp \
     ../../lib/Framework/ViewFrustum.cpp \
     ../../lib/Framework/Render.cpp \
     ../../lib/Framework/AbstractCamera.cpp \
-    ../../lib/Framework/DefaultCamera.cpp \
     ../../lib/Framework/TreeNode.cpp \
+    ../../lib/Solutions/FirstPersonCamera.cpp \
     FrameWorkTest.cpp
 
 HEADERS += \
@@ -70,7 +70,7 @@ HEADERS += \
     ../../lib/Framework/ViewFrustum.h \
     ../../lib/Framework/EntityManager.h \
     ../../lib/Framework/TreeNode.h \
-    ../../lib/Framework/DefaultCamera.h \
+    ../../lib/Solutions/FirstPersonCamera.h \
     FrameWorkTest.h
 
 OTHER_FILES += \

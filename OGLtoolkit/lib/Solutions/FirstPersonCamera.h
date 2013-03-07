@@ -1,13 +1,12 @@
-#ifndef DEFAULTCAMERA_H
-#define DEFAULTCAMERA_H
+#ifndef FIRSTPERSONCAMERA_H
+#define FIRSTPERSONCAMERA_H
 
-#include "AbstractCamera.h"
+#include "lib/Framework/AbstractCamera.h"
 
-/** Камера, которая будет использоваться в большинстве случаев.
-  * Скорее всего, следует перенести эту камеру на другой уровень (например GameObjects),
-  * т.к. она использует классы из Subsystems (устройства ввода и доступ к окну)
+/** Камера, которая используется в First Person Shooter
+  * Вращание происходит так, как в большинстве шутеров
   */
-class DefaultCamera : public AbstractCamera {
+class FirstPersonCamera : public AbstractCamera {
 private:
         // Чувствительность мыши от 0.0 до 100
         float   m_mouseSensitivity;
@@ -22,7 +21,7 @@ private:
 
 public:
         // Конструктор
-        DefaultCamera(SceneNode* node);
+        FirstPersonCamera(SceneNode* node);
 
         // Установка чуствительности камеры при повороте
         void    setMouseSensitivity(float sensitivity);

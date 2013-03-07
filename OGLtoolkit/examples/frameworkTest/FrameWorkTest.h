@@ -3,21 +3,22 @@
 
 #include "lib/Core/OpenGL/GpuProgram.h"
 #include "lib/Framework/AbstractScene.h"
-#include "lib/Framework/DefaultCamera.h"
 #include "lib/Framework/EntityManager.h"
 #include "lib/Framework/SceneNode.h"
+#include "lib/Solutions/FirstPersonCamera.h"
 
 class FrameWorkTest : public AbstractScene {
 private:
-        GpuProgram*     m_program;
-        DefaultCamera*  m_camera;
+        GpuProgram*             m_program;
+        FirstPersonCamera*      m_camera;
 
-        EntityManager*  m_entityManager;
+        EntityManager*          m_entityManager;
 
-        SceneNode*      m_cameraNode;
-        SceneNode*      m_node1;
-        SceneNode*      m_node2;
-        SceneNode*      m_node3;
+        SceneNode*              m_cameraNode;
+        SceneNode*              m_node1;
+        SceneNode*              m_node2;
+        SceneNode*              m_node3;
+
 public:
         FrameWorkTest();
         ~FrameWorkTest();
