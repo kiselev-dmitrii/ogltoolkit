@@ -24,17 +24,15 @@ void FrameWorkTest::initEntities() {
         m_node3->setPositionInParent(vec3(-4,-4,0));
 
         m_entityManager = new EntityManager();
-        m_entityManager->addMesh(Mesh("resources/meshes/cube.obj"), "cube.mesh");
-        m_entityManager->addMesh(Mesh("resources/meshes/suzanne.obj"), "suzanne.mesh");
-        m_entityManager->addMesh(Mesh("resources/meshes/teapot.obj", 1), "teapot.mesh");
+        m_entityManager->addMesh(Mesh("resources/meshes/sphere.obj"), "sphere.mesh");
 
-        m_entityManager->createEntity("cube", "cube.mesh");
-        m_entityManager->createEntity("suzanne", "suzanne.mesh");
-        m_entityManager->createEntity("teapot", "teapot.mesh");
+        m_entityManager->createEntity("sun", "sphere.mesh");
+        m_entityManager->createEntity("earth", "sphere.mesh");
+        m_entityManager->createEntity("moon", "sphere.mesh");
 
-        m_entityManager->entity("teapot")->setNode(m_node1);
-        m_entityManager->entity("cube")->setNode(m_node2);
-        m_entityManager->entity("suzanne")->setNode(m_node3);
+        m_entityManager->entity("sun")->setNode(m_node1);
+        m_entityManager->entity("earth")->setNode(m_node2);
+        m_entityManager->entity("moon")->setNode(m_node3);
 }
 
 void FrameWorkTest::initCamera() {
@@ -47,16 +45,16 @@ void FrameWorkTest::initShaders() {
         m_program = new GpuProgram("resources/shaders/lighting");
         Render::instance()->setCurrentProgram(m_program);
 
-        m_program->setUniform("light.position", vec3(10));
+        m_program->setUniform("light.position", vec3(0));
         m_program->setUniform("light.color", vec3(1));
 
 }
 
 void FrameWorkTest::init() {
         initRender();
-        initCamera();
         initShaders();
         initEntities();
+        initCamera();
 }
 
 void FrameWorkTest::resize(int w, int h) {
@@ -77,18 +75,18 @@ void FrameWorkTest::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_program->setUniform("material.ambient", vec3(0.3));
-        m_program->setUniform("material.diffuse", vec3(1, 0, 0));
+        m_program->setUniform("material.diffuse", vec3(1, 1, 0));
         m_program->setUniform("material.specular", vec3(1.0));
         m_program->setUniform("material.shininess", 80.0f);
-        Render::instance()->render(m_entityManager->entity("cube"));
-        m_program->setUniform("material.ambient", vec3(0.3));
-        m_program->setUniform("material.diffuse", vec3(0, 1, 0));
-        m_program->setUniform("material.specular", vec3(1.0));
-        m_program->setUniform("material.shininess", 80.0f);
-        Render::instance()->render(m_entityManager->entity("suzanne"));
+        Render::instance()->render(m_entityManager->entity("sun"));
         m_program->setUniform("material.ambient", vec3(0.3));
         m_program->setUniform("material.diffuse", vec3(0, 0, 1));
         m_program->setUniform("material.specular", vec3(1.0));
         m_program->setUniform("material.shininess", 80.0f);
-        Render::instance()->render(m_entityManager->entity("teapot"));
+        Render::instance()->render(m_entityManager->entity("earth"));
+        m_program->setUniform("material.ambient", vec3(0.3));
+        m_program->setUniform("material.diffuse", vec3(0.5, 0.5, 0.5));
+        m_program->setUniform("material.specular", vec3(1.0));
+        m_program->setUniform("material.shininess", 80.0f);
+        Render::instance()->render(m_entityManager->entity("moon"));
 }
