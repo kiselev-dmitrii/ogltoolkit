@@ -129,18 +129,30 @@ const vec3& SceneNode::scaleInParent() {
 }
 
 void SceneNode::setPositionInWorld(const vec3 &position) {
-        vec3 posInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(position);
-        setPositionInParent(posInParent);
+        if(m_parentNode) {
+                vec3 posInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(position);
+                setPositionInParent(posInParent);
+        } else {
+                setPositionInParent(position);
+        }
 }
 
 void SceneNode::setOrientationInWorld(const quat &orientation) {
-        quat orientInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(orientation);
-        setOrientationInParent(orientInParent);
+        if(m_parentNode) {
+                quat orientInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(orientation);
+                setOrientationInParent(orientInParent);
+        } else {
+                setOrientationInParent(orientation);
+        }
 }
 
 void SceneNode::setScaleInWorld(const vec3 &scale) {
-        vec3 scaleInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(scale);
-        setScaleInParent(scaleInParent);
+        if(m_parentNode) {
+                vec3 scaleInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(scale);
+                setScaleInParent(scaleInParent);
+        } else {
+                setScaleInParent(scale);
+        }
 }
 
 const vec3& SceneNode::positionInWorld() {

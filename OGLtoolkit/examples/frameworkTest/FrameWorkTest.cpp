@@ -50,10 +50,6 @@ void FrameWorkTest::initShaders() {
         m_program->setUniform("light.position", vec3(10));
         m_program->setUniform("light.color", vec3(1));
 
-        m_program->setUniform("material.ambient", vec3(0.3));
-        m_program->setUniform("material.diffuse", vec3(1, 0, 0));
-        m_program->setUniform("material.specular", vec3(1.0));
-        m_program->setUniform("material.shininess", 80.0f);
 }
 
 void FrameWorkTest::init() {
@@ -80,7 +76,19 @@ void FrameWorkTest::update(float deltaTime) {
 void FrameWorkTest::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        m_program->setUniform("material.ambient", vec3(0.3));
+        m_program->setUniform("material.diffuse", vec3(1, 0, 0));
+        m_program->setUniform("material.specular", vec3(1.0));
+        m_program->setUniform("material.shininess", 80.0f);
         Render::instance()->render(m_entityManager->entity("cube"));
+        m_program->setUniform("material.ambient", vec3(0.3));
+        m_program->setUniform("material.diffuse", vec3(0, 1, 0));
+        m_program->setUniform("material.specular", vec3(1.0));
+        m_program->setUniform("material.shininess", 80.0f);
         Render::instance()->render(m_entityManager->entity("suzanne"));
+        m_program->setUniform("material.ambient", vec3(0.3));
+        m_program->setUniform("material.diffuse", vec3(0, 0, 1));
+        m_program->setUniform("material.specular", vec3(1.0));
+        m_program->setUniform("material.shininess", 80.0f);
         Render::instance()->render(m_entityManager->entity("teapot"));
 }
