@@ -15,13 +15,26 @@ void FrameWorkTest::initRender() {
 
 void FrameWorkTest::initEntities() {
         m_node1 = new SceneNode("Node1");
+        m_node2 = new SceneNode("Node2");
+        m_node3 = new SceneNode("Node3");
+
+        m_node2->setParentNode(m_node1);
+        m_node2->setPositionInParent(vec3(10,10,0));
+        m_node3->setParentNode(m_node2);
+        m_node3->setPositionInParent(vec3(-4,-4,0));
 
         m_entityManager = new EntityManager();
         m_entityManager->addMesh(Mesh("resources/meshes/cube.obj"), "cube.mesh");
+        m_entityManager->addMesh(Mesh("resources/meshes/suzanne.obj"), "suzanne.mesh");
+        m_entityManager->addMesh(Mesh("resources/meshes/teapot.obj", 1), "teapot.mesh");
 
         m_entityManager->createEntity("cube", "cube.mesh");
+        m_entityManager->createEntity("suzanne", "suzanne.mesh");
+        m_entityManager->createEntity("teapot", "teapot.mesh");
 
-        m_entityManager->entity("cube")->setNode(m_node1);
+        m_entityManager->entity("teapot")->setNode(m_node1);
+        m_entityManager->entity("cube")->setNode(m_node2);
+        m_entityManager->entity("suzanne")->setNode(m_node3);
 }
 
 void FrameWorkTest::initCamera() {
@@ -58,10 +71,16 @@ void FrameWorkTest::resize(int w, int h) {
 void FrameWorkTest::update(float deltaTime) {
         SHOW(1.0/deltaTime);
         m_camera->update(deltaTime);
+
+        m_node1->rotateInParent(vec3(1,1,1), 40*deltaTime);
+        m_node2->rotateInParent(vec3(0,1,1), 50*deltaTime);
+        m_node3->rotateInParent(vec3(0,0,1), 60*deltaTime);
 }
 
 void FrameWorkTest::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Render::instance()->render(m_entityManager->entity("cube"));
+        Render::instance()->render(m_entityManager->entity("suzanne"));
+        Render::instance()->render(m_entityManager->entity("teapot"));
 }
