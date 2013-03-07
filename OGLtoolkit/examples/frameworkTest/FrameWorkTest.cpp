@@ -15,21 +15,13 @@ void FrameWorkTest::initRender() {
 
 void FrameWorkTest::initEntities() {
         m_node1 = new SceneNode("Node1");
-        m_node2 = new SceneNode("Node2");
-        m_node3 = new SceneNode("Node3");
 
         m_entityManager = new EntityManager();
-        m_entityManager->addMesh(Mesh("resources/meshes/suzanne.obj"), "suzanne");
-        m_entityManager->addMesh(Mesh("resources/meshes/teapot.obj"), "teapot");
-        m_entityManager->addMesh(Mesh("resources/meshes/cube.obj"), "cube");
+        m_entityManager->addMesh(Mesh("resources/meshes/cube.obj"), "cube.mesh");
 
-        m_entityManager->createEntity("suzanne", "suzanne");
-        m_entityManager->createEntity("teapot", "teapot");
-        m_entityManager->createEntity("cube", "cube");
+        m_entityManager->createEntity("cube", "cube.mesh");
 
-        m_entityManager->entity("suzanne")->setNode(m_node1);
-        m_entityManager->entity("teapot")->setNode(m_node2);
-        m_entityManager->entity("cube")->setNode(m_node3);
+        m_entityManager->entity("cube")->setNode(m_node1);
 }
 
 void FrameWorkTest::initCamera() {
@@ -41,13 +33,21 @@ void FrameWorkTest::initCamera() {
 void FrameWorkTest::initShaders() {
         m_program = new GpuProgram("resources/shaders/lighting");
         Render::instance()->setCurrentProgram(m_program);
+
+        m_program->setUniform("light.position", vec3(10));
+        m_program->setUniform("light.color", vec3(1));
+
+        m_program->setUniform("material.ambient", vec3(0.3));
+        m_program->setUniform("material.diffuse", vec3(1, 0, 0));
+        m_program->setUniform("material.specular", vec3(1.0));
+        m_program->setUniform("material.shininess", 80.0f);
 }
 
 void FrameWorkTest::init() {
         initRender();
-        initEntities();
         initCamera();
         initShaders();
+        initEntities();
 }
 
 void FrameWorkTest::resize(int w, int h) {
@@ -56,15 +56,12 @@ void FrameWorkTest::resize(int w, int h) {
 }
 
 void FrameWorkTest::update(float deltaTime) {
+        SHOW(1.0/deltaTime);
         m_camera->update(deltaTime);
-        m_camera->node()->rotateInWorld(vec3(0,0,1), 100*deltaTime);
-        SHOW(m_camera->node()->localToWorldMatrix());
 }
 
 void FrameWorkTest::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Render::instance()->render(m_entityManager->entity("suzanne"));
-        Render::instance()->render(m_entityManager->entity("teapot"));
         Render::instance()->render(m_entityManager->entity("cube"));
 }

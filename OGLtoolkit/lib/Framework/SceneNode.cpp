@@ -41,7 +41,7 @@ void SceneNode::notifyChilds() {
 
         NodeMap::iterator it;
         for(it=m_childNodes.begin(); it!=m_childNodes.end(); ++it) {
-                ((SceneNode* )it->second)->notifyNeedToUpdateWorldValues();
+                ((SceneNode* )it->second)->notifyChilds();
         }
 }
 
@@ -139,7 +139,7 @@ void SceneNode::setOrientationInWorld(const quat &orientation) {
 }
 
 void SceneNode::setScaleInWorld(const vec3 &scale) {
-        vec3 scaleInParent = ((SceneNode*)m_scaleNode)->convertWorldToLocal(scale);
+        vec3 scaleInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(scale);
         setScaleInParent(scaleInParent);
 }
 
