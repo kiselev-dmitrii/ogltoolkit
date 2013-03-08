@@ -14,7 +14,8 @@ private:
 
         EntityManager*          m_entityManager;
 
-        SceneNode*              m_cameraNode;
+        SceneNode*              m_cameraNode1;
+        SceneNode*              m_cameraNode2;
         SceneNode*              m_node1;
         SceneNode*              m_node2;
         SceneNode*              m_node3;
