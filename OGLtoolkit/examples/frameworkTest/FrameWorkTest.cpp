@@ -57,6 +57,9 @@ void FrameWorkTest::initShaders() {
 
         m_program->setUniform("light.position", vec3(10));
         m_program->setUniform("light.color", vec3(1));
+
+        StringList uniforms = m_program->activeUniforms();
+        for(size_t i=0; i < uniforms.size(); ++i) SHOW(uniforms[i]);
 }
 
 void FrameWorkTest::init() {

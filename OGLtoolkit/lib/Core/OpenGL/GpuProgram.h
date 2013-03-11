@@ -16,6 +16,8 @@ using glm::mat4;
 using namespace std;
 using namespace glm;
 
+typedef vector<string>  StringList;
+
 /** Типы шейдеров
   */
 namespace ShaderType {
@@ -61,42 +63,43 @@ public:
         ~GpuProgram();
 
         // Компиляция, линковка
-        bool    compileShaderFromFile(const string &filename, ShaderType::Enum type);
-        bool    link();
-        bool    isLinked();
+        bool            compileShaderFromFile(const string &filename, ShaderType::Enum type);
+        bool            link();
+        bool            isLinked();
 
         // Загружает, компилирует и линкует программу
         // Шейдеры находятся в одном файле, и каждый начинается с комментария "//--Тип_шейдера"
-        bool    loadProgram(const string &filename);
+        bool            loadProgram(const string &filename);
 
         // Делает шейдер текущим или отключает его
-        void    bind();
-        void    unbind();
+        void            bind();
+        void            unbind();
 
         // Установка переменных
-        void    setUniform(const string &name, float value);
-        void    setUniform(const string &name, int value);
-        void    setUniform(const string &name, const vec3 &value);
-        void    setUniform(const string &name, const vec4 &value);
-        void    setUniform(const string &name, const mat3 &value);
-        void    setUniform(const string &name, const mat4 &value);
+        void            setUniform(const string &name, float value);
+        void            setUniform(const string &name, int value);
+        void            setUniform(const string &name, const vec3 &value);
+        void            setUniform(const string &name, const vec4 &value);
+        void            setUniform(const string &name, const mat3 &value);
+        void            setUniform(const string &name, const mat4 &value);
 
         // Устанавливает подряд идущие uniform-subroutine переменные из uniformNames в значения funcNames в шейдере type
         // В uniformNames должны быть указаны все uniform-subroutine переменные или хотябы первые подряд
-        void    setSubroutines(ShaderType::Enum type, const vector<string> &uniformNames, const vector<string> &funcNames);
+        void            setSubroutines(ShaderType::Enum type, const StringList &uniformNames, const StringList &funcNames);
 
         // Устанавливает uniform-subroutine нулевую по порядку
         // Удобно, если в шейдере лишь одна такая переменная
-        void    setSubroutine(ShaderType::Enum type, const string &funcName);
+        void            setSubroutine(ShaderType::Enum type, const string &funcName);
+
+        // Возвращает список доступных uniform переменных
+        StringList      activeUniforms() const;
+        // Возвращает список доступных аттрибутов
+        StringList      activeAttributes() const;
+        // Возвращает лог
+        string          log() const;
 
         // Возвращает handle программы
         GLuint  handle() const;
-
-        // Дебаг
-        string  getLog();
-        void    showLog();
-        void    showActiveUniforms();
-        void    showActiveAttributes();
 
 };
 

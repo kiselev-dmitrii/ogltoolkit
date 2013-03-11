@@ -275,7 +275,7 @@ void GpuProgram::setUniform(const string &name, const mat4 &value) {
         glUniformMatrix4fv(loc, 1, GL_FALSE, &value[0][0]);
 }
 
-void GpuProgram::setSubroutines(ShaderType::Enum type, const vector<string> &uniformNames, const vector<string> &funcNames) {
+void GpuProgram::setSubroutines(ShaderType::Enum type, const StringList &uniformNames, const StringList &funcNames) {
         if(uniformNames.size() != funcNames.size()) {
                 TRACE("Count of uniform names doesnt match count of uniform values");
                 return;
@@ -299,56 +299,62 @@ void GpuProgram::setSubroutine(ShaderType::Enum type, const string &funcName) {
         glUniformSubroutinesuiv(type, 1, &index);
 }
 
+StringList GpuProgram::activeUniforms() const {
+        StringList result;
+
+        // Получаем количество переменных и максимальную длину имени
+        GLint countUniforms, maxLength;
+        glGetProgramiv(m_programHandle, GL_ACTIVE_UNIFORMS, &countUniforms);
+        glGetProgramiv(m_programHandle, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxLength);
+
+        // Выделяем память под имя
+        GLchar* name = new GLchar[maxLength];
+
+        // Получаем данные о i-той переменной
+        for(int i=0; i< countUniforms; ++i) {
+                GLsizei written;
+                GLint   size;
+                GLenum  type;
+                glGetActiveUniform(m_programHandle, i, maxLength, &written, &size, &type, name);
+
+                result.push_back(string(name));
+        }
+
+        delete [] name;
+
+        return result;
+}
+
+StringList GpuProgram::activeAttributes() const {
+        StringList result;
+
+        // Получаем количество переменных и максимальную длину имени
+        GLint countAttribs, maxLength;
+        glGetProgramiv(m_programHandle, GL_ACTIVE_ATTRIBUTES, &countAttribs);
+        glGetProgramiv(m_programHandle, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxLength);
+
+        // Выделяем память под имя
+        GLchar* name = new GLchar[maxLength];
+
+        // Получаем данные о i-той переменной
+        for(int i=0; i< countAttribs; ++i) {
+                GLsizei written;
+                GLint   size;
+                GLenum  type;
+                glGetActiveAttrib(m_programHandle, i, maxLength, &written, &size, &type, name);
+
+                result.push_back(string(name));
+        }
+
+        delete [] name;
+
+        return result;
+}
+
 GLuint GpuProgram::handle() const {
         return m_programHandle;
 }
 
-string GpuProgram::getLog() {
+string GpuProgram::log() const {
         return m_log;
-}
-
-void GpuProgram::showLog() {
-        std::cout << m_log << std::endl;
-}
-
-void GpuProgram::showActiveUniforms() {
-        GLint countUniforms, maxLength, size, location;
-        GLsizei written;
-        GLenum type;
-        GLchar *name;
-
-        glGetProgramiv(m_programHandle, GL_ACTIVE_UNIFORMS, &countUniforms);
-        glGetProgramiv(m_programHandle, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxLength);
-        name = new GLchar[maxLength];
-
-        std::cout << "Location\t | Name" << std::endl;
-        std::cout << "---------------------------------------------" << std::endl;
-        for(int i=0; i < countUniforms; ++i) {
-                glGetActiveUniform(m_programHandle, i, maxLength, &written, &size, &type, name);
-                location = glGetUniformLocation(m_programHandle, name);
-                std::cout << location << "\t\t | " << name << std::endl;
-        }
-
-        delete [] name;
-}
-
-void GpuProgram::showActiveAttributes() {
-        GLint countAttribs, maxLength, size, location;
-        GLsizei written;
-        GLenum type;
-        GLchar *name;
-
-        glGetProgramiv(m_programHandle, GL_ACTIVE_ATTRIBUTES, &countAttribs);
-        glGetProgramiv(m_programHandle, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxLength);
-        name = new GLchar[maxLength];
-
-        std::cout << "Location\t | Name" << std::endl;
-        std::cout << "-------------------------------------------------------------------------------------" << std::endl;
-        for(int i=0; i < countAttribs; ++i) {
-                glGetActiveAttrib(m_programHandle, i, maxLength, &written, &size, &type, name);
-                location = glGetAttribLocation(m_programHandle, name);
-                std::cout << location << "\t | " << name << std::endl;
-        }
-
-        delete [] name;
 }
