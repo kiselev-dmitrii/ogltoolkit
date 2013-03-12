@@ -122,3 +122,7 @@ StringList EntityManager::listOfEntities() const {
 
         return result;
 }
+
+MapEntity* EntityManager::entities() const {
+        return m_entities;
+}

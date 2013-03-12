@@ -34,7 +34,7 @@ SOURCES += main.cpp \
     ../../lib/Framework/Movable.cpp \
     ../../lib/Framework/EntityManager.cpp \
     ../../lib/Framework/ViewFrustum.cpp \
-    ../../lib/Framework/Render.cpp \
+    ../../lib/Framework/RenderManager.cpp \
     ../../lib/Framework/AbstractCamera.cpp \
     ../../lib/Framework/TreeNode.cpp \
     ../../lib/Solutions/FirstPersonCamera.cpp \
@@ -65,7 +65,7 @@ HEADERS += \
     ../../lib/Framework/SceneNode.h \
     ../../lib/Framework/AbstractScene.h \
     ../../lib/Framework/Entity.h \
-    ../../lib/Framework/Render.h \
+    ../../lib/Framework/RenderManager.h \
     ../../lib/Framework/Movable.h \
     ../../lib/Framework/ViewFrustum.h \
     ../../lib/Framework/EntityManager.h \

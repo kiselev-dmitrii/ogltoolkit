@@ -28,6 +28,9 @@ struct MeshInfo {
         uint            m_indicesCount;
 };
 
+/** Ассоциативный массив из указателей на Entity
+  */
+typedef map<string, Entity*> MapEntity;
 
 /** Класс представляет собой фабрику объектов типа Entity
   * Представляет методы для загрузки мешей в видеопамять и
@@ -44,7 +47,6 @@ struct MeshInfo {
 class EntityManager {
 private:
         typedef map<string, MeshInfo*> MapMeshInfo;
-        typedef map<string, Entity*> MapEntity;
 
 private:
         MapMeshInfo     m_meshes;       //меши
@@ -77,6 +79,9 @@ public:
         void            removeAllEntities();
         // Возвращает список созданных Entity
         StringList      listOfEntities() const;
+
+        // Вовзвращает указатель на коллекцию объектов Entity
+        MapEntity*      entities() const;
 
 };
 
