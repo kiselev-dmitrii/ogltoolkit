@@ -12,22 +12,22 @@ EntityManager::~EntityManager() {
 void EntityManager::addMesh(const Mesh &mesh, const string &meshName) {
         // Создаем VBO, IBO, VAO и загружаем туда данные меша
         MeshInfo* meshInfo = new MeshInfo();
-        meshInfo->m_vbo.uploadData(mesh.vertices(), mesh.verticesSize(), Hint::STATIC_DRAW);
-        meshInfo->m_ibo.uploadData(mesh.indices(), mesh.indicesSize(), Hint::STATIC_DRAW);
+        meshInfo->vertexBuffer()->uploadData(mesh.vertices(), mesh.verticesSize(), Hint::STATIC_DRAW);
+        meshInfo->indexBuffer()->uploadData(mesh.indices(), mesh.indicesSize(), Hint::STATIC_DRAW);
 
         // Настраиваем VAO (задаем, как должны интерпретировать аттрибуты и т.д
-        meshInfo->m_vao.bind();
-                meshInfo->m_vbo.setAttribAssociation("vertexPosition", 3, GL_FLOAT, 0, mesh.vertexSize());
+        meshInfo->vertexArray()->bind();
+                meshInfo->vertexBuffer()->setAttribAssociation("vertexPosition", 3, GL_FLOAT, 0, mesh.vertexSize());
 
-                if(mesh.hasNormals()) meshInfo->m_vbo.setAttribAssociation("vertexNormal", 3, GL_FLOAT, mesh.normalOffset(), mesh.vertexSize());
-                if(mesh.hasTexCoords()) meshInfo->m_vbo.setAttribAssociation("vertexTexCoord", 2, GL_FLOAT, mesh.texCoordOffset(), mesh.vertexSize());
-                if(mesh.hasTangents()) meshInfo->m_vbo.setAttribAssociation("vertexTangent", 3, GL_FLOAT, mesh.tangentOffset(), mesh.vertexSize());
+                if(mesh.hasNormals()) meshInfo->vertexBuffer()->setAttribAssociation("vertexNormal", 3, GL_FLOAT, mesh.normalOffset(), mesh.vertexSize());
+                if(mesh.hasTexCoords()) meshInfo->vertexBuffer()->setAttribAssociation("vertexTexCoord", 2, GL_FLOAT, mesh.texCoordOffset(), mesh.vertexSize());
+                if(mesh.hasTangents()) meshInfo->vertexBuffer()->setAttribAssociation("vertexTangent", 3, GL_FLOAT, mesh.tangentOffset(), mesh.vertexSize());
 
-                meshInfo->m_ibo.bind();
-        meshInfo->m_vao.unbind();
+                meshInfo->indexBuffer()->bind();
+        meshInfo->vertexArray()->unbind();
 
         // Указываем количество индексов в меше
-        meshInfo->m_indicesCount = mesh.indicesCount();
+        meshInfo->setIndicesCount(mesh.indicesCount());
 
         // Добавляем меш в список доступных
         m_meshes.insert(std::pair<string, MeshInfo*>(meshName, meshInfo));

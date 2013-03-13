@@ -4,32 +4,15 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "lib/Core/OpenGL/VertexBuffer.h"
-#include "lib/Core/OpenGL/IndexBuffer.h"
-#include "lib/Core/OpenGL/VertexArray.h"
 #include "lib/Core/Data/Mesh.h"
-#include "lib/Framework/Entity.h"
+#include "MeshInfo.h"
+#include "Entity.h"
 
 using std::map;
 using std::string;
 using namespace std;
 
 typedef vector<string> StringList;
-
-/** Данные о меше
-  * Указатель на эти данные имеет каждый объект Entity.
-  * Они затем используются при ренедере
-  */
-struct MeshInfo {
-        VertexBuffer    m_vbo;
-        IndexBuffer     m_ibo;
-        VertexArray     m_vao;
-
-        uint            m_indicesCount;
-};
-
-/** Ассоциативный массив из указателей на Entity
-  */
 typedef map<string, Entity*> MapEntity;
 
 /** Класс представляет собой фабрику объектов типа Entity

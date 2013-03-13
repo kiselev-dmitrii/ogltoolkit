@@ -38,7 +38,9 @@ SOURCES += main.cpp \
     ../../lib/Framework/AbstractCamera.cpp \
     ../../lib/Framework/TreeNode.cpp \
     ../../lib/Solutions/FirstPersonCamera.cpp \
-    FrameWorkTest.cpp
+    ../../lib/Solutions/Primitives/BoundBox.cpp \
+    FrameWorkTest.cpp \
+    ../../lib/Framework/MeshInfo.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -71,7 +73,9 @@ HEADERS += \
     ../../lib/Framework/EntityManager.h \
     ../../lib/Framework/TreeNode.h \
     ../../lib/Solutions/FirstPersonCamera.h \
-    FrameWorkTest.h
+    ../../lib/Solutions/Primitives/BoundBox.h \
+    FrameWorkTest.h \
+    ../../lib/Framework/MeshInfo.h
 
 OTHER_FILES += \
     bin/resources/shaders/lighting.vert \
