@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include "MeshManager.h"
 #include "lib/Utils/Debug.h"
 
 EntityManager::EntityManager() {
@@ -6,88 +7,20 @@ EntityManager::EntityManager() {
 
 EntityManager::~EntityManager() {
         removeAllEntities();
-        removeAllMeshes();
 }
 
-void EntityManager::addMesh(const Mesh &mesh, const string &meshName) {
-        // Создаем VBO, IBO, VAO и загружаем туда данные меша
-        MeshInfo* meshInfo = new MeshInfo();
-        meshInfo->vertexBuffer()->uploadData(mesh.vertices(), mesh.verticesSize(), Hint::STATIC_DRAW);
-        meshInfo->indexBuffer()->uploadData(mesh.indices(), mesh.indicesSize(), Hint::STATIC_DRAW);
-
-        // Настраиваем VAO (задаем, как должны интерпретировать аттрибуты и т.д
-        meshInfo->vertexArray()->bind();
-                meshInfo->vertexBuffer()->setAttribAssociation("vertexPosition", 3, GL_FLOAT, 0, mesh.vertexSize());
-
-                if(mesh.hasNormals()) meshInfo->vertexBuffer()->setAttribAssociation("vertexNormal", 3, GL_FLOAT, mesh.normalOffset(), mesh.vertexSize());
-                if(mesh.hasTexCoords()) meshInfo->vertexBuffer()->setAttribAssociation("vertexTexCoord", 2, GL_FLOAT, mesh.texCoordOffset(), mesh.vertexSize());
-                if(mesh.hasTangents()) meshInfo->vertexBuffer()->setAttribAssociation("vertexTangent", 3, GL_FLOAT, mesh.tangentOffset(), mesh.vertexSize());
-
-                meshInfo->indexBuffer()->bind();
-        meshInfo->vertexArray()->unbind();
-
-        // Указываем количество индексов в меше
-        meshInfo->setIndicesCount(mesh.indicesCount());
-
-        // Добавляем меш в список доступных
-        m_meshes.insert(std::pair<string, MeshInfo*>(meshName, meshInfo));
-}
-
-void EntityManager::removeMesh(const string &meshName) {
-        MapMeshInfo::iterator it;
-        it = m_meshes.find(meshName);
-
-        if(it != m_meshes.end()) {
-                delete it->second;
-                m_meshes.erase(it);
-        } else {
-                DEBUG("Error on removing: mesh with name " << meshName << " is not exist");
-        }
-}
-
-void EntityManager::removeAllMeshes() {
-        MapMeshInfo::iterator it;
-        for(it = m_meshes.begin(); it != m_meshes.end(); ++it) {
-                delete it->second;
-        }
-        m_meshes.erase(m_meshes.begin(), m_meshes.end());
-}
-
-StringList EntityManager::listOfMeshes() const {
-        StringList result;
-
-        MapMeshInfo::const_iterator it;
-        for(it = m_meshes.begin(); it != m_meshes.end(); ++it) {
-                result.push_back(it->first);
-        }
-
-        return result;
+EntityManager* EntityManager::instance() {
+        static EntityManager instance;
+        return &instance;
 }
 
 Entity* EntityManager::createEntity(const string &entityName, const string &meshName) {
-        // Ищем меш по имени
-        MapMeshInfo::iterator it;
-        it = m_meshes.find(meshName);
-        if(it == m_meshes.end()) {
-                DEBUG("Error on creating entity: mesh with name " << meshName << " is not exist");
-                return NULL;
-        }
-
-        // Создаем и добавляем новую сущность
-        Entity* entity = new Entity(it->second);
-        m_entities.insert(std::pair<string, Entity*>(entityName, entity));
-
-        return entity;
-}
-
-Entity* EntityManager::entity(const string &entityName) const {
-        MapEntity::const_iterator it;
-        it = m_entities.find(entityName);
-
-        if(it != m_entities.end()) {
-                return it->second;
+        MeshInfo* mesh = MeshManager::instance()->mesh(meshName);
+        if(mesh) {
+                Entity* entity = new Entity(mesh);
+                m_entities.insert(std::pair<string, Entity*>(entityName, entity));
+                return entity;
         } else {
-                DEBUG("Error on finding entity: Entity with name " << entityName << " not found");
                 return NULL;
         }
 }
@@ -112,6 +45,22 @@ void EntityManager::removeAllEntities() {
         m_entities.erase(m_entities.begin(), m_entities.end());
 }
 
+Entity* EntityManager::entity(const string &entityName) const {
+        MapEntity::const_iterator it;
+        it = m_entities.find(entityName);
+
+        if(it != m_entities.end()) {
+                return it->second;
+        } else {
+                DEBUG("Error on finding entity: Entity with name " << entityName << " not found");
+                return NULL;
+        }
+}
+
+MapEntity* EntityManager::entities() const {
+        return m_entities;
+}
+
 StringList EntityManager::listOfEntities() const {
         StringList result;
 
@@ -121,8 +70,4 @@ StringList EntityManager::listOfEntities() const {
         }
 
         return result;
-}
-
-MapEntity* EntityManager::entities() const {
-        return m_entities;
 }

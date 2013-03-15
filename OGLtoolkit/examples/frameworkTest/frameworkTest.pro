@@ -40,7 +40,8 @@ SOURCES += main.cpp \
     ../../lib/Solutions/FirstPersonCamera.cpp \
     ../../lib/Solutions/Primitives/BoundBox.cpp \
     FrameWorkTest.cpp \
-    ../../lib/Framework/MeshInfo.cpp
+    ../../lib/Framework/MeshInfo.cpp \
+    ../../lib/Framework/MeshManager.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -75,7 +76,8 @@ HEADERS += \
     ../../lib/Solutions/FirstPersonCamera.h \
     ../../lib/Solutions/Primitives/BoundBox.h \
     FrameWorkTest.h \
-    ../../lib/Framework/MeshInfo.h
+    ../../lib/Framework/MeshInfo.h \
+    ../../lib/Framework/MeshManager.h
 
 OTHER_FILES += \
     bin/resources/shaders/lighting.vert \
