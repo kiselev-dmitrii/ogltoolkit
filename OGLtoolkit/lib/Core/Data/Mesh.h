@@ -87,6 +87,13 @@ public:
 
         // Операторы
         Mesh&           operator=(const Mesh &op2);
+
+
+        // Создает поверхность
+        static Mesh     createPlane(const vec2& minCoords, const vec2& maxCoords,
+                                   const vec2& minTexCoords, const vec2& maxTexCoords);
+        // Создает квад для рендеринга
+        static Mesh     createQuad();
 };
 
 #endif // MESH_H

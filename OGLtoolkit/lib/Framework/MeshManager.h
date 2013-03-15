@@ -36,6 +36,9 @@ public:
         void            loadMesh(const string& meshName, const string& filename, size_t indexMesh=0, unsigned char flags=MeshFlags::ALL);
         void            loadMesh(const string& meshName, const Mesh& mesh);
 
+        // Обновляет меш новыми данными
+        void            updateMesh(const string& meshName, const Mesh& mesh);
+
         // Удаляет меш из доступных
         void            removeMesh(const string& meshName);
         void            removeAllMeshes();
@@ -46,13 +49,6 @@ public:
         // Вовзращает список доступных мешей
         StringList      listOfMeshes() const;
 
-        // Генерирует примитив
-        void            createQuad();
-        void            createPlane();
-        void            createPyramid();
-        void            createSphere();
-        void            createBox();
-        void            createCoordinateAxes();
 };
 
 #endif // MESHMANAGER_H

@@ -188,3 +188,37 @@ Mesh &Mesh::operator =(const Mesh &op2) {
 
         return *this;
 }
+
+Mesh Mesh::createPlane(const vec2 &minCoords, const vec2 &maxCoords, const vec2 &minTexCoords, const vec2 &maxTexCoords) {
+        float vertices[] = {
+                minCoords.x, minCoords.y, 0,
+                minTexCoords.x, minTexCoords.y,
+
+                minCoords.x, maxCoords.y, 0,
+                minTexCoords.x, maxTexCoords.y,
+
+                maxCoords.x, maxCoords.y, 0,
+                maxTexCoords.x, maxTexCoords.y,
+
+                maxCoords.x, minCoords.y, 0,
+                maxTexCoords.x, minTexCoords.y
+        };
+        uint indices[] = { 0, 1, 2, 2, 3, 0 };
+
+        Mesh plane = Mesh();
+        plane.m_verticesCount = 4;
+        plane.m_indicesCount = 6;
+        plane.m_flags = MeshFlags::TEXCOORDS;
+        plane.calculateOffsets(plane.m_flags);
+
+        plane.m_vertices = new unsigned char[plane.m_vertexSize * plane.m_verticesCount];
+        plane.m_indices = new uint[plane.m_indicesCount];
+        memcpy(plane.m_vertices, &vertices, plane.m_vertexSize * plane.m_verticesCount);
+        memcpy(plane.m_indices, &indices, sizeof(uint) * plane.m_indicesCount);
+
+        return plane;
+}
+
+Mesh Mesh::createQuad() {
+        return createPlane(vec2(-1,-1), vec2(1,1), vec2(0,0), vec2(1,1));
+}
