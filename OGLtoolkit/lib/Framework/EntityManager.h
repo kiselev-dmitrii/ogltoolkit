@@ -34,18 +34,18 @@ public:
         ~EntityManager();
 
         // Создает объект Entity c именем entityName и доступным мешем meshName.
-        Entity*         createEntity(const string& entityName, const string& meshName);
+        Entity*                 createEntity(const string& entityName, const string& meshName);
 
         // Удаляет сущность
-        void            removeEntity(const string& entityName);
-        void            removeAllEntities();
+        void                    removeEntity(const string& entityName);
+        void                    removeAllEntities();
 
         // Возвращает указатель на сущность или на коллекцию сущностей
-        Entity*         entity(const string& entityName) const;
-        MapEntity*      entities() const;
+        Entity*                 entity(const string& entityName);
+        MapEntity*              entities();
 
         // Возвращает список созданных Entity
-        StringList      listOfEntities() const;
+        StringList              listOfEntities() const;
 
 };
 

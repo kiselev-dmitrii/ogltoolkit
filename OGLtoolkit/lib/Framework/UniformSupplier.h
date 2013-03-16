@@ -23,7 +23,7 @@ enum Enum {
 }
 
 /** Служит для автоматического обеспечения шейдера uniform-переменными
-  * Имена автоматически передаваемых переменных указаны ниже.
+  * Имена автоматически передаваемых переменных указаны в *.cpp файле.
   * Каждый автоматически передаваемый аттрибут или переменная имеет синтаксис "_ИмяПеременной"
   */
 class UniformSupplier {
@@ -32,17 +32,17 @@ private:
         bitset<AutoUniforms::COUNT>     m_flags;
 
 public:
-        static const string ViewMatrixName;
-        static const string InverseViewMatrixName;
+        static string ViewMatrixName;
+        static string InverseViewMatrixName;
 
-        static const string ModelMatrixName;
-        static const string NormalMatrixName;
+        static string ModelMatrixName;
+        static string NormalMatrixName;
 
-        static const string ModelViewMatrixName;
-        static const string ModelViewProjectionMatrixName;
+        static string ModelViewMatrixName;
+        static string ModelViewProjectionMatrixName;
 
-        static const string TimeValueName;
-        static const string WindowSizeName;
+        static string TimeValueName;
+        static string WindowSizeName;
 
 public:
         // Определяет нужно ли передавать значение такой переменной
@@ -51,19 +51,6 @@ public:
         // По шейдеру, узнает какие uniform нужны шейдеру
         void    calculateFlags(GpuProgram* program);
 };
-
-/** Определение имен uniform-переменных
-  */
-const string UniformSupplier::ViewMatrixName = "_ViewMatrix";
-const string UniformSupplier::InverseViewMatrixName = "_InverseViewMatrix";
-const string UniformSupplier::ModelMatrixName = "_ModelMatrix";
-const string UniformSupplier::NormalMatrixName = "_NormalMatrix";
-const string UniformSupplier::ModelViewMatrixName = "_ModelViewMatrix";
-const string UniformSupplier::ModelViewProjectionMatrixName = "_ModelViewProjectionMatrix";
-
-const string UniformSupplier::TimeValueName = "_time";
-const string UniformSupplier::WindowSizeName = "_windowSize";
-
 
 
 #endif // UNIFORMSUPPLIER_H

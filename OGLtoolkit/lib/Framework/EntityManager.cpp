@@ -45,7 +45,7 @@ void EntityManager::removeAllEntities() {
         m_entities.erase(m_entities.begin(), m_entities.end());
 }
 
-Entity* EntityManager::entity(const string &entityName) const {
+Entity* EntityManager::entity(const string &entityName) {
         MapEntity::const_iterator it;
         it = m_entities.find(entityName);
 
@@ -57,8 +57,8 @@ Entity* EntityManager::entity(const string &entityName) const {
         }
 }
 
-MapEntity* EntityManager::entities() const {
-        return m_entities;
+MapEntity* EntityManager::entities() {
+        return &m_entities;
 }
 
 StringList EntityManager::listOfEntities() const {

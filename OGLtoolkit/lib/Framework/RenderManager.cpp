@@ -17,7 +17,7 @@ RenderManager* RenderManager::instance() {
 RenderManager::~RenderManager() {
 }
 
-void RenderManager::addProgram(const string &programName, const GpuProgram *program) {
+void RenderManager::addProgram(const string &programName, GpuProgram *program) {
         m_programs.insert(std::pair<string, GpuProgram*>(programName, program));
 }
 
@@ -41,7 +41,7 @@ void RenderManager::removeAllProgram() {
         m_programs.erase(m_programs.begin(), m_programs.end());
 }
 
-GpuProgram* RenderManager::program(const string &programName) const {
+GpuProgram* RenderManager::program(const string &programName) {
         MapGpuProgram::const_iterator it;
         it = m_programs.find(programName);
 
@@ -58,6 +58,8 @@ void RenderManager::setCurrentProgram(const string &programName) {
         if(gpuProgram) {
                 m_currentProgram = gpuProgram;
                 m_uniformSupplier.calculateFlags(m_currentProgram);
+
+                m_currentProgram->bind();
         }
 }
 
@@ -69,7 +71,7 @@ void RenderManager::setCurrentCamera(AbstractCamera *camera) {
         m_currentCamera = camera;
 }
 
-AbstractCamera* RenderManager::currentCamera() const {
+AbstractCamera* RenderManager::currentCamera() {
         return m_currentCamera;
 }
 
@@ -86,7 +88,6 @@ void RenderManager::render(MapEntity *entities) {
         for(it = entities->begin(); it != entities->end(); ++it) {
                 //Нужно использовать материал
                 //it->second->material()->bind();
-
                 render(it->second);
         }
 }

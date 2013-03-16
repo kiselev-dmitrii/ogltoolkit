@@ -19,9 +19,9 @@ private:
 
 public:
         // Возвращает укащатели на VBO, VAO, IBO
-        VertexBuffer*   vertexBuffer() const;
-        IndexBuffer*    indexBuffer() const;
-        VertexArray*    vertexArray() const;
+        VertexBuffer*   vertexBuffer();
+        IndexBuffer*    indexBuffer();
+        VertexArray*    vertexArray();
 
         // Установить/получить количество индексов
         unsigned int    indicesCount() const;

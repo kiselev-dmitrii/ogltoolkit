@@ -5,12 +5,12 @@
 #include <map>
 #include <string>
 #include "UniformSupplier.h"
+#include "EntityManager.h"
 
 using namespace std;
 
 class AbstractCamera;
 class GpuProgram;
-class MapEntity;
 class Entity;
 
 typedef map<string, GpuProgram*>        MapGpuProgram;
@@ -46,23 +46,23 @@ public:
         ~RenderManager();
 
         // Добавляет GPU программу в список доступных
-        void            addProgram(const string& programName, const GpuProgram* program);
+        void            addProgram(const string& programName, GpuProgram *program);
         // Удаляет GPU программу из списка доступных
         void            removeProgram(const string& programName);
         void            removeAllProgram();
         // Возвращает GPU программу по имени
-        GpuProgram*     program(const string& programName) const;
+        GpuProgram*     program(const string& programName);
 
         // Устанавливает/возвращает текущую активную GPU программу
         void            setCurrentProgram(const string& programName);
-        GpuProgram*     currentProgram() const;
+        GpuProgram*     currentProgram();
 
         // Устанавливает/возращает текущую камеру
         void            setCurrentCamera(AbstractCamera* camera);
-        AbstractCamera* currentCamera() const;
+        AbstractCamera* currentCamera();
 
         // Отрисовывает объекты типа Enity
-        void            render(MapEntity* entities);
+        void            render(MapEntity *entities);
         void            render(Entity* entity);
 };
 

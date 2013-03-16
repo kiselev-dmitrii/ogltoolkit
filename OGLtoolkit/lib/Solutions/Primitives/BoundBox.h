@@ -22,7 +22,7 @@ public:
         void            setGeometry(const vec3& minCoords, const vec3& maxCoords);
 
         // Возвращает указатель на MeshInfo
-        MeshInfo*       meshInfo() const;
+        MeshInfo*       meshInfo();
 };
 
 #endif // BOUNDBOX_H

@@ -81,6 +81,9 @@ bool Window::openWindow() {
 
 auto_ptr<AbstractScene> Application::m_scene;
 Window Application::m_window;
+float Application::m_deltaTime = 0.0f;
+float Application::m_startTime = 0.0f;
+float Application::m_executionTime = 0.0f;
 
 Application::Application() {
 }

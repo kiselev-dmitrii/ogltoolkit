@@ -20,10 +20,10 @@ struct Material {
 
 uniform Material material;
 uniform Light light;
-uniform mat4 V;
+uniform mat4 _V;
 
 vec3 phongModel(vec3 pos, vec3 norm) {
-        vec3 vLightPos = vec3(V * vec4(light.position,1.0));
+        vec3 vLightPos = vec3(_V * vec4(light.position,1.0));
 
         vec3 s = normalize(vLightPos - pos);
         vec3 v = normalize(-pos.xyz);

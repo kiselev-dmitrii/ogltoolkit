@@ -1,19 +1,21 @@
 #ifndef FRAMEWORKTEST_H
 #define FRAMEWORKTEST_H
 
-#include "lib/Core/OpenGL/GpuProgram.h"
 #include "lib/Framework/AbstractScene.h"
 #include "lib/Framework/EntityManager.h"
+#include "lib/Framework/RenderManager.h"
+#include "lib/Framework/MeshManager.h"
+
 #include "lib/Framework/SceneNode.h"
 #include "lib/Solutions/FirstPersonCamera.h"
 
 class FrameWorkTest : public AbstractScene {
 private:
-        GpuProgram*             m_program;
+        EntityManager*          m_entityMgr;
+        RenderManager*          m_renderMgr;
+        MeshManager*            m_meshMgr;
+
         FirstPersonCamera*      m_camera;
-
-        EntityManager*          m_entityManager;
-
         SceneNode*              m_cameraNode1;
         SceneNode*              m_cameraNode2;
         SceneNode*              m_node1;

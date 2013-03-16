@@ -1,14 +1,14 @@
 #include "MeshInfo.h"
 
-VertexBuffer* MeshInfo::vertexBuffer() const {
+VertexBuffer* MeshInfo::vertexBuffer() {
         return &m_vbo;
 }
 
-IndexBuffer* MeshInfo::indexBuffer() const {
+IndexBuffer* MeshInfo::indexBuffer() {
         return &m_ibo;
 }
 
-VertexArray* MeshInfo::vertexArray() const {
+VertexArray* MeshInfo::vertexArray() {
         return &m_vao;
 }
 
