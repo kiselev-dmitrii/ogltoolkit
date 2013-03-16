@@ -20,11 +20,11 @@ void MeshManager::loadMesh(const string &meshName, const Mesh &mesh) {
 
         // Настраиваем VAO (задаем, как должны интерпретировать аттрибуты и т.д
         meshInfo->vertexArray()->bind();
-                meshInfo->vertexBuffer()->setAttribAssociation("vertexPosition", 3, GL_FLOAT, 0, mesh.vertexSize());
+                meshInfo->vertexBuffer()->setAttribAssociation("_vertexPosition", 3, GL_FLOAT, 0, mesh.vertexSize());
 
-                if(mesh.hasNormals()) meshInfo->vertexBuffer()->setAttribAssociation("vertexNormal", 3, GL_FLOAT, mesh.normalOffset(), mesh.vertexSize());
-                if(mesh.hasTexCoords()) meshInfo->vertexBuffer()->setAttribAssociation("vertexTexCoord", 2, GL_FLOAT, mesh.texCoordOffset(), mesh.vertexSize());
-                if(mesh.hasTangents()) meshInfo->vertexBuffer()->setAttribAssociation("vertexTangent", 3, GL_FLOAT, mesh.tangentOffset(), mesh.vertexSize());
+                if(mesh.hasNormals()) meshInfo->vertexBuffer()->setAttribAssociation("_vertexNormal", 3, GL_FLOAT, mesh.normalOffset(), mesh.vertexSize());
+                if(mesh.hasTexCoords()) meshInfo->vertexBuffer()->setAttribAssociation("_vertexTexCoord", 2, GL_FLOAT, mesh.texCoordOffset(), mesh.vertexSize());
+                if(mesh.hasTangents()) meshInfo->vertexBuffer()->setAttribAssociation("_vertexTangent", 3, GL_FLOAT, mesh.tangentOffset(), mesh.vertexSize());
 
                 meshInfo->indexBuffer()->bind();
         meshInfo->vertexArray()->unbind();

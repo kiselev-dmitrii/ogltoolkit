@@ -41,7 +41,8 @@ SOURCES += main.cpp \
     ../../lib/Solutions/Primitives/BoundBox.cpp \
     FrameWorkTest.cpp \
     ../../lib/Framework/MeshInfo.cpp \
-    ../../lib/Framework/MeshManager.cpp
+    ../../lib/Framework/MeshManager.cpp \
+    ../../lib/Framework/UniformSupplier.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -77,7 +78,8 @@ HEADERS += \
     ../../lib/Solutions/Primitives/BoundBox.h \
     FrameWorkTest.h \
     ../../lib/Framework/MeshInfo.h \
-    ../../lib/Framework/MeshManager.h
+    ../../lib/Framework/MeshManager.h \
+    ../../lib/Framework/UniformSupplier.h
 
 OTHER_FILES += \
     bin/resources/shaders/lighting.vert \

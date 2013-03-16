@@ -134,11 +134,14 @@ void Application::loop() {
         float oldTime, curTime;
         int running = GL_TRUE;
 
-        oldTime = glfwGetTime();
+        m_startTime = glfwGetTime();
+        oldTime = m_startTime;
         // Цикл, пока не закрыли окно
         while(running) {
                 curTime = glfwGetTime();
-                m_scene->update(curTime-oldTime);
+                m_executionTime = curTime - m_startTime;
+                m_deltaTime = curTime-oldTime;
+                m_scene->update(m_deltaTime);
                 oldTime = curTime;
 
                 m_scene->render();

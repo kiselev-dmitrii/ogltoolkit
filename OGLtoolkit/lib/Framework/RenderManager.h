@@ -1,7 +1,10 @@
 #ifndef RENDER_H
 #define RENDER_H
 
+#include <vector>
+#include <map>
 #include <string>
+#include "UniformSupplier.h"
 
 using namespace std;
 
@@ -10,22 +13,7 @@ class GpuProgram;
 class MapEntity;
 class Entity;
 
-/** Класс инкапсулирует настройки, применяемые в процессе дебага приложения.
-  * Позволяет отобразить координтные оси, описывающие боксы и т.д
-  *
-  */
-class RenderDebugSettings {
-public:
-        // Определяет, отрисовывать ли координтные оси у нодов, к которым подключены Entity
-        void    showCoordinateAxes(bool isShow=true);
-        bool    isShowCoordinateAxes() const;
-        // Определяет, отрисовывать bound box
-        void    showBoundBox(bool isShow=true);
-        bool    isShowBoundBox() const;
-        // Определяет, отрисовывать bound sphere
-        void    showBoundSphere(bool isShow=true);
-        bool    isShowBoundSphere() const;
-};
+typedef map<string, GpuProgram*>        MapGpuProgram;
 
 /** В обязанности данного класса входит:
   *     - Отрисовка объектов класса Entity в соответствии с текущей GPU программой.
@@ -34,22 +22,40 @@ public:
   */
 class RenderManager {
 private:
+        MapGpuProgram   m_programs;
+
+        GpuProgram*     m_currentProgram;
+        AbstractCamera* m_currentCamera;
+
+        UniformSupplier m_uniformSupplier;      //занимается определением, что нужно шейдеру
+
+private:
+        // Обновляет значения некоторых uniform переменных
+        void    uploadUniforms(Entity* entity);
+
+private:
         // Закрытый конструктор
-        RenderManager()        {}
+        RenderManager();
+        RenderManager(const RenderManager&);
+        RenderManager& operator=(const RenderManager&);
 
 public:
         // Точка доступа к объекту
-        static RenderManager*   instance();
+        static RenderManager* instance();
+        // Деструктор
+        ~RenderManager();
 
         // Добавляет GPU программу в список доступных
-        void            addGpuProgram(const GpuProgram& program, const string& name);
+        void            addProgram(const string& programName, const GpuProgram* program);
         // Удаляет GPU программу из списка доступных
-        void            removeGpuProgram(const string& name);
+        void            removeProgram(const string& programName);
+        void            removeAllProgram();
         // Возвращает GPU программу по имени
-        GpuProgram*     gpuProgram(const string& name) const;
+        GpuProgram*     program(const string& programName) const;
+
         // Устанавливает/возвращает текущую активную GPU программу
-        void            setCurrentGpuProgram(const string& name);
-        GpuProgram*     currentGpuProgram() const;
+        void            setCurrentProgram(const string& programName);
+        GpuProgram*     currentProgram() const;
 
         // Устанавливает/возращает текущую камеру
         void            setCurrentCamera(AbstractCamera* camera);
@@ -58,9 +64,6 @@ public:
         // Отрисовывает объекты типа Enity
         void            render(MapEntity* entities);
         void            render(Entity* entity);
-
-        // Возвращает указатель к настройками отрисовки
-        RenderDebugSettings*     debugSettings() const;
 };
 
 #endif // RENDER_H

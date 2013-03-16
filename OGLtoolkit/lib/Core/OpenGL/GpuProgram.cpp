@@ -255,6 +255,11 @@ void GpuProgram::setUniform(const string &name, int value) {
         glUniform1i(loc, value);
 }
 
+void GpuProgram::setUniform(const string &name, const vec2 &value) {
+        GLint loc = glGetUniformLocation(m_programHandle, name.c_str());
+        glUniform2f(loc, value.x, value.y);
+}
+
 void GpuProgram::setUniform(const string &name, const vec3 &value) {
         GLint loc = glGetUniformLocation(m_programHandle, name.c_str());
         glUniform3f(loc, value.x, value.y, value.z);

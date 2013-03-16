@@ -67,6 +67,10 @@ private:
         static Window                   m_window;               //главное окно приложения
         static auto_ptr<AbstractScene>  m_scene;                //auto_ptr для того, чтобы объект по указателю разрушался
 
+        static float                    m_deltaTime;
+        static float                    m_executionTime;
+        static float                    m_startTime;            //время запуска
+
 private:
         // Инициализирование подсистем и т.д
         static bool             init();
@@ -93,6 +97,12 @@ public:
         // Точка входа в основной цикл приложения
         // Возвращает код завершения приложения
         static int              exec();
+
+        // Возвращает время выполнения программы
+        static float            executionTime()                                                { return m_executionTime; }
+        // Возвращает дельту времени
+        static float            deltaTime()                                                    { return m_deltaTime; }
+
 };
 
 #endif // APPLICATION_H

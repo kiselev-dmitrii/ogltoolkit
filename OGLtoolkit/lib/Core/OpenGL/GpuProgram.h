@@ -78,6 +78,7 @@ public:
         // Установка переменных
         void            setUniform(const string &name, float value);
         void            setUniform(const string &name, int value);
+        void            setUniform(const string &name, const vec2 &value);
         void            setUniform(const string &name, const vec3 &value);
         void            setUniform(const string &name, const vec4 &value);
         void            setUniform(const string &name, const mat3 &value);
