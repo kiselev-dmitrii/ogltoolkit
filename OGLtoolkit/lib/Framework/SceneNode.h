@@ -57,6 +57,9 @@ public:
         // Разрушает СК
         ~SceneNode();
 
+        // Создает дочернюю ноду
+        SceneNode*      createChildNode(const string& name);
+
         // Конвертирует вектор/кватернион из мировой СК в локальную
         vec3            convertWorldToLocal(const vec3& worldVec);
         quat            convertWorldToLocal(const quat& worldQuat);

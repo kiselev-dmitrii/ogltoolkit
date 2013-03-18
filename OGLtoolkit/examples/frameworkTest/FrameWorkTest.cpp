@@ -2,6 +2,7 @@
 #include "lib/Utils/Debug.h"
 #include "lib/Subsystems/Keyboard.h"
 #include "lib/Subsystems/Mouse.h"
+#include "lib/Subsystems/Application.h"
 
 
 FrameWorkTest::FrameWorkTest() {
@@ -16,6 +17,7 @@ FrameWorkTest::~FrameWorkTest() {
 void FrameWorkTest::initRender() {
         glClearColor(0.9, 0.9, 0.9, 1.0);
         glEnable(GL_DEPTH_TEST);
+
         Mouse::hide();
 }
 

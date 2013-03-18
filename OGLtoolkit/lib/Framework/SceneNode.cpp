@@ -81,6 +81,12 @@ SceneNode::SceneNode(const string &name) : TreeNode(name) {
 SceneNode::~SceneNode() {
 }
 
+SceneNode* SceneNode::createChildNode(const string &name) {
+        SceneNode* node = new SceneNode(name);
+        this->addChildNode(node);
+        return SceneNode;
+}
+
 vec3 SceneNode::convertWorldToLocal(const vec3 &worldVec) {
         updateWorldCoords();
         return inverse(m_orientationInWorld) * (worldVec - m_positionInWorld) / m_scaleInWorld;

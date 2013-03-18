@@ -41,6 +41,7 @@ SOURCES += main.cpp \
     FrameWorkTest.cpp \
     ../../lib/Framework/MeshInfo.cpp \
     ../../lib/Framework/MeshManager.cpp \
+    ../../lib/Framework/SceneManager.cpp \
     ../../lib/Framework/UniformSupplier.cpp
 
 HEADERS += \
@@ -77,6 +78,7 @@ HEADERS += \
     FrameWorkTest.h \
     ../../lib/Framework/MeshInfo.h \
     ../../lib/Framework/MeshManager.h \
+    ../../lib/Framework/SceneManager.h \
     ../../lib/Framework/UniformSupplier.h
 
 OTHER_FILES += \
