@@ -15,6 +15,7 @@ RenderManager* RenderManager::instance() {
 }
 
 RenderManager::~RenderManager() {
+        removeAllProgram();
 }
 
 void RenderManager::addProgram(const string &programName, GpuProgram *program) {

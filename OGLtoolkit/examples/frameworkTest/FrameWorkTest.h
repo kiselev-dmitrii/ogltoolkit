@@ -5,19 +5,16 @@
 #include "lib/Framework/EntityManager.h"
 #include "lib/Framework/RenderManager.h"
 #include "lib/Framework/MeshManager.h"
+#include "lib/Framework/SceneManager.h"
 
-#include "lib/Framework/SceneNode.h"
-#include "lib/Solutions/FirstPersonCamera.h"
 
 class FrameWorkTest : public AbstractScene {
 private:
         EntityManager*          m_entityMgr;
         RenderManager*          m_renderMgr;
         MeshManager*            m_meshMgr;
+        SceneManager*           m_sceneMgr;
 
-        FirstPersonCamera*      m_camera;
-        SceneNode*              m_cameraNode1;
-        SceneNode*              m_cameraNode2;
         SceneNode*              m_node1;
         SceneNode*              m_node2;
         SceneNode*              m_node3;

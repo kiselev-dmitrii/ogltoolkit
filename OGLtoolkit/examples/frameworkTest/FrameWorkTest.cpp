@@ -3,12 +3,14 @@
 #include "lib/Subsystems/Keyboard.h"
 #include "lib/Subsystems/Mouse.h"
 #include "lib/Subsystems/Application.h"
+#include "lib/Solutions/FirstPersonCamera.h"
 
 
 FrameWorkTest::FrameWorkTest() {
         m_entityMgr = EntityManager::instance();
         m_renderMgr = RenderManager::instance();
         m_meshMgr = MeshManager::instance();
+        m_sceneMgr = SceneManager::instance();
 }
 
 FrameWorkTest::~FrameWorkTest() {
@@ -22,13 +24,11 @@ void FrameWorkTest::initRender() {
 }
 
 void FrameWorkTest::initEntities() {
-        m_node1 = new SceneNode("Node1");
-        m_node2 = new SceneNode("Node2");
-        m_node3 = new SceneNode("Node3");
+        m_node1 = m_sceneMgr->rootNode()->createChildNode("Node1");
+        m_node2 = m_node1->createChildNode("Node2");
+        m_node3 = m_node2->createChildNode("Node3");
 
-        m_node2->setParentNode(m_node1);
         m_node2->setPositionInParent(vec3(10,10,0));
-        m_node3->setParentNode(m_node2);
         m_node3->setPositionInParent(vec3(-4,-4,0));
 
         m_meshMgr->loadMesh("sphere.mesh", "resources/meshes/sphere.obj");
@@ -37,21 +37,16 @@ void FrameWorkTest::initEntities() {
         m_meshMgr->loadMesh("bullet1.mesh", "resources/meshes/bullet.3ds", 0);
         m_meshMgr->loadMesh("bullet2.mesh", "resources/meshes/bullet.3ds", 1);
 
-        m_entityMgr->createEntity("earth", "sphere.mesh");
-        m_entityMgr->createEntity("moon", "pyramid.mesh");
+        m_entityMgr->createEntity("earth", "sphere.mesh")->setNode(m_node2);
+        m_entityMgr->createEntity("moon", "sphere.mesh")->setNode(m_node3);
         m_entityMgr->createEntity("bullet1", "bullet1.mesh")->setNode(m_node1);
         m_entityMgr->createEntity("bullet2", "bullet2.mesh")->setNode(m_node1);
-
-        m_entityMgr->entity("earth")->setNode(m_node2);
-        m_entityMgr->entity("moon")->setNode(m_node3);
 }
 
 void FrameWorkTest::initCamera() {
-        m_cameraNode1 = new SceneNode("Camera_node1");
-        m_cameraNode2 = new SceneNode("Camera_node2");
-        m_camera = new FirstPersonCamera(m_cameraNode1);
-        m_cameraNode1->setParentNode(m_node3);
-        m_renderMgr->setCurrentCamera(m_camera);
+        SceneNode* cameraNode = m_sceneMgr->rootNode()->createChildNode("Camera_Node");
+        AbstractCamera* camera = m_sceneMgr->addCamera("Camera1", new FirstPersonCamera(cameraNode));
+        m_renderMgr->setCurrentCamera(camera);
 }
 
 void FrameWorkTest::initShaders() {
@@ -71,19 +66,16 @@ void FrameWorkTest::init() {
 
 void FrameWorkTest::resize(int w, int h) {
         glViewport(0,0, w,h);
-        m_camera->setAspectRatio(float(w)/h);
+        m_renderMgr->currentCamera()->setAspectRatio(float(w)/h);
 }
 
 void FrameWorkTest::update(float deltaTime) {
-        m_camera->update(deltaTime);
+        m_renderMgr->currentCamera()->update(deltaTime);
         SHOW(1.0/deltaTime);
 
-        m_node1->rotateInParent(vec3(1,1,1), 40*deltaTime);
-        m_node2->rotateInParent(vec3(0,1,1), 50*deltaTime);
-        m_node3->rotateInParent(vec3(0,0,1), 60*deltaTime);
-
-        if(Keyboard::isKeyPressed('1')) m_camera->setNode(m_cameraNode1);
-        if(Keyboard::isKeyPressed('2')) m_camera->setNode(m_cameraNode2);
+        //m_node1->rotateInParent(vec3(1,1,1), 40*deltaTime);
+        //m_node2->rotateInParent(vec3(0,1,1), 50*deltaTime);
+        //m_node3->rotateInParent(vec3(0,0,1), 60*deltaTime);
 }
 
 void FrameWorkTest::render() {

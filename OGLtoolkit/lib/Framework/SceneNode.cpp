@@ -84,7 +84,7 @@ SceneNode::~SceneNode() {
 SceneNode* SceneNode::createChildNode(const string &name) {
         SceneNode* node = new SceneNode(name);
         this->addChildNode(node);
-        return SceneNode;
+        return node;
 }
 
 vec3 SceneNode::convertWorldToLocal(const vec3 &worldVec) {

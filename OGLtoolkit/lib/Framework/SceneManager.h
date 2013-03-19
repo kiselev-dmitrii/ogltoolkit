@@ -2,15 +2,24 @@
 #define SCENEMANAGER_H
 
 #include <string>
+#include <map>
+#include "SceneNode.h"
 
 using namespace std;
 
 class SceneNode;
 class AbstractCamera;
 
+typedef map<string, AbstractCamera*>    MapAbstractCamera;
+
 /** Занимается управлением всех объектов на сцене
+  * Включает в себя методы управления другими менеджерами для удобства
   */
 class SceneManager {
+private:
+        MapAbstractCamera       m_cameras;      //коллекция камер
+        SceneNode               m_rootNode;     //корневая нода
+
 private:
         // Закрытые конструкторы
         SceneManager();
@@ -26,16 +35,12 @@ public:
         // Возвращает корневую ноду сцены
         SceneNode*      rootNode();
 
-        // Добавляет новую камеру и привязывает ее к ноде
-        AbstractCamera* addCamera(const string& cameraName, SceneNode* node, AbstractCamera* camera);
-        // Добавляет новую камеру и создает ноду
-        AbstractCamera* addCamera(const string& cameraName, AbstractCamera* camera);
+        // Добавляет новую камеру
+        AbstractCamera* addCamera(const string& cameraName,  AbstractCamera* camera);
         // Удаляет камеру
         void            removeCamera(const string& cameraName);
         // Возвращает указатель на камеру
-        AbstractCamera* camera(const string& cameraName);
-
-
+        AbstractCamera* camera(const string& cameraName) const;
 
 };
 
