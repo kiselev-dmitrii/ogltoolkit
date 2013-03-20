@@ -6,10 +6,10 @@
 #include <string>
 #include "UniformSupplier.h"
 #include "EntityManager.h"
+#include "AbstractCamera.h"
 
 using namespace std;
 
-class AbstractCamera;
 class GpuProgram;
 class Entity;
 

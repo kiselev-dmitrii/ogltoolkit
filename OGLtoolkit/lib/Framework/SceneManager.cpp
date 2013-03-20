@@ -41,5 +41,6 @@ AbstractCamera* SceneManager::camera(const string &cameraName) const {
                 return it->second;
         } else {
                 DEBUG("Error on finding: camera with name " << cameraName << " is not exist");
+                return NULL;
         }
 }

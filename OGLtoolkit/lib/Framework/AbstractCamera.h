@@ -12,6 +12,8 @@ class AbstractCamera : public ViewFrustum, public Movable {
 public:
         // Создает камеру, подключенную к узлу node
         AbstractCamera(SceneNode* node);
+        // Виртуальный деструктор
+        virtual         ~AbstractCamera()                                               {}
 
         // Перемещает камеру вперед/вправо/вверх на расстояние delta
         void            moveForward(float delta);
