@@ -18,15 +18,17 @@ GpuProgram::GpuProgram() {
         init();
 }
 
-GpuProgram::GpuProgram(const string &vertexShader, const string &fragmentShader) {
+GpuProgram::GpuProgram(const string &vertexShader, const string &fragmentShader, const StringList &defines) {
         init();
+        setDefines(defines);
         compileShaderFromFile(vertexShader, ShaderType::VERTEX_SHADER);
         compileShaderFromFile(fragmentShader, ShaderType::FRAGMENT_SHADER);
         link();
 }
 
-GpuProgram::GpuProgram(const string &shaders) {
+GpuProgram::GpuProgram(const string &shaders, const StringList &defines) {
         init();
+        setDefines(defines);
         compileShaderFromFile(shaders+".vert", ShaderType::VERTEX_SHADER);
         compileShaderFromFile(shaders+".frag", ShaderType::FRAGMENT_SHADER);
         link();
@@ -39,6 +41,14 @@ GpuProgram::~GpuProgram() {
         glDeleteShader(m_geometryHandle);
         glDeleteShader(m_tessControlHandle);
         glDeleteShader(m_tessEvalHandle);
+}
+
+void GpuProgram::setDefines(const StringList &defines) {
+        m_defines = defines;
+}
+
+StringList GpuProgram::defines() {
+        return m_defines;
 }
 
 bool GpuProgram::createProgram() {
@@ -68,6 +78,14 @@ bool GpuProgram::loadBufferFromFile(const string &filename, string *buffer) {
         inFile.close();
 
         return true;
+}
+
+void GpuProgram::addDefines(const StringList &defines, string *buffer) {
+        string defs = "";
+        for(size_t i = 0; i < defines.size(); ++i) {
+                defs += "#define " + defines[i] + '\n';
+        }
+        *buffer = defs + *buffer;
 }
 
 bool  GpuProgram::compileShaderFromString(const string &sourceCode, ShaderType::Enum type) {
@@ -153,9 +171,9 @@ bool GpuProgram::compileShaderFromFile(const string &filename, ShaderType::Enum 
         if (!createProgram()) return false;
 
         string sourceCode;
-        if (!loadBufferFromFile(filename, &sourceCode)) return false;
-
-        if (!compileShaderFromString(sourceCode, type)) return false;
+        if (!loadBufferFromFile(filename, &sourceCode)) return false;           //загружаем код
+        addDefines(m_defines, &sourceCode);                                     //добавляем дефайны
+        if (!compileShaderFromString(sourceCode, type)) return false;           //компилируем
 
         return true;
 }

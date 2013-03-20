@@ -38,6 +38,13 @@ vec3 phongModel(vec3 pos, vec3 norm) {
         if (sDotN > 0.0) {
                 specular = light.color * material.specular * pow(max(dot(r,v), 0.0), material.shininess);
         }
+        #ifdef RED
+                diffuse = vec3(1,0,0);
+        #endif RED
+
+        #ifdef GREEN 
+                specular = vec3(0,1,0);
+        #endif GREEN
 
         return ambient + diffuse + specular;
 }

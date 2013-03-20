@@ -34,33 +34,44 @@ enum Enum {
   */
 class GpuProgram {
 private:
-        GLuint  m_programHandle;
+         GLuint          m_programHandle;
 
-        GLuint  m_vertexHandle;
-        GLuint  m_fragmentHandle;
-        GLuint  m_geometryHandle;
-        GLuint  m_tessControlHandle;
-        GLuint  m_tessEvalHandle;
+        GLuint          m_vertexHandle;
+        GLuint          m_fragmentHandle;
+        GLuint          m_geometryHandle;
+        GLuint          m_tessControlHandle;
+        GLuint          m_tessEvalHandle;
 
-        string  m_log;
-        bool    m_isLinked;
+        string          m_log;
+        bool            m_isLinked;
+
+        StringList      m_defines;              //макроопределения
 
 private:
         void    init();
 
+        // Создает пустую программу
         bool    createProgram();
+        // Загружает в строку *buffer данные из filename
         bool    loadBufferFromFile(const string &filename, string *buffer);
+        // Добавляет в начало строки *buffer макроопределения из defines
+        void    addDefines(const StringList& defines, string *buffer);
+        // Создает шейдер, компилирует его и присоединяет к основной программе
         bool    compileShaderFromString(const string &sourceCode, ShaderType::Enum type);
 
 public:
         // Создает пустой объект
         GpuProgram();
         // Создает программу с загруженными шейдерами (компилирует, линкует)
-        GpuProgram(const string &vertexShader, const string &fragmentShader);
+        GpuProgram(const string &vertexShader, const string &fragmentShader, const StringList& defines = StringList());
         // Аналогично, но принимает на вход путь без расширений (добавляет .vert и .frag)
-        GpuProgram(const string &shaders);
+        GpuProgram(const string &shaders, const StringList& defines = StringList());
         // Разрушает объект
         ~GpuProgram();
+
+        // Устанавливает/возвращает дефайны, которые будут добавлены в каждый шейдер
+        void            setDefines(const StringList& defines);
+        StringList      defines();
 
         // Компиляция, линковка
         bool            compileShaderFromFile(const string &filename, ShaderType::Enum type);
