@@ -71,7 +71,6 @@ void FrameWorkTest::resize(int w, int h) {
 
 void FrameWorkTest::update(float deltaTime) {
         m_renderMgr->currentCamera()->update(deltaTime);
-        SHOW(1.0/deltaTime);
 
         //m_node1->rotateInParent(vec3(1,1,1), 40*deltaTime);
         //m_node2->rotateInParent(vec3(0,1,1), 50*deltaTime);

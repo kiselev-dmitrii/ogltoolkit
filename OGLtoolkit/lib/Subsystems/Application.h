@@ -71,6 +71,10 @@ private:
         static float                    m_executionTime;
         static float                    m_startTime;            //время запуска
 
+        static int                      m_fps;
+        static float                    m_remainTime;           //таймер отсчитывающий секунду
+        static int                      m_numFrames;            //счетчик кадров за секунду
+
 private:
         // Инициализирование подсистем и т.д
         static bool             init();
@@ -102,6 +106,8 @@ public:
         static float            executionTime()                                                { return m_executionTime; }
         // Возвращает дельту времени
         static float            deltaTime()                                                    { return m_deltaTime; }
+        // Возвращает fps
+        static int              fps()                                                          { return m_fps; }
 
 };
 

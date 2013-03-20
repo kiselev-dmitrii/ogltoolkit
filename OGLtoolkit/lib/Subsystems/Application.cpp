@@ -84,6 +84,9 @@ Window Application::m_window;
 float Application::m_deltaTime = 0.0f;
 float Application::m_startTime = 0.0f;
 float Application::m_executionTime = 0.0f;
+int   Application::m_fps = 0;
+float Application::m_remainTime = 1.0f;
+int   Application::m_numFrames = 0;
 
 Application::Application() {
 }
@@ -141,12 +144,25 @@ void Application::loop() {
         oldTime = m_startTime;
         // Цикл, пока не закрыли окно
         while(running) {
+                // Считаем дельту времени
                 curTime = glfwGetTime();
-                m_executionTime = curTime - m_startTime;
                 m_deltaTime = curTime-oldTime;
-                m_scene->update(m_deltaTime);
                 oldTime = curTime;
 
+                // Считаем время выполнения программы
+                m_executionTime = curTime - m_startTime;
+
+                // Считаем fps
+                if(m_remainTime <= 0.0) {
+                        m_fps = m_numFrames;
+                        m_numFrames = 0;
+                        m_remainTime = 1.0;
+                } else {
+                        ++m_numFrames;
+                        m_remainTime -= m_deltaTime;
+                }
+
+                m_scene->update(m_deltaTime);
                 m_scene->render();
 
                 glfwSwapBuffers();
