@@ -46,7 +46,7 @@ void FrameWorkTest::initEntities() {
 void FrameWorkTest::initCamera() {
         SceneNode* cameraNode = m_sceneMgr->rootNode()->createChildNode("Camera_Node");
         AbstractCamera* camera = m_sceneMgr->addCamera("Camera1", new FirstPersonCamera(cameraNode));
-        m_renderMgr->setCurrentCamera(camera);
+        m_sceneMgr->setCurrentCamera(camera);
 }
 
 void FrameWorkTest::initShaders() {
@@ -66,12 +66,13 @@ void FrameWorkTest::init() {
 
 void FrameWorkTest::resize(int w, int h) {
         glViewport(0,0, w,h);
-        m_renderMgr->currentCamera()->setAspectRatio(float(w)/h);
+        m_sceneMgr->currentCamera()->setAspectRatio(float(w)/h);
 }
 
 void FrameWorkTest::update(float deltaTime) {
-        m_renderMgr->currentCamera()->update(deltaTime);
+        m_sceneMgr->currentCamera()->update(deltaTime);
 
+        SHOW(Application::fps());
         //m_node1->rotateInParent(vec3(1,1,1), 40*deltaTime);
         //m_node2->rotateInParent(vec3(0,1,1), 50*deltaTime);
         //m_node3->rotateInParent(vec3(0,0,1), 60*deltaTime);
