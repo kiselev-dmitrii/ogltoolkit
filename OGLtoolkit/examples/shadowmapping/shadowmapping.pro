@@ -42,7 +42,8 @@ SOURCES += main.cpp \
     ../../lib/Framework/MeshManager.cpp \
     ../../lib/Framework/SceneManager.cpp \
     ../../lib/Framework/UniformSupplier.cpp\
-    ShadowmapTest.cpp
+    ShadowmapTest.cpp \
+    ../../lib/Framework/TextureManager.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -79,7 +80,8 @@ HEADERS += \
     ../../lib/Framework/MeshManager.h \
     ../../lib/Framework/SceneManager.h \
     ../../lib/Framework/UniformSupplier.h \
-    ShadowmapTest.h
+    ShadowmapTest.h \
+    ../../lib/Framework/TextureManager.h
 
 OTHER_FILES += \
     bin/resources/shaders/ubershader.vert \

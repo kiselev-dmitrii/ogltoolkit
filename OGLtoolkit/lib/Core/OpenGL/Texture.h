@@ -98,7 +98,7 @@ protected:
 public:
         // Создает текстуру с точкой привязки к target
         Texture(TextureTarget::Enum target);
-        ~Texture();
+        virtual ~Texture();
 
         // Установка интерполяции при уменьшении и увеличении текстуры
         void    setFilterMinimization(TextureFilter::Enum filter);
