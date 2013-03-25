@@ -31,7 +31,6 @@ void ShadowmapTest::initEntities() {
         m_node3 = m_node2->createChildNode("Node3");
         m_node4 = m_node3->createChildNode("Node4");
 
-        m_node2->setPositionInParent(vec3(4,0,0));
 
         m_meshMgr->loadMesh("teapot.mesh", "resources/meshes/teapot.obj", 1);
         m_meshMgr->loadMesh("cube.mesh", "resources/meshes/cube.obj");
@@ -39,9 +38,20 @@ void ShadowmapTest::initEntities() {
         m_quad = m_meshMgr->mesh("_quad.mesh");
 
         m_entityMgr->createEntity("plane", "cube.mesh")->setNode(m_node1);
+
+        SceneNode* node = m_sceneMgr->rootNode()->createChildNode("wall1");
+        m_entityMgr->createEntity("wall1", "cube.mesh")->setNode(node);
+        node->setScaleInParent(vec3(0.1,100,100));
+
+        node = m_sceneMgr->rootNode()->createChildNode("wall2");
+        m_entityMgr->createEntity("wall2", "cube.mesh")->setNode(node);
+        node->setScaleInParent(vec3(100,0.1,100));
+
+
         m_node1->setScaleInParent(vec3(100,100,0.1));
         m_entityMgr->createEntity("teapot", "teapot.mesh")->setNode(m_node2);
         m_node2->rotateInLocal(vec3(1,0,0), 90);
+        m_node2->setPositionInParent(vec3(8,8,0));
 
         m_entityMgr->createEntity("microteapot", "teapot.mesh")->setNode(m_node4);
         m_node4->setScaleInParent(vec3(0.1, 0.1, 0.1));
@@ -50,22 +60,27 @@ void ShadowmapTest::initEntities() {
 
 void ShadowmapTest::initCamera() {
         SceneNode* cameraNode = m_sceneMgr->rootNode()->createChildNode("Camera_Node");
-        AbstractCamera* camera = m_sceneMgr->addCamera("Camera1", new FirstPersonCamera(cameraNode));
-        m_sceneMgr->setCurrentCamera(camera);
+        m_mainCamera = (FirstPersonCamera*)m_sceneMgr->addCamera("mainCamera", new FirstPersonCamera(cameraNode));
+        m_sceneMgr->setCurrentCamera(m_mainCamera);
+        m_mainCamera->node()->setPositionInWorld(vec3(10,10,10));
 }
 
 void ShadowmapTest::initShaders() {
         m_tu = new TextureUnit();
 
         StringList defines1; defines1.push_back("RECORD_DEPTH");
-        m_renderMgr->addProgram("phongLighting", new GpuProgram("resources/shaders/ubershader", defines1));
-        StringList defines2; defines2.push_back("DRAW_QUAD");
-        m_renderMgr->addProgram("drawQuad", new GpuProgram("resources/shaders/ubershader", defines2));
+        m_renderMgr->addProgram("recordDepth", new GpuProgram("resources/shaders/ubershader", defines1));
+        StringList defines2; defines2.push_back("PHONG_LIGHT_MODEL");
+        m_renderMgr->addProgram("phongLighting", new GpuProgram("resources/shaders/ubershader", defines2));
 
         m_renderMgr->setCurrentProgram("phongLighting");
 
-        m_renderMgr->currentProgram()->setUniform("light.position", vec3(10));
-        m_renderMgr->currentProgram()->setUniform("light.color", vec3(1));
+        m_renderMgr->currentProgram()->setUniform("light.position", m_spot->node()->positionInWorld());
+        m_renderMgr->currentProgram()->setUniform("light.color", m_spot->diffuseColor());
+        m_renderMgr->currentProgram()->setUniform("material.ambient", vec3(0.3));
+        m_renderMgr->currentProgram()->setUniform("material.diffuse", vec3(1, 1, 0));
+        m_renderMgr->currentProgram()->setUniform("material.specular", vec3(1.0));
+        m_renderMgr->currentProgram()->setUniform("material.shininess", 80.0f);
 }
 
 void ShadowmapTest::initFBO() {
@@ -79,8 +94,19 @@ void ShadowmapTest::initFBO() {
         m_tu->bindTexture(depth);
 }
 
+void ShadowmapTest::initLight() {
+        SceneNode* node = m_sceneMgr->rootNode()->createChildNode("spotNode");
+        node->setPositionInWorld(vec3(30));
+        m_sceneMgr->addCamera("spotCamera", new FirstPersonCamera(node));
+
+        m_spot = new Spotlight(node);
+        m_spot->bindCamera(m_sceneMgr->camera("spotCamera"));
+
+}
+
 void ShadowmapTest::init() {
         initRender();
+        initLight();
         initShaders();
         initEntities();
         initCamera();
@@ -108,27 +134,22 @@ void ShadowmapTest::update(float deltaTime) {
 }
 
 void ShadowmapTest::pass1() {
-        m_renderMgr->setCurrentProgram("phongLighting");
+        m_renderMgr->setCurrentProgram("recordDepth");
+        m_sceneMgr->setCurrentCamera(m_spot->camera());
 
         m_fbo->bind();
-                glCullFace(GL_BACK);
+                glCullFace(GL_FRONT);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                m_renderMgr->currentProgram()->setUniform("material.ambient", vec3(0.3));
-                m_renderMgr->currentProgram()->setUniform("material.diffuse", vec3(1, 1, 0));
-                m_renderMgr->currentProgram()->setUniform("material.specular", vec3(1.0));
-                m_renderMgr->currentProgram()->setUniform("material.shininess", 80.0f);
                 m_renderMgr->render(m_entityMgr->entities());
         m_fbo->unbind();
 }
 
 void ShadowmapTest::pass2() {
+        m_sceneMgr->setCurrentCamera(m_mainCamera);
+        m_renderMgr->setCurrentProgram("phongLighting");
         glCullFace(GL_BACK);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        m_renderMgr->setCurrentProgram("drawQuad");
-        m_renderMgr->currentProgram()->setUniform("base_texture", m_tu->number());
-
-        m_quad->vertexArray()->bind();
-        glDrawElements(GL_TRIANGLES, m_quad->indicesCount(), GL_UNSIGNED_INT, (GLvoid *) 0);
+        m_renderMgr->render(m_entityMgr->entities());
 }
 
 void ShadowmapTest::render() {

@@ -7,6 +7,8 @@
 #include "lib/Framework/MeshManager.h"
 #include "lib/Framework/SceneManager.h"
 #include "lib/Framework/TextureManager.h"
+#include "lib/Framework/GameObjects/Spotlight.h"
+#include "lib/Solutions/FirstPersonCamera.h"
 
 #include "lib/Core/OpenGL/Framebuffer.h"
 #include "lib/Core/OpenGL/TextureUnit.h"
@@ -23,6 +25,9 @@ private:
         SceneNode*              m_node2;
         SceneNode*              m_node3;
         SceneNode*              m_node4;
+
+        FirstPersonCamera*      m_mainCamera;
+        Spotlight*              m_spot;
 
 private:
         // Это уйдет в RenderManager
@@ -47,6 +52,7 @@ public:
         void    initEntities();
         void    initCamera();
         void    initShaders();
+        void    initLight();
 };
 
 /** Техника затененения ShadowMapping

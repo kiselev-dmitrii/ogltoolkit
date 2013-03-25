@@ -43,7 +43,9 @@ SOURCES += main.cpp \
     ../../lib/Framework/SceneManager.cpp \
     ../../lib/Framework/UniformSupplier.cpp\
     ShadowmapTest.cpp \
-    ../../lib/Framework/TextureManager.cpp
+    ../../lib/Framework/TextureManager.cpp \
+    ../../lib/Framework/GameObjects/AbstractLightSource.cpp \
+    ../../lib/Framework/GameObjects/Spotlight.cpp
 
 HEADERS += \
     ../../lib/Core/Data/Image.h \
@@ -81,7 +83,9 @@ HEADERS += \
     ../../lib/Framework/SceneManager.h \
     ../../lib/Framework/UniformSupplier.h \
     ShadowmapTest.h \
-    ../../lib/Framework/TextureManager.h
+    ../../lib/Framework/TextureManager.h \
+    ../../lib/Framework/GameObjects/AbstractLightSource.h \
+    ../../lib/Framework/GameObjects/Spotlight.h
 
 OTHER_FILES += \
     bin/resources/shaders/ubershader.vert \
