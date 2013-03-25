@@ -2,8 +2,11 @@
 #define TEXTURE2D_H
 
 #include <string>
+#include <glm/glm.hpp>
 #include "Texture.h"
 #include "../Data/Image.h"
+
+using namespace glm;
 
 /** Класс двумерной текстуры.
   * Представляет к использованию общие методы, для всех двумерных текстур
@@ -23,8 +26,8 @@ class ColorTexture2D : public Texture2D {
 public:
         // Создает текстуру с изображением из filename.
         ColorTexture2D(const string &filename, bool generateMipmaps=true);
-        // Создает пустую RGBA текстуру размера width на height. Компоненты текселей получают тип type
-        ColorTexture2D(int width, int height, TextureType::Enum type=TextureType::UBYTE);
+        // Создает пустую RGBA текстуру размера size. Компоненты текселей получают тип type
+        ColorTexture2D(const ivec2& size, TextureType::Enum type=TextureType::UBYTE);
 
         // Загружает изображение в текстуру
         void    uploadImage(const string &filename, bool generateMipmaps=true);
@@ -35,8 +38,8 @@ public:
   */
 class DepthTexture2D : public Texture2D {
 public:
-        // Создает пустую текстуру глубины с размером width на height и указанным типом компонент
-        DepthTexture2D(int width, int height, TextureType::Enum type=TextureType::UINT);
+        // Создает пустую текстуру глубины с размером size и указанным типом компонент
+        DepthTexture2D(const ivec2& size, TextureType::Enum type=TextureType::UINT);
 };
 
 #endif // TEXTURE2D_H

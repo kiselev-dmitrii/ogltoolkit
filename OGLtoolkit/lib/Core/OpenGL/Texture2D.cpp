@@ -16,7 +16,7 @@ ColorTexture2D::ColorTexture2D(const string &filename, bool generateMipmaps) : T
         setFilterMagnification(TextureFilter::LINEAR);
 }
 
-ColorTexture2D::ColorTexture2D(int width, int height, TextureType::Enum type) : Texture2D() {
+ColorTexture2D::ColorTexture2D(const ivec2 &size, TextureType::Enum type) : Texture2D() {
         //Количество бит на тип соответствует 32-битной архитектуре.
         TextureInternal::Enum internalFormat;
         if(type == TextureType::BYTE || type == TextureType::UBYTE) internalFormat = TextureInternal::RGBA8;
@@ -24,7 +24,7 @@ ColorTexture2D::ColorTexture2D(int width, int height, TextureType::Enum type) : 
         else if(type == TextureType::UINT) internalFormat = TextureInternal::RGBA32UI;
         else if(type == TextureType::FLOAT) internalFormat = TextureInternal::RGBA32F;
 
-        glTexImage2D(m_target, 0, internalFormat, width, height, 0, TextureFormat::BGRA, type, NULL);
+        glTexImage2D(m_target, 0, internalFormat, size.x, size.y, 0, TextureFormat::BGRA, type, NULL);
 
         setFilterMinimization(TextureFilter::NEAREST);
         setFilterMagnification(TextureFilter::NEAREST);
@@ -43,8 +43,8 @@ void ColorTexture2D::uploadImage(const Image &image, bool generateMipmaps) {
 
 //==================================================================================================================//
 
-DepthTexture2D::DepthTexture2D(int width, int height, TextureType::Enum type) : Texture2D() {
-        glTexImage2D(m_target, 0, TextureInternal::DEPTH, width, height, 0, TextureFormat::DEPTH, type, NULL);
+DepthTexture2D::DepthTexture2D(const ivec2 &size, TextureType::Enum type) : Texture2D() {
+        glTexImage2D(m_target, 0, TextureInternal::DEPTH, size.x, size.y, 0, TextureFormat::DEPTH, type, NULL);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);

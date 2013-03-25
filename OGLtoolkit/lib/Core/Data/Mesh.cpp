@@ -203,7 +203,7 @@ Mesh Mesh::createPlane(const vec2 &minCoords, const vec2 &maxCoords, const vec2 
                 maxCoords.x, minCoords.y, 0,
                 maxTexCoords.x, minTexCoords.y
         };
-        uint indices[] = { 0, 1, 2, 2, 3, 0 };
+        uint indices[] = { 0, 2, 1, 0, 3, 2 };
 
         Mesh plane = Mesh();
         plane.m_verticesCount = 4;
