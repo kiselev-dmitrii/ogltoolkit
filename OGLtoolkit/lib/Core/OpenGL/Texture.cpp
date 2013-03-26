@@ -39,6 +39,11 @@ void Texture::setWrapR(WrapMode::Enum mode) {
         glTexParameterf(m_target, GL_TEXTURE_WRAP_R, mode);
 }
 
+void Texture::setCompareFunction(TextureCompareFunction::Enum function) {
+        bind();
+        glTexParameterf(m_target, GL_TEXTURE_COMPARE_FUNC, function);
+}
+
 GLuint Texture::handle() const {
         return m_handle;
 }

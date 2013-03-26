@@ -46,8 +46,8 @@ void ColorTexture2D::uploadImage(const Image &image, bool generateMipmaps) {
 DepthTexture2D::DepthTexture2D(const ivec2 &size, TextureType::Enum type) : Texture2D() {
         glTexImage2D(m_target, 0, TextureInternal::DEPTH, size.x, size.y, 0, TextureFormat::DEPTH, type, NULL);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+        setCompareFunction(TextureCompareFunction::LESS);
         setFilterMinimization(TextureFilter::NEAREST);
         setFilterMinimization(TextureFilter::NEAREST);
 }

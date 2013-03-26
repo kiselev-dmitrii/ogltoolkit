@@ -87,6 +87,27 @@ enum Enum {
 };
 }
 
+/** Перечисление функций сравнения
+  * В GLSL команда textureProj(sampler, coord) для sampler*Shadow эквивалентна:
+  * cmp(texture2DProj(sampler, coord.xy).r, coord.z) ? 1 : 0
+  * Данная команда служит для установки конкретного оператора сравнения
+  */
+namespace TextureCompareFunction {
+enum Enum {
+        LESS_OR_EQUAL = GL_LEQUAL,              //cmp = '<='
+        LESS = GL_LESS,                         //cmp = '<'
+
+        GREATER_OR_EQUAL = GL_GEQUAL,           //cmp = '>='
+        GREATER = GL_GREATER,                   //cmp = '>'
+
+        EQUAL = GL_EQUAL,                       //cmp = '=='
+        NOT_EQUAL = GL_NOTEQUAL,                //cmp = '!='
+
+        ALWAYS = GL_ALWAYS,                     //cmp = 'true'
+        NEVER = GL_NEVER                        //cmp = 'false'
+};
+}
+
 /** Базовый класс OpenGL текстур
   * Не имеет виртуальных функций.
   */
@@ -108,6 +129,9 @@ public:
         void    setWrapS(WrapMode::Enum mode);
         void    setWrapT(WrapMode::Enum mode);
         void    setWrapR(WrapMode::Enum mode);
+
+        // Установка функции сравнения
+        void    setCompareFunction(TextureCompareFunction::Enum function);
 
         // Возвращает размеры текстуры на mipmap уровне mipmapLevel
         int     width(int mipmapLevel=0) const;

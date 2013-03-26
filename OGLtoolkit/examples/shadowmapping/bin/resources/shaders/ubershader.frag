@@ -3,6 +3,9 @@
 in vec4 vPosition;
 in vec3 vNormal;
 in vec2 texCoord;
+#ifdef SHADOW_MAPPING
+in vec4 vShadowCoord;
+#endif SHADOW_MAPPING
 
 layout (location = 0) out vec4 FragColor;
 
@@ -22,6 +25,10 @@ uniform Material material;
 uniform Light light;
 #endif PHONG_LIGHT_MODEL
 
+#ifdef SHADOW_MAPPING
+uniform sampler2DShadow shadowMap;
+#endif SHADOW_MAPPING
+
 #ifdef DRAW_QUAD
 uniform sampler2D baseTexture;
 #endif DRAW_QUAD
@@ -38,8 +45,6 @@ vec3 phongModel(vec3 pos, vec3 norm) {
         vec3 v = normalize(-pos.xyz);
         vec3 r = reflect(-s, norm);
 
-        vec3 ambient = light.color * material.ambient;
-
         float sDotN = max(dot(s,norm), 0.0);
         vec3 diffuse = light.color * material.diffuse * sDotN;
 
@@ -48,9 +53,22 @@ vec3 phongModel(vec3 pos, vec3 norm) {
                 specular = light.color * material.specular * pow(max(dot(r,v), 0.0), material.shininess);
         }
 
-        return ambient + diffuse + specular;
+        return diffuse + specular;
 }
 #endif PHONG_LIGHT_MODEL
+
+#ifdef SHADOW_MAPPING
+vec3 shadeWithShadow() {
+        vec3 ambient = light.color * material.ambient;
+        #ifdef PHONG_LIGHT_MODEL
+        vec3 spec_diffuse = phongModel(vPosition, vNormal);
+        #endif
+
+        float shadow = textureProj(shadowMap, vShadowCoord);
+
+        return spec_diffuse*shadow + ambient;
+}
+#endif SHADOW_MAPPING
 
 #ifdef DRAW_QUAD
 float linearizeDepth(float depth, float farClipPlane, float nearClipPlane) {
@@ -60,9 +78,6 @@ float linearizeDepth(float depth, float farClipPlane, float nearClipPlane) {
 
 void main() {
         FragColor = vec4(0.0);
-        #ifdef PHONG_LIGHT_MODEL
-        FragColor += vec4(phongModel(vec3(vPosition), vNormal), 1.0);
-        #endif PHONG_LIGHT_MODEL
 
         #ifdef DRAW_QUAD
         FragColor += vec4(linearizeDepth(texture2D(baseTexture, texCoord).r, 100, 0.05));
@@ -70,5 +85,9 @@ void main() {
 
         #ifdef RECORD_DEPTH
         #endif RECORD_DEPTH
+
+        #ifdef LIGHTING
+        FragColor = vec4(shadeWithShadow(), 1.0);
+        #endif LIGHTING
 
 }

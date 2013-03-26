@@ -38,6 +38,7 @@ private:
         void                    pass1();
         void                    pass2();
         void                    initFBO();
+        void                    showShadowMap();
 
 public:
         ShadowmapTest();
