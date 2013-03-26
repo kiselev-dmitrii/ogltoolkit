@@ -62,7 +62,8 @@ void ShadowmapTest::initCamera() {
         SceneNode* cameraNode = m_sceneMgr->rootNode()->createChildNode("Camera_Node");
         m_mainCamera = (FirstPersonCamera*)m_sceneMgr->addCamera("mainCamera", new FirstPersonCamera(cameraNode));
         m_sceneMgr->setCurrentCamera(m_mainCamera);
-        m_mainCamera->node()->setPositionInWorld(vec3(10,10,10));
+        m_mainCamera->node()->setPositionInWorld(vec3(30,30,30));
+        m_mainCamera->node()->lookAt(vec3(8,8,0), vec3(0,0,1));
 }
 
 void ShadowmapTest::initShaders() {

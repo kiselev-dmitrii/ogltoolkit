@@ -103,8 +103,7 @@ public:
         void            rotateInWorld(const vec3& axis, float angle);
 
         // Устанавливает ориентацию таким образом, чтобы ось -Z была направлена в target, а Y в сторону up
-        // В основном применяется в классе Camera
-        void            lookAt(const vec3& target, const vec3& up);
+        void            lookAt(const vec3& targetInWorld, const vec3& upInParent);
 
         // Возвращает матрицу перехода из локальной СК в глобальную и обратную
         const mat4&     localToWorldMatrix();

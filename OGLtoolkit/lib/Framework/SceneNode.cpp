@@ -227,17 +227,19 @@ void SceneNode::rotateInWorld(const vec3 &axis, float angle) {
         rotateInWorld(q);
 }
 
-void SceneNode::lookAt(const vec3 &target, const vec3 &up) {
-        vec3 zAxis = normalize(-target);
-        vec3 xAxis = normalize(cross(up, zAxis));
+void SceneNode::lookAt(const vec3 &targetInWorld, const vec3 &upInParent) {
+        vec3 targetInParent;
+        if(m_parentNode) targetInParent = ((SceneNode*)m_parentNode)->convertWorldToLocal(targetInWorld);
+        else targetInParent = targetInWorld;
+
+        vec3 zAxis = -normalize(targetInParent-positionInParent());
+        vec3 xAxis = normalize(cross(upInParent, zAxis));
         vec3 yAxis = normalize(cross(zAxis, xAxis));
 
-        mat3 matrix = mat3(xAxis.x, yAxis.x, zAxis.x,
-                           xAxis.y, yAxis.y, zAxis.y,
-                           xAxis.z, yAxis.z, zAxis.z);
-        m_orientation = toQuat(matrix);
-
-        notifyChilds();
+        mat3 matrix = mat3(xAxis.x, xAxis.y, xAxis.z,
+                           yAxis.x, yAxis.y, yAxis.z,
+                           zAxis.x, zAxis.y, zAxis.z);
+        setOrientationInParent(toQuat(matrix));
 }
 
 
