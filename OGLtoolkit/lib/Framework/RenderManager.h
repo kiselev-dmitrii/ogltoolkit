@@ -13,6 +13,17 @@ using namespace std;
 class GpuProgram;
 class Entity;
 
+/** Перечисление, задающее грани полигона
+  */
+namespace PolygonFace {
+enum Enum {
+        FRONT = GL_FRONT,
+        BACK = GL_BACK,
+        FRONT_AND_BACK = GL_FRONT_AND_BACK,
+        NONE = GL_NONE
+};
+}
+
 typedef map<string, GpuProgram*>        MapGpuProgram;
 
 /** В обязанности данного класса входит:
@@ -28,6 +39,8 @@ private:
         AbstractCamera* m_currentCamera;
 
         UniformSupplier m_uniformSupplier;      //занимается определением, что нужно шейдеру
+
+        bool            m_isCullFaceEnabled;    //определяет, включено ли отсечение граней
 
 private:
         // Обновляет значения некоторых uniform переменных
@@ -64,6 +77,12 @@ public:
         // Отрисовывает объекты типа Enity
         void            render(MapEntity *entities);
         void            render(Entity* entity);
+
+        // Отсекает задние или передние грани полигонов
+        void            setCullFace(PolygonFace::Enum face);
+
+        // Очищает цветовой буфер и буфер глубины
+        void            clearColorDepthBuffers();
 };
 
 #endif // RENDER_H

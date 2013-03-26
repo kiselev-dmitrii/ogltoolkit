@@ -6,6 +6,9 @@
 #include "lib/Utils/Debug.h"
 
 RenderManager::RenderManager() {
+        m_isCullFaceEnabled = false;
+        glClearColor(0.9, 0.9, 0.9, 1.0);
+        glEnable(GL_DEPTH_TEST);
 }
 
 RenderManager* RenderManager::instance() {
@@ -126,4 +129,17 @@ void RenderManager::uploadUniforms(Entity *entity) {
         if(m_uniformSupplier.isNeedSupplyUniform(AutoUniforms::WindowSize)) {
                 m_currentProgram->setUniform(UniformSupplier::WindowSizeName, vec2(Application::window()->size()));
         }
+}
+
+void RenderManager::setCullFace(PolygonFace::Enum face) {
+        if(!m_isCullFaceEnabled && face != PolygonFace::NONE) {
+                glEnable(GL_CULL_FACE);
+                m_isCullFaceEnabled = true;
+        }
+        if(face == PolygonFace::NONE) glDisable(GL_CULL_FACE);
+        else glCullFace(face);
+}
+
+void RenderManager::clearColorDepthBuffers() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

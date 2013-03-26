@@ -41,15 +41,11 @@ private:
         void                    showShadowMap();
 
 public:
-        ShadowmapTest();
-        ~ShadowmapTest();
-
         void    init();
         void    resize(int w, int h);
         void    update(float deltaTime);
         void    render();
 
-        void    initRender();
         void    initEntities();
         void    initCamera();
         void    initShaders();

@@ -6,31 +6,11 @@
 #include "lib/Solutions/FirstPersonCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-ShadowmapTest::ShadowmapTest() {
-        m_entityMgr = EntityManager::instance();
-        m_renderMgr = RenderManager::instance();
-        m_meshMgr = MeshManager::instance();
-        m_sceneMgr = SceneManager::instance();
-        m_texMgr = TextureManager::instance();
-}
-
-ShadowmapTest::~ShadowmapTest() {
-}
-
-void ShadowmapTest::initRender() {
-        glClearColor(0.9, 0.9, 0.9, 1.0);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_CULL_FACE);
-
-        Mouse::hide();
-}
-
 void ShadowmapTest::initEntities() {
         m_node1 = m_sceneMgr->rootNode()->createChildNode("Node1");
         m_node2 = m_sceneMgr->rootNode()->createChildNode("Node2");
         m_node3 = m_node2->createChildNode("Node3");
         m_node4 = m_node3->createChildNode("Node4");
-
 
         m_meshMgr->loadMesh("teapot.mesh", "resources/meshes/teapot.obj", 1);
         m_meshMgr->loadMesh("cube.mesh", "resources/meshes/cube.obj");
@@ -92,7 +72,7 @@ void ShadowmapTest::initShaders() {
         m_renderMgr->currentProgram()->setUniform("light.position", m_spot->node()->positionInWorld());
         m_renderMgr->currentProgram()->setUniform("light.color", m_spot->diffuseColor());
         m_renderMgr->currentProgram()->setUniform("material.ambient", vec3(0.3));
-        m_renderMgr->currentProgram()->setUniform("material.diffuse", vec3(1, 1, 0));
+        m_renderMgr->currentProgram()->setUniform("material.diffuse", vec3(0.4, 0.4, 0.4));
         m_renderMgr->currentProgram()->setUniform("material.specular", vec3(1.0));
         m_renderMgr->currentProgram()->setUniform("material.shininess", 80.0f);
 }
@@ -124,7 +104,13 @@ void ShadowmapTest::initLight() {
 }
 
 void ShadowmapTest::init() {
-        initRender();
+        Mouse::hide();
+        m_entityMgr = EntityManager::instance();
+        m_renderMgr = RenderManager::instance();
+        m_meshMgr = MeshManager::instance();
+        m_sceneMgr = SceneManager::instance();
+        m_texMgr = TextureManager::instance();
+
         initLight();
         initShaders();
         initEntities();
@@ -157,8 +143,8 @@ void ShadowmapTest::pass1() {
         m_sceneMgr->setCurrentCamera(m_spot->camera());
 
         m_fbo->bind();
-                glCullFace(GL_FRONT);
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                m_renderMgr->setCullFace(PolygonFace::FRONT);
+                m_renderMgr->clearColorDepthBuffers();
                 m_renderMgr->render(m_entityMgr->entities());
         m_fbo->unbind();
 }
@@ -166,12 +152,11 @@ void ShadowmapTest::pass1() {
 void ShadowmapTest::pass2() {
         m_renderMgr->setCurrentProgram("shadowMapping");
         m_sceneMgr->setCurrentCamera(m_mainCamera);
-        //Передаем матрицу, переводящую из модельных координат в СК источника света
+
+        m_renderMgr->setCullFace(PolygonFace::BACK);
+        m_renderMgr->clearColorDepthBuffers();
+
         mat4 bias = glm::translate(mat4(1), vec3(0.5))*glm::scale(mat4(1), vec3(0.5));
-
-        glCullFace(GL_BACK);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         MapEntity* entities = m_entityMgr->entities();
         MapEntity::iterator it;
         for(it = entities->begin(); it != entities->end(); ++it) {

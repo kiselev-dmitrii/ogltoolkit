@@ -64,7 +64,7 @@ vec3 shadeWithShadow() {
         vec3 spec_diffuse = phongModel(vPosition, vNormal);
         #endif
 
-        float shadow = textureProj(shadowMap, vShadowCoord);
+        float shadow = shadow2DProj(shadowMap, vShadowCoord);
 
         return spec_diffuse*shadow + ambient;
 }
