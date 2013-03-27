@@ -90,3 +90,6 @@ HEADERS += \
 OTHER_FILES += \
     bin/resources/shaders/ubershader.vert \
     bin/resources/shaders/ubershader.frag
+
+QMAKE_CXXFLAGS += "-std=c++11"
+CXXFLAGS="-std=c++0x"

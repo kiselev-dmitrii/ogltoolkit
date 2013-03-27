@@ -64,9 +64,14 @@ vec3 shadeWithShadow() {
         vec3 spec_diffuse = phongModel(vPosition, vNormal);
         #endif
 
-        float shadow = shadow2DProj(shadowMap, vShadowCoord);
+        float summ = 0;
+        summ += textureProjOffset(shadowMap, vShadowCoord, ivec2(-1,-1));
+        summ += textureProjOffset(shadowMap, vShadowCoord, ivec2(-1,1));
+        summ += textureProjOffset(shadowMap, vShadowCoord, ivec2(1,1));
+        summ += textureProjOffset(shadowMap, vShadowCoord, ivec2(1,-1));
+        summ /= 4.0;
 
-        return spec_diffuse*shadow + ambient;
+        return spec_diffuse*summ + ambient;
 }
 #endif SHADOW_MAPPING
 
@@ -80,7 +85,7 @@ void main() {
         FragColor = vec4(0.0);
 
         #ifdef DRAW_QUAD
-        FragColor += vec4(linearizeDepth(texture2D(baseTexture, texCoord).r, 100, 0.05));
+        FragColor += vec4(linearizeDepth(texture(baseTexture, texCoord).r, 100, 0.05));
         #endif DRAW_QUAD
 
         #ifdef RECORD_DEPTH
@@ -89,5 +94,4 @@ void main() {
         #ifdef LIGHTING
         FragColor = vec4(shadeWithShadow(), 1.0);
         #endif LIGHTING
-
 }
