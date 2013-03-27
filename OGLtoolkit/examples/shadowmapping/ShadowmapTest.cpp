@@ -54,9 +54,12 @@ void ShadowmapTest::initCamera() {
 }
 
 void ShadowmapTest::initShaders() {
-        m_renderMgr->addProgram("recordDepth", new GpuProgram("resources/shaders/ubershader", StringList({"RECORD_DEPTH"})));
-        m_renderMgr->addProgram("shadowMapping", new GpuProgram("resources/shaders/ubershader", {"LIGHTING", "PHONG_LIGHT_MODEL", "SHADOW_MAPPING"}));
-        m_renderMgr->addProgram("drawQuad", new GpuProgram("resources/shaders/ubershader", StringList({"DRAW_QUAD"})));
+        StringList options1 = {"RECORD_DEPTH"};
+        m_renderMgr->addProgram("recordDepth", new GpuProgram("resources/shaders/ubershader", options1));
+        StringList options2 = {"LIGHTING", "PHONG_LIGHT_MODEL", "SHADOW_MAPPING"};
+        m_renderMgr->addProgram("shadowMapping", new GpuProgram("resources/shaders/ubershader", options2));
+        StringList options3 = {"DRAW_QUAD"};
+        m_renderMgr->addProgram("drawQuad", new GpuProgram("resources/shaders/ubershader", options3));
 
         m_renderMgr->setCurrentProgram("shadowMapping");
         m_renderMgr->currentProgram()->setUniform("light.color", m_spot->diffuseColor());
