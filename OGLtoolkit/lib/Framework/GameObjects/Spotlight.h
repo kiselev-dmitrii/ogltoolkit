@@ -20,12 +20,12 @@ public:
         Spotlight(SceneNode* node, float angle=90.0f, float distance=1000.0f);
 
         //Устанавливает/возвращает угол развертки
-        void            setCutoffAngle(float angle)                     { m_cutoffAngle = angle; }
-        float           cutoffAngle() const                             { return m_cutoffAngle; }
+        void            setCutoffAngle(float angle);
+        float           cutoffAngle() const;
 
         //Устанавливает/возвращает осветительное расстояние
-        void            setAttenuationDistance(float distance)          { m_attenuationDistance = distance; }
-        float           attenuationDistance() const                     { return m_attenuationDistance; }
+        void            setAttenuationDistance(float distance);
+        float           attenuationDistance() const;
 
         // Привязывает камеру к проектору. Таким образом он видит все что проектор
         void            bindCamera(AbstractCamera* camera);
