@@ -2,6 +2,8 @@
 #define TEXTURE_H
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+using namespace glm;
 
 /** Точка привязки
   */
@@ -132,6 +134,9 @@ public:
 
         // Установка функции сравнения
         void    setCompareFunction(TextureCompareFunction::Enum function);
+
+        // Установка цвета границы текстуры (по умолчанию это vec4(0,0,0,0))
+        void    setBorderColor(const vec4& color);
 
         // Возвращает размеры текстуры на mipmap уровне mipmapLevel
         int     width(int mipmapLevel=0) const;

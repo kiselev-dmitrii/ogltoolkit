@@ -44,6 +44,11 @@ void Texture::setCompareFunction(TextureCompareFunction::Enum function) {
         glTexParameterf(m_target, GL_TEXTURE_COMPARE_FUNC, function);
 }
 
+void Texture::setBorderColor(const vec4 &color) {
+        bind();
+        glTexParameterfv(m_target, GL_TEXTURE_BORDER_COLOR, &color[0]);
+}
+
 GLuint Texture::handle() const {
         return m_handle;
 }
