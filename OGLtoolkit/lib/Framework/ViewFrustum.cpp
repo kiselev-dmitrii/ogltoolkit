@@ -7,7 +7,7 @@ ViewFrustum::ViewFrustum() {
         m_farClipDist = 100.0f;
         m_aspectRatio = 1.0f;
         m_fieldOfView = 60.0f;
-        m_orthoRect = vec2(1.0f);
+        m_orthoRect = vec2(40.0f);
 
         m_isUpdateMatrix = true;
 }
@@ -70,7 +70,7 @@ const mat4& ViewFrustum::viewToScreenMatrix() {
         if(m_isUpdateMatrix) {
                 switch(m_projType) {
                         case ProjectionType::ORTHOGONAL:
-                                m_viewToScreenMatrix = glm::ortho(0.0f, m_orthoRect.x, 0.0f, m_orthoRect.y);
+                                m_viewToScreenMatrix = glm::ortho(0.0f, m_orthoRect.x, 0.0f, m_orthoRect.y, m_nearClipDist, m_farClipDist);
                                 break;
                         case ProjectionType::PERSPECTIVE:
                                 m_viewToScreenMatrix = glm::perspective(m_fieldOfView, m_aspectRatio, m_nearClipDist, m_farClipDist);

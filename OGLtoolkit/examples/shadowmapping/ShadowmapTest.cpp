@@ -134,6 +134,8 @@ void ShadowmapTest::update(float deltaTime) {
         if(Keyboard::isKeyPressed('2')) m_mainCamera = (FirstPersonCamera*)m_sceneMgr->camera("spotCamera");
         if(Keyboard::isKeyPressed('-')) m_spot->setCutoffAngle(m_spot->cutoffAngle()+0.3);
         if(Keyboard::isKeyPressed('=')) m_spot->setCutoffAngle(m_spot->cutoffAngle()-0.3);
+        if(Keyboard::isKeyPressed('O')) m_mainCamera->setProjectionType(ProjectionType::ORTHOGONAL);
+        if(Keyboard::isKeyPressed('P')) m_mainCamera->setProjectionType(ProjectionType::PERSPECTIVE);
         m_renderMgr->currentProgram()->setUniform("light.position", m_spot->node()->positionInWorld());
 }
 
